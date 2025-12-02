@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea Hormigonera - Hormigón Premezclado en Guayas, Pichincha y El Empalme</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles/creahormigonera.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="imagenes/CREA .png" alt="Crea Hormigonera Logo">
+                </div>
+                <nav class="nav">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#productos">Productos</a>
+                    <a href="#proyectos">Proyectos</a>
+                    <a href="#contacto">Contacto</a>
+                </nav>
+                <a href="https://wa.me/593997528670" class="btn-glossy btn-whatsapp" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> CONSÚLTANOS
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <div class="badge">
+                        📍 Cobertura Inmediata: El Empalme, Guayas, Manabí y Quevedo
+                    </div>
+                    <h1>Hormigón Premezclado en Guayas, Pichincha y El Empalme</h1>
+                    <p>Solidez garantizada para tus obras. Despachamos calidad certificada con puntualidad inglesa.</p>
+                    <a href="#calculadora" class="btn-glossy btn-red">
+                        <i class="fa-solid fa-phone"></i> COTIZAR AHORA
+                    </a>
+                    <p class="pedido-minimo">Pedido mínimo: 5 metros cúbicos</p>
+                </div>
+                <div class="hero-images">
+                    <div class="image-grid">
+                        <div class="image-large">
+                            <img src="imagenes/mixer1.jpeg" alt="Mixer en Obra">
+                        </div>
+                        <div class="image-small-grid">
+                            <img src="https://via.placeholder.com/290x200/999999/FFFFFF?text=Render+3D" alt="Render 3D">
+                            <img src="https://via.placeholder.com/290x200/CCCCCC/333333?text=Textura+Hormigón" alt="Textura Hormigón">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULADORA -->
+    <section class="calculadora" id="calculadora">
+        <div class="container">
+            <div class="calculadora-card">
+                <h2>¿No sabes cuánto pedir?</h2>
+                <p class="subtitle">Calcula el volumen exacto que necesitas</p>
+                
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label>Largo (metros)</label>
+                        <input type="number" id="largo" placeholder="Ej: 10" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Ancho (metros)</label>
+                        <input type="number" id="ancho" placeholder="Ej: 8" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Espesor (centímetros)</label>
+                        <input type="number" id="espesor" placeholder="Ej: 10" step="0.1" min="0">
+                        <small class="help-text">Ej: Para 10cm escribe 0.10</small>
+                    </div>
+                </div>
+
+                <button class="btn-glossy btn-red" onclick="calcularVolumen()">
+                    <i class="fa-solid fa-calculator"></i> CALCULAR VOLUMEN
+                </button>
+
+                <div id="resultado" class="resultado" style="display: none;">
+                    <div id="resultado-contenido"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section class="productos" id="productos">
+        <div class="container">
+            <h2>Resistencias para cada necesidad</h2>
+            <p class="section-subtitle">Hormigón certificado con la resistencia exacta para tu proyecto</p>
+            
+            <div class="productos-grid">
+                <div class="producto-card">
+                    <div class="icon-circle icon-red">
+                        <i class="fa-solid fa-road"></i>
+                    </div>
+                    <h3>H-180</h3>
+                    <p>Aceras y bordillos</p>
+                    <a href="https://wa.me/593968188499?text=Hola, necesito información sobre H-180" class="btn-glossy btn-red" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Consultar Precio
+                    </a>
+                </div>
+
+                <div class="producto-card">
+                    <div class="icon-circle icon-red">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <h3>H-210</h3>
+                    <p>Losas de vivienda</p>
+                    <a href="https://wa.me/593968188499?text=Hola, necesito información sobre H-210" class="btn-glossy btn-red" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Consultar Precio
+                    </a>
+                </div>
+
+                <div class="producto-card">
+                    <div class="icon-circle icon-red">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <h3>H-240</h3>
+                    <p>Vigas y columnas</p>
+                    <a href="https://wa.me/593968188499?text=Hola, necesito información sobre H-240" class="btn-glossy btn-red" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Consultar Precio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section class="proyectos" id="proyectos">
+        <div class="container">
+            <h2>Proyectos Ejecutados</h2>
+            <p class="section-subtitle">Obras que respaldan nuestra calidad y experiencia</p>
+            
+            <div class="proyectos-grid">
+                <div class="proyecto-card">
+                    <div class="proyecto-image">
+                        <img src="https://via.placeholder.com/400x280/888888/FFFFFF?text=Pavimentación+Vial" alt="Pavimentación Vial">
+                    </div>
+                    <div class="proyecto-content">
+                        <h3>Pavimentación Vial</h3>
+                        <p>Proyecto de infraestructura vial con hormigón H-280</p>
+                    </div>
+                </div>
+
+                <div class="proyecto-card">
+                    <div class="proyecto-image">
+                        <img src="https://via.placeholder.com/400x280/999999/FFFFFF?text=Edificación+Residencial" alt="Edificación Residencial">
+                    </div>
+                    <div class="proyecto-content">
+                        <h3>Edificación Residencial</h3>
+                        <p>Construcción de estructura con hormigón H-240</p>
+                    </div>
+                </div>
+
+                <div class="proyecto-card">
+                    <div class="proyecto-image">
+                        <img src="https://via.placeholder.com/400x280/AAAAAA/FFFFFF?text=Obra+Industrial" alt="Obra Industrial">
+                    </div>
+                    <div class="proyecto-content">
+                        <h3>Obra Industrial</h3>
+                        <p>Losa industrial de alta resistencia H-280</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="contacto" id="contacto">
+        <div class="container">
+            <h2>Contáctanos</h2>
+            <p class="section-subtitle">Estamos listos para atender tu proyecto</p>
+            
+            <div class="contacto-grid">
+                <div class="contacto-mapa">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7926!2d-79.4242!3d-0.9537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMMKwNTcnMTMuMyJTIDc5wrAyNScyNy4xIlc!5e0!3m2!1ses!2sec!4v1234567890" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                
+                <div class="contacto-info">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Dirección Principal</h3>
+                            <p>Av. Guayaquil y Calle Quito, Edificio Marcimex, 3er piso. El Empalme, Ecuador.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Correo Electrónico</h3>
+                            <p><a href="mailto:hormigonera.admin@creacomsa.com">hormigonera.admin@creacomsa.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>WhatsApp / Teléfono</h3>
+                            <p><a href="https://wa.me/593968188499" target="_blank">+593 968 188 499</a></p>
+                        </div>
+                    </div>
+
+                    <div class="redes-sociales">
+                        <h3>Síguenos en Redes Sociales</h3>
+                        <div class="social-buttons">
+                            <a href="#" class="social-btn tiktok" target="_blank">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </a>
+                            <a href="#" class="social-btn instagram" target="_blank">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/593968188499?text=Hola, necesito hablar con un ingeniero" class="btn-glossy btn-red btn-large" target="_blank">
+                        <i class="fa-solid fa-comments"></i> CHATEAR CON UN INGENIERO
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="imagenes/CREA .png" alt="Crea Hormigonera">
+                    <p>Hormigón premezclado de calidad certificada para tus obras en Guayas, Pichincha y El Empalme.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Enlaces Rápidos</h4>
+                    <a href="#inicio">Inicio</a>
+                    <a href="#productos">Productos</a>
+                    <a href="#proyectos">Proyectos</a>
+                    <a href="#contacto">Contacto</a>
+                </div>
+
+                <div class="footer-social">
+                    <h4>Síguenos</h4>
+                    <div class="social-buttons">
+                        <a href="#" class="social-btn tiktok" target="_blank">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="social-btn instagram" target="_blank">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/593997528670" class="social-btn whatsapp" target="_blank">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Crea Hormigonera. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/creahormigonera.js"></script>
+</body>
+</html>
