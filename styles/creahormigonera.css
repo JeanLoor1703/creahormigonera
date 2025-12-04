@@ -686,4 +686,23 @@ body {
     .nav {
         display: none;
     }
+    
+}
+/* WhatsApp: hacer el icono verde y al hover cambiar texto negro a verde */
+.info-item.whatsapp .info-icon {
+    background: linear-gradient(135deg, #2EE775, #25D366);
+}
+
+.info-item.whatsapp .info-icon i {
+    color: #ffffff; /* icono en blanco dentro del círculo verde */
+}
+
+/* Al pasar el mouse sobre la fila de WhatsApp, el título y el texto pasan a verde */
+.info-item.whatsapp:hover .info-text h3 {
+    color: var(--color-whatsapp);
+}
+
+.info-item.whatsapp:hover .info-text p,
+.info-item.whatsapp:hover .info-text a {
+    color: var(--color-whatsapp);
 }
