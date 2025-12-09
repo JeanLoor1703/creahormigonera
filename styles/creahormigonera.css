@@ -180,10 +180,10 @@ body {
     margin-top: 20px;
 }
 
-/* HERO SECTION */
+/* HERO SECTION - ESPACIADO REDUCIDO */
 .hero {
     background: linear-gradient(135deg, var(--color-bg-light) 0%, #FFFFFF 100%);
-    padding: 80px 0;
+    padding: 40px 0 80px 0; /* Padding superior reducido de 80px a 40px */
 }
 
 .hero-grid {
@@ -386,7 +386,7 @@ body {
 
 .productos-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
 }
 
@@ -439,9 +439,10 @@ body {
     background-color: var(--color-bg-light);
 }
 
+/* PROYECTOS - Grid de 4 columnas */
 .proyectos-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 30px;
 }
 
@@ -477,6 +478,20 @@ body {
 
 .proyecto-content {
     padding: 25px;
+}
+
+/* Badge rojo dentro de las tarjetas de proyecto */
+.proyecto-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF1744, #DC143C);
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+    letter-spacing: 0.5px;
 }
 
 .proyecto-content h3 {
@@ -604,6 +619,24 @@ body {
                 0 0 25px rgba(37, 211, 102, 0.3);
 }
 
+/* WhatsApp: hacer el icono verde y al hover cambiar texto negro a verde */
+.info-item.whatsapp .info-icon {
+    background: linear-gradient(135deg, #2EE775, #25D366);
+}
+
+.info-item.whatsapp .info-icon i {
+    color: #ffffff;
+}
+
+.info-item.whatsapp:hover .info-text h3 {
+    color: var(--color-whatsapp);
+}
+
+.info-item.whatsapp:hover .info-text p,
+.info-item.whatsapp:hover .info-text a {
+    color: var(--color-whatsapp);
+}
+
 /* FOOTER */
 .footer {
     background-color: var(--color-dark);
@@ -659,6 +692,10 @@ body {
 
 /* RESPONSIVE */
 @media (max-width: 968px) {
+    .hero {
+        padding: 30px 0 60px 0; /* Espaciado reducido en móviles */
+    }
+    
     .hero-grid {
         grid-template-columns: 1fr;
     }
@@ -671,7 +708,11 @@ body {
         grid-template-columns: 1fr;
     }
     
-    .productos-grid, .proyectos-grid {
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .proyectos-grid {
         grid-template-columns: 1fr;
     }
     
@@ -685,57 +726,6 @@ body {
     
     .nav {
         display: none;
-    }
-    
-}
-/* WhatsApp: hacer el icono verde y al hover cambiar texto negro a verde */
-.info-item.whatsapp .info-icon {
-    background: linear-gradient(135deg, #2EE775, #25D366);
-}
-
-.info-item.whatsapp .info-icon i {
-    color: #ffffff; /* icono en blanco dentro del círculo verde */
-}
-
-/* Al pasar el mouse sobre la fila de WhatsApp, el título y el texto pasan a verde */
-.info-item.whatsapp:hover .info-text h3 {
-    color: var(--color-whatsapp);
-}
-
-.info-item.whatsapp:hover .info-text p,
-.info-item.whatsapp:hover .info-text a {
-    color: var(--color-whatsapp);
-}
-.productos-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-}
-/* PROYECTOS - Grid de 4 columnas */
-.proyectos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 30px;
-}
-
-/* Badge rojo dentro de las tarjetas de proyecto */
-.proyecto-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #FF1744, #DC143C);
-    color: #FFFFFF;
-    font-weight: 800;
-    font-size: 0.85rem;
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
-    letter-spacing: 0.5px;
-}
-
-/* Ajustes responsive para proyectos */
-@media (max-width: 968px) {
-    .proyectos-grid {
-        grid-template-columns: 1fr;
     }
 }
 
