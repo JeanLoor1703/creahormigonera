@@ -55,16 +55,98 @@ function calcularVolumen() {
     // Scroll suave al resultado
     resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-
-// Permitir calcular con Enter
-document.addEventListener('DOMContentLoaded', function() {
-    const inputs = document.querySelectorAll('.calculator-form input');
-    inputs.forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calcularVolumen();
-            }
+    // Permitir calcular con Enter
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('. calculator-form input');
+        inputs.forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calcularVolumen();
+                }
+            });
         });
-    });
-});
 
+
+    });
+    // VIDEO SMART - AUTOPLAY Y ACTIVAR SONIDO
+        document.addEventListener("DOMContentLoaded", function() {
+            const video = document.getElementById("miVideoSmart");   
+            
+            // 1. AUTOPLAY AL HACER SCROLL
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Si el video no tiene sonido activo aún...
+                    if (!video.dataset.soundActive) {
+                        if (entry.isIntersecting) {
+                            video.play().catch(e => console.log("Esperando interacción"));
+                        } else {
+                            video.pause();
+                        }
+                    }
+                });
+            }, { threshold: 0.5 }); // Se activa al ver el 50%
+
+            observer.observe(video);
+        });
+
+        // 2. ACTIVAR SONIDO Y REINICIAR CON FUERZA
+        function activarExperiencia() {
+            const video = document.getElementById("miVideoSmart");
+            const overlay = document.getElementById("overlaySonido");
+
+            video.muted = false; // Quita silencio
+            video.currentTime = 0; // Reinicia para impacto
+            video.volume = 1.0;
+            video.play();
+            
+            // Marca que el usuario ya interactuó
+            video.dataset.soundActive = "true";
+
+            // Oculta el botón suavemente
+            overlay.classList.add("video-activo");
+        }
+// Variable para guardar el observador y poder detenerlo luego
+        let videoObserver;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const video = document.getElementById("miVideoSmart");
+            
+            // 1. CONFIGURACIÓN DEL SENSOR DE SCROLL
+            videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Solo actúa si el usuario NO ha activado el sonido todavía
+                    if (!video.controls) {
+                        if (entry.isIntersecting) {
+                            video.play().catch(e => console.log("Esperando interacción"));
+                        } else {
+                            video.pause();
+                        }
+                    }
+                });
+            }, { threshold: 0.5 }); // 50% visible
+
+            videoObserver.observe(video);
+        });
+
+        // 2. FUNCIÓN: CUANDO EL USUARIO TOMA EL CONTROL
+        function activarExperiencia() {
+            const video = document.getElementById("miVideoSmart");
+            const overlay = document.getElementById("overlaySonido");
+
+            // A) Configuramos el video para uso manual
+            video.muted = false;       // Activamos sonido
+            video.currentTime = 0;     // Reiniciamos desde el principio
+            video.volume = 1.0;
+            video.controls = true;     // <--- ¡AQUÍ ESTÁ LA MAGIA! (Aparecen pausa, volumen, etc)
+            
+            // B) Reproducimos
+            video.play();
+
+            // C) Ocultamos el botón rojo y desconectamos el sensor automático
+            overlay.classList.add("video-activo");
+            
+            // "Matamos" el sensor de scroll para que no moleste más
+            if (videoObserver) {
+                videoObserver.disconnect();
+            }
+        }
