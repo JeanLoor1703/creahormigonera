@@ -814,4 +814,26 @@ body {
             opacity: 0;
             pointer-events: none;
         }
+/* =========================================
+   CORRECCIÓN MOBILE (Logo vs WhatsApp)
+   ========================================= */
+@media (max-width: 768px) {
+    /* 1. Hacemos el logo más pequeño para dar espacio */
+    .navbar-brand img, .logo img {
+        max-width: 130px !important; /* Reduce esto si sigue chocando */
+        height: auto;
+    }
 
+    /* 2. Ajustamos el botón de WhatsApp para que sea compacto */
+    .btn-contacto, a[href*="wa.me"], a[href*="whatsapp"] {
+        padding: 8px 12px !important; /* Menos relleno */
+        font-size: 14px !important;   /* Texto un poco más chico */
+        white-space: nowrap;          /* Evita que el texto se parta en dos */
+    }
+    
+    /* OPCIONAL: Ajustar el contenedor del menú para que no se desborde */
+    .container, .navbar-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
