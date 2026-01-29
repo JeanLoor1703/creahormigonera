@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17780502582"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17780502582');
+    </script>
+
+    <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-17780502582/Z5sSCOOlp-0bELbgs55C',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+
     <meta name="google-site-verification" content="AbOwF9I2u8Bi80OY-snfwDGby9HwaYz6FlLEzVG71P0" />
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Hormigón Premezclado en El Empalme y Guayas | Creacom Hormigonera</title>
-    
+    <title>Hormigón Premezclado en El Empalme ,Guayas,Manabí,Pichincha | Creacom Hormigonera</title>
     <meta name="description" content="¿Buscas hormigón de calidad? Venta de concreto premezclado (H-180 a H-280) en El Empalme, Quevedo, Pichincha y Manabí. Cotiza tu losa o pavimento aquí. ¡Entrega puntual y volumen exacto!">
-    
     <meta name="keywords" content="hormigon premezclado el empalme, concretera guayas, venta de concreto quevedo, precio hormigon h210, hormigon h240, pavimento rigido, planta de hormigon manabi, construccion pichincha, concreto para losas, crea hormigonera">
     
     <meta name="geo.region" content="EC-G" /> 
@@ -23,6 +42,7 @@
     <link rel="canonical" href="https://creahormigonera.com/"> 
     <link rel="icon" href="favicon.png" type="image/png" sizes="192x192">
     <link rel="apple-touch-icon" href="favicon.png">
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -51,9 +71,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="styles/creahormigonera.css">
 </head>
 <body>
@@ -69,7 +87,7 @@
                     <a href="#proyectos">Proyectos</a>
                     <a href="#contacto">Contacto</a>
                 </nav>
-                <a href="https://wa.me/593997528670" class="btn-glossy btn-whatsapp" target="_blank">
+                <a href="https://wa.me/593997528670" class="btn-glossy btn-whatsapp" target="_blank" onclick="return gtag_report_conversion('https://wa.me/593997528670');">
                     <i class="fa-brands fa-whatsapp"></i> Contáctanos
                 </a>
             </div>
@@ -85,7 +103,7 @@
                     </div>
                     <h1>Hormigón Premezclado en Guayas, Pichincha y El Empalme</h1>
                     <p>La resistencia exacta y el volumen completo que tu obra exige. Garantizamos despacho puntual y calidad certificada en cada viaje.</p>
-                    <a href="https://wa.me/593997528670?text=Hola, necesito información sobre hormigón premezclado" class="btn-glossy btn-red">
+                    <a href="https://wa.me/593997528670?text=Hola, necesito información sobre hormigón premezclado" class="btn-glossy btn-red" onclick="return gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito información sobre hormigón premezclado');">
                         <i class="fa-solid fa-phone"></i> COTIZAR AHORA
                     </a>
                     <p class="pedido-minimo">Pedido mínimo: 5 metros cúbicos</p>
@@ -93,11 +111,11 @@
                 <div class="hero-images">
                     <div class="image-grid">
                         <div class="image-large">
-                            <img src="imagenes/mixer1.jpg" alt="Camión mixer descargando hormigón premezclado en obra de construcción en El Empalme" loading="lazy" alt ="Mixer de hormigón en El Empalme y Guayas">
+                            <img src="imagenes/mixer1.jpg" alt="Camión mixer descargando hormigón premezclado en obra de construcción en El Empalme" loading="lazy">
                         </div>
                         <div class="image-small-grid">
-                            <img src="imagenes/mixer2.jpg" alt="Flota de mixers listos para despacho de concreto en Quevedo y Manabí" loading="lazy" alt="Hormigon en Guayas y El Empalme">
-                            <img src="imagenes/mixer3.jpg" alt="Textura y calidad del hormigón certificado H-210 y H-240" loading="lazy" alt="Hormigon premezclado en El Empalme">
+                            <img src="imagenes/mixer2.jpg" alt="Flota de mixers listos para despacho de concreto en Quevedo y Manabí" loading="lazy">
+                            <img src="imagenes/mixer3.jpg" alt="Textura y calidad del hormigón certificado H-210 y H-240" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -110,7 +128,6 @@
             <div class="calculadora-card">
                 <h2>¿No sabes cuánto pedir?</h2>
                 <p class="subtitle">Calcula el volumen exacto que necesitas</p>
-                
                 <div class="calculator-form">
                     <div class="form-group">
                         <label>Largo (metros)</label>
@@ -126,11 +143,9 @@
                         <small class="help-text">Ej: Para 10cm escribe 0.10</small>
                     </div>
                 </div>
-
                 <button class="btn-glossy btn-red" onclick="calcularVolumen()">
                     <i class="fa-solid fa-calculator"></i> CALCULAR VOLUMEN
                 </button>
-
                 <div id="resultado" class="resultado" style="display: none;">
                     <div id="resultado-contenido"></div>
                 </div>
@@ -142,7 +157,6 @@
         <div class="container">
             <h2>Resistencias para cada necesidad</h2>
             <p class="section-subtitle">Hormigón certificado con la resistencia exacta para tu proyecto</p>
-            
             <div class="productos-grid">
                 <div class="producto-card">
                     <div class="icon-circle icon-red">
@@ -150,75 +164,69 @@
                     </div>
                     <h3>H-180</h3>
                     <p>Aceras y bordillos</p>
-                    <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-180" class="btn-glossy btn-red" target="_blank">
+                    <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-180" class="btn-glossy btn-red" target="_blank" onclick="return gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito información sobre H-180');">
                         <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                     </a>
                 </div>
-
                 <div class="producto-card">
                     <div class="icon-circle icon-red">
                         <i class="fa-solid fa-house"></i>
                     </div>
                     <h3>H-210</h3>
                     <p>Losas de vivienda</p>
-                    <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-210" class="btn-glossy btn-red" target="_blank">
+                    <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-210" class="btn-glossy btn-red" target="_blank" onclick="return gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito información sobre H-210');">
                         <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                     </a>
                 </div>
-
                 <div class="producto-card">
                     <div class="icon-circle icon-red">
                         <i class="fa-solid fa-building"></i>
                     </div>
                     <h3>H-240</h3>
                     <p>Vigas y columnas</p>
-                    <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-240" class="btn-glossy btn-red" target="_blank">
+                    <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-240" class="btn-glossy btn-red" target="_blank" onclick="return gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito información sobre H-240');">
                         <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                     </a>
                 </div>
-                
                 <div class="producto-card">
                     <div class="icon-circle icon-red">
                         <i class="fa-solid fa-shield-halved icon-red"></i>
                     </div>
                     <h3>H-280</h3>
                     <p>Alta Resistencia </p>
-                    <a href="https://wa.me/593968188499?text=Hola, necesito información sobre H-280" class="btn-glossy btn-red" target="_blank">
+                    <a href="https://wa.me/593968188499?text=Hola, necesito información sobre H-280" class="btn-glossy btn-red" target="_blank" onclick="return gtag_report_conversion('https://wa.me/593968188499?text=Hola, necesito información sobre H-280');">
                         <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                     </a>
                 </div>
             </div>
         </div>
     </section>
-<section class="video-smart-section">
+
+    <section class="video-smart-section">
         <div class="container">
             <div class="video-header">
                 <h2>Tecnología y Solidez en Cada Mezcla</h2>
                 <p>Conoce la planta de Creacom Hormigonera en acción</p>
             </div>
-            
             <div class="video-container">
-                
                 <video id="miVideoSmart" width="100%" height="auto" muted loop playsinline>
                     <source src="video/creahormigoneravideo1.mp4" type="video/mp4">
                     Tu navegador no soporta videos HTML5.
                 </video>
-
                 <div id="overlaySonido" class="overlay" onclick="activarExperiencia()">
                     <div class="btn-pulsante">
                         <i class="fa-solid fa-play"></i>
                         <span>VER VIDEO CON SONIDO</span>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
+
     <section class="proyectos" id="proyectos">
         <div class="container">
             <h2>Proyectos Ejecutados</h2>
             <p class="section-subtitle">Experiencia comprobada en obras de todo tipo</p>
-            
             <div class="proyectos-grid">
                 <div class="proyecto-card">
                     <div class="proyecto-image">
@@ -230,7 +238,6 @@
                         <p>Ejecución técnica de aceras, bordillos y pavimentos rígidos. Hormigón diseñado para alta resistencia a la abrasión y tránsito constante.</p>
                     </div>
                 </div>
-
                 <div class="proyecto-card">
                     <div class="proyecto-image">
                         <img src="imagenes/losas.jpg" alt="Fundición de losa de techo con concreto H-210 resistente" loading="lazy">
@@ -241,7 +248,6 @@
                         <p>Hormigón especializado para techos y segundos pisos. Garantizamos una superficie sólida, sin grietas y resistente al peso para la seguridad de su familia.</p>
                     </div>
                 </div>
-
                 <div class="proyecto-card">
                     <div class="proyecto-image">
                         <img src="imagenes/vigas columnas.webp" alt="Estructuras sismo-resistentes, vigas y columnas con hormigón H-240" loading="lazy">
@@ -252,7 +258,6 @@
                         <p>Hormigón de alta resistencia a la compresión para columnas, vigas y plintos. Seguridad estructural</p>
                     </div>
                 </div>
-
                 <div class="proyecto-card">
                     <div class="proyecto-image">
                         <img src="imagenes/puente.jpg" alt="Pavimento rígido y puentes de alta resistencia H-280 en Ecuador" loading="lazy">
@@ -271,56 +276,40 @@
         <div class="container">
             <h2>Contáctanos</h2>
             <p class="section-subtitle">Estamos listos para atender tu proyecto</p>
-            
             <div class="contacto-grid">
                 <div class="contacto-mapa">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.5788146469147!2d-79.6379480730357!3d-1.0427165699341405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902b5b414a4f0969%3A0x6404b2a7326e2500!2sMixer%20Hormig%C3%B3n%20Elaborado%20-%20Crea%20Hormigonera!5e0!3m2!1ses!2sec!4v1765498469509!5m2!1ses!2sec" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.5788146469147!2d-79.6379480730357!3d-1.0427165699341405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902b5b414a4f0969%3A0x6404b2a7326e2500!2sMixer%20Hormig%C3%B3n%20Elaborado%20-%20Crea%20Hormigonera!5e0!3m2!1ses!2sec!4v1765498469509!5m2!1ses!2sec" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                
                 <div class="contacto-info">
                     <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
+                        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
                         <div class="info-text">
                             <h3>Dirección Principal</h3>
                             <p>Av. Manabí . Rct Maria Ester . Kilometro 5.5 . El Empalme, Ecuador.</p>
                         </div>
                     </div>
-
                     <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
+                        <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
                         <div class="info-text">
                             <h3>Correo Electrónico</h3>
                             <p><a href="mailto:hormigonera.admin@creacomsa.com">hormigonera.admin@creacomsa.com</a></p>
                         </div>
                     </div>
-
-                     <div class="info-item whatsapp">
-                        <div class="info-icon">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </div>
+                    <div class="info-item whatsapp">
+                        <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
                         <div class="info-text">
                             <h3>WhatsApp / Teléfono</h3>
-                            <p><a href="https://wa.me/593997528670" target="_blank">+593 997 528 670</a></p>
+                            <p><a href="https://wa.me/593997528670" target="_blank" onclick="return gtag_report_conversion('https://wa.me/593997528670');">+593 997 528 670</a></p>
                         </div>
                     </div>
-
                     <div class="redes-sociales">
                         <h3>Síguenos en Redes Sociales</h3>
                         <div class="social-buttons">
-                            <a href="https://www.tiktok.com/@creacom.hormigonera" class="social-btn tiktok" target="_blank">
-                                <i class="fa-brands fa-tiktok"></i>
-                            </a>
-                            <a href="https://www.instagram.com/creahormigonera/" class="social-btn instagram" target="_blank">
-                                <i class="fa-brands fa-instagram"></i>
-                            </a>
+                            <a href="https://www.tiktok.com/@creacom.hormigonera" class="social-btn tiktok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                            <a href="https://www.instagram.com/creahormigonera/" class="social-btn instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
                         </div>
                     </div>
-
-                    <a href="https://wa.me/593997528670?text=Hola, necesito hablar con un ingeniero" class="btn-glossy btn-red btn-large" target="_blank">
+                    <a href="https://wa.me/593997528670?text=Hola, necesito hablar con un ingeniero" class="btn-glossy btn-red btn-large" target="_blank" onclick="return gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito hablar con un ingeniero');">
                         <i class="fa-solid fa-comments"></i> COTIZAR MI PROYECTO AHORA
                     </a>
                 </div>
@@ -335,7 +324,6 @@
                     <img src="imagenes/creahormigoneralogo.png" alt="Logo Crea Hormigonera - Planta de Concreto en El Empalme y Guayas" >
                     <p>Hormigón premezclado de calidad certificada para tus obras en Guayas, Pichincha y El Empalme.</p> 
                 </div>
-                
                 <div class="footer-links">
                     <h4>Enlaces Rápidos</h4>
                     <a href="#inicio">Inicio</a>
@@ -343,29 +331,22 @@
                     <a href="#proyectos">Proyectos</a>
                     <a href="#contacto">Contacto</a>
                 </div>
-
                 <div class="footer-social">
                     <h4>Síguenos</h4>
                     <div class="social-buttons">
-                        <a href="https://www.tiktok.com/@creacom.hormigonera" class="social-btn tiktok" target="_blank">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </a>
-                        <a href="https://www.instagram.com/creahormigonera/" class="social-btn instagram" target="_blank">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="https://wa.me/593997528670" class="social-btn whatsapp" target="_blank"> 
+                        <a href="https://www.tiktok.com/@creacom.hormigonera" class="social-btn tiktok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="https://www.instagram.com/creahormigonera/" class="social-btn instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/593997528670" class="social-btn whatsapp" target="_blank" onclick="return gtag_report_conversion('https://wa.me/593997528670');"> 
                             <i class="fa-brands fa-whatsapp"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            
             <div class="footer-bottom">
                 <p>© 2025 Creacom Hormigonera. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
-
     <script src="js/creahormigonera.js"></script>
 </body>
 </html>
