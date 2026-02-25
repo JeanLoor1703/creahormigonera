@@ -837,3 +837,82 @@ body {
         padding-right: 10px;
     }
 }
+/* =========================================
+   SECCIÓN EQUIPO CREACOM
+   ========================================= */
+.equipo-creacom {
+    padding: 80px 0;
+    background-color: #f8f9fa; /* Un fondo gris súper claro para separarlo de los productos */
+}
+
+.equipo-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    flex-wrap: wrap; /* Para que se adapte a celulares */
+}
+
+.equipo-texto {
+    flex: 1;
+    min-width: 300px; /* Evita que se encoja mucho en pantallas medianas */
+}
+
+.equipo-texto h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.equipo-texto p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* Contenedor del llamado a la acción */
+.equipo-enlace {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+.equipo-enlace p {
+    margin-bottom: 15px; /* Da un poco de espacio antes del botón rojo */
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo de la imagen */
+.equipo-imagen {
+    flex: 1;
+    min-width: 300px;
+}
+
+.equipo-imagen img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px; /* Bordes redondeados modernos */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.equipo-imagen img:hover {
+    transform: translateY(-5px); /* Pequeño efecto al pasar el mouse */
+}
+
+/* Ajustes para celulares (Responsive) */
+@media (max-width: 768px) {
+    .equipo-grid {
+        gap: 30px;
+    }
+    .equipo-texto h2 {
+        font-size: 2rem;
+    }
+    .equipo-imagen img {
+        margin-top: 10px;
+    }
+}
