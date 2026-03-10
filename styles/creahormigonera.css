@@ -1295,4 +1295,34 @@ video {
     .hero-text p {
         font-size: 1rem;
     }
+
+    /* Cobertura Móvil */
+    .cobertura-nueva-inner,
+    .cobertura-regional .container {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .cobertura-nueva-texto,
+    .cobertura-nueva-imagen,
+    .cobertura-regional .columna-texto,
+    .cobertura-regional .mapa-col {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        width: 100%;
+        padding: 0 15px;
+    }
+    
+    .ciudades-grid,
+    .cobertura-regional ul {
+        grid-template-columns: 1fr !important;
+        text-align: left;
+    }
+    
+    .mapa-img {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+        object-fit: contain;
+    }
 }
