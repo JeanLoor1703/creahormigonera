@@ -150,3 +150,15 @@ function calcularVolumen() {
                 videoObserver.disconnect();
             }
         }
+
+// MENU HAMBURGUESA MÓVIL
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav');
+
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('nav-active');
+        });
+    }
+});

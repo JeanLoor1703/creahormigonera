@@ -80,6 +80,10 @@ body {
     color: var(--color-primary);
 }
 
+.menu-toggle {
+    display: none;
+}
+
 /* BOTONES GLOSSY 3D CON BRILLO ANIMADO */
 .btn-glossy {
     display: inline-flex;
@@ -1236,4 +1240,59 @@ video {
     padding-bottom: 20px;
     display: block;
     width: 100%;
+}
+
+/* ================================
+   MOBILE MENU & HERO (max-width: 768px)
+   ================================ */
+@media (max-width: 768px) {
+    /* Navbar Hamburguesa */
+    .nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
+    .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: #333;
+    }
+    .nav-active {
+        display: flex !important;
+    }
+
+    /* Corrección Hero */
+    .hero-grid {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-text, .hero-images {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        width: 100%;
+        padding: 0 15px;
+    }
+    .badge {
+        display: inline-block;
+        white-space: normal;
+        height: auto;
+        padding: 8px 15px;
+    }
+    .hero-text h1 {
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+        line-height: 1.2;
+    }
+    .hero-text p {
+        font-size: 1rem;
+    }
 }
