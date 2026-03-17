@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conectando con Creacom Hormigonera...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+    <div class="text-center p-8 bg-white rounded-2xl shadow-2xl max-w-sm w-full mx-4">
+        <img src="../imagenes/creahormigoneralogo.png" alt="Creacom Logo" class="w-32 mx-auto mb-6">
+        
+        <h1 class="text-xl font-bold text-gray-800 mb-2">Conectando con un asesor</h1>
+        <p class="text-gray-600 mb-6 text-sm">Estamos redirigiéndote a WhatsApp para tu cotización inmediata...</p>
+
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-6"></div>
+
+        <a id="wa-link" href="https://wa.me/593997528670?text=Hola%20Creacom,%20vengo%20desde%20Google%20y%20quiero%20una%20cotización" 
+           class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+            Abrir WhatsApp manualmente
+        </a>
+    </div>
+
+    <script>
+        // Redirigir automáticamente después de 2 segundos
+        setTimeout(() => {
+            window.location.href = document.getElementById('wa-link').href;
+        }, 2000);
+    </script>
+</body>
+</html>
