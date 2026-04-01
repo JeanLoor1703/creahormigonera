@@ -718,78 +718,167 @@ body {
     color: #AAAAAA;
 }
 
-/* COBERTURA NUEVA (después del hero) */
-.cobertura-nueva {
-    background-color: #f8f9fa;
-    padding: 60px 20px;
+/* =========================================
+   COBERTURA NUEVA — Delivery Zones Section
+   ========================================= */
+
+/* Scroll-reveal keyframes */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-48px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(48px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes mapZoomIn {
+    from {
+        transform: scale(0.97);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Invisible state before animation fires */
+.cobertura-nueva-texto.reveal-ready,
+.cobertura-nueva-imagen.reveal-ready {
+    opacity: 0;
+}
+
+/* Animated states */
+.cobertura-nueva-texto.reveal-active {
+    animation: slideInFromLeft 0.70s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cobertura-nueva-imagen.reveal-active {
+    animation: slideInFromRight 0.70s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+/* Section wrapper */
+.cobertura-nueva {
+    background-color: #f4f6f8;
+    padding: 80px 24px;
+}
+
+/* Two-column layout */
 .cobertura-nueva-inner {
-    max-width: 1200px;
+    max-width: 1160px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 50px;
+    gap: 60px;
 }
 
+/* ---- LEFT: text column ---- */
 .cobertura-nueva-texto {
     flex: 1;
-    max-width: 50%;
+    max-width: 48%;
     min-width: 0;
-    padding-right: 20px;
 }
 
 .cobertura-nueva-texto h2 {
-    font-size: 1.9rem;
+    font-size: clamp(1.75rem, 2.8vw, 2.25rem);
     font-weight: 800;
     color: var(--color-dark);
-    margin-bottom: 12px;
+    line-height: 1.15;
+    margin-bottom: 14px;
 }
 
-.cobertura-nueva-texto>p {
+.cobertura-nueva-texto > p {
     font-size: 1rem;
-    color: #4a4a4a;
-    line-height: 1.6;
-    margin-bottom: 24px;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 42ch;
 }
 
+/* City list — 2-column grid */
 .ciudades-grid {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 13px 24px;
 }
 
 .ciudades-grid li {
-    font-size: 0.95rem;
+    font-size: 0.93rem;
     font-weight: 600;
     color: var(--color-text);
     display: flex;
     align-items: center;
+    gap: 0; /* icon margin is inline */
+    line-height: 1.4;
+    transition: color 0.2s;
 }
 
+.ciudades-grid li:hover {
+    color: var(--color-primary);
+}
+
+/* ---- RIGHT: floating map card ---- */
 .cobertura-nueva-imagen {
     flex: 1;
-    max-width: 50%;
+    max-width: 48%;
     min-width: 0;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    border-radius: 15px;
-    overflow: hidden;
 }
 
+/* The floating card wrapper */
+.mapa-card {
+    border-radius: 18px;
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.04),
+        0 10px 25px rgba(0, 0, 0, 0.09),
+        0 25px 50px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 520px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.mapa-card:hover {
+    transform: translateY(-6px) scale(1.012);
+    box-shadow:
+        0 6px 10px rgba(0, 0, 0, 0.05),
+        0 18px 40px rgba(0, 0, 0, 0.12),
+        0 35px 65px rgba(0, 0, 0, 0.07);
+}
+
+/* Map image inside card — fills edge-to-edge, no white gaps */
 .mapa-img {
     width: 100%;
-    height: auto;
-    max-width: 100%;
-    max-height: 500px;
-    object-fit: contain;
+    height: 100%;
+    max-height: 460px;
+    object-fit: cover;
     object-position: center;
-    border-radius: 15px;
     display: block;
+    transition: transform 0.55s ease;
+}
+
+.mapa-card:hover .mapa-img {
+    transform: scale(1.025);
 }
 
 /* COBERTURA REGIONAL */
@@ -878,6 +967,21 @@ body {
 
     .cobertura-nueva-inner {
         flex-direction: column;
+        gap: 36px;
+    }
+
+    .cobertura-nueva-texto,
+    .cobertura-nueva-imagen {
+        max-width: 100%;
+    }
+
+    .mapa-card {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .mapa-img {
+        max-height: 340px;
     }
 
     .cobertura-grid {
@@ -1297,10 +1401,14 @@ video {
     }
 
     /* Cobertura Móvil */
+    .cobertura-nueva {
+        padding: 56px 16px;
+    }
+
     .cobertura-nueva-inner,
     .cobertura-regional .container {
         flex-direction: column;
-        gap: 40px;
+        gap: 32px;
     }
     
     .cobertura-nueva-texto,
@@ -1310,19 +1418,31 @@ video {
         flex: 0 0 100% !important;
         max-width: 100% !important;
         width: 100%;
-        padding: 0 15px;
+    }
+
+    /* Lighter animations on mobile */
+    .cobertura-nueva-texto.reveal-active {
+        animation-duration: 0.55s;
+    }
+    .cobertura-nueva-imagen.reveal-active {
+        animation-duration: 0.55s;
+        animation-delay: 0.06s;
+    }
+
+    .mapa-card {
+        max-width: 100%;
     }
     
     .ciudades-grid,
     .cobertura-regional ul {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: repeat(2, 1fr) !important;
         text-align: left;
     }
     
     .mapa-img {
         width: 100%;
-        height: auto;
-        max-height: 400px;
-        object-fit: contain;
+        height: 300px;
+        max-height: 300px;
+        object-fit: cover;
     }
 }

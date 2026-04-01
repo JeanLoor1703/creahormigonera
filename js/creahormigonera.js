@@ -162,3 +162,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// =========================================
+// COBERTURA SECTION — Scroll Reveal
+// =========================================
+(function () {
+    'use strict';
+
+    function initCoberturaReveal() {
+        const targets = document.querySelectorAll(
+            '.cobertura-nueva-texto.reveal-ready, .cobertura-nueva-imagen.reveal-ready'
+        );
+
+        if (!targets.length || !('IntersectionObserver' in window)) {
+            // Fallback: just show everything immediately
+            targets.forEach(el => {
+                el.style.opacity = '1';
+                el.classList.remove('reveal-ready');
+            });
+            return;
+        }
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    // Remove the "hidden" class so the animation can set opacity itself
+                    el.classList.remove('reveal-ready');
+                    el.classList.add('reveal-active');
+                    observer.unobserve(el); // fire once only
+                }
+            });
+        }, {
+            threshold: 0.15,    // trigger when 15 % of the element is visible
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        targets.forEach(el => observer.observe(el));
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCoberturaReveal);
+    } else {
+        initCoberturaReveal();
+    }
+}());
