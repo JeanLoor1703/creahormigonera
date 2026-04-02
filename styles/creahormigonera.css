@@ -1446,3 +1446,171 @@ video {
         object-fit: cover;
     }
 }
+
+/* ==============================================
+   FLOATING WHATSAPP BUTTON
+   ============================================== */
+
+/* --- Keyframes --- */
+@keyframes waEntrance {
+    0%   { opacity: 0; transform: translateY(24px) scale(0.85); }
+    70%  { opacity: 1; transform: translateY(-4px) scale(1.03); }
+    100% { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+@keyframes waPulse {
+    0%, 100% { box-shadow: 0 8px 28px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0.30); }
+    50%       { box-shadow: 0 8px 28px rgba(37,211,102,0.45), 0 0 0 10px rgba(37,211,102,0);  }
+}
+
+@keyframes waTooltipFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* --- Wrapper --- */
+.wa-float-wrapper {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    /* Entrance: hidden until JS adds .wa-visible */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.wa-float-wrapper.wa-visible {
+    opacity: 1;
+    pointer-events: auto;
+    animation: waEntrance 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --- Pill button --- */
+.wa-float-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px 14px 18px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #2EE775 0%, #20c05a 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-family: var(--font-main, 'Montserrat', sans-serif);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45),
+                inset 0 1px 0 rgba(255,255,255,0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    animation: waPulse 3s ease-in-out 2s infinite; /* pulse starts after 2 s */
+    will-change: transform;
+    /* Subtle top gloss */
+    position: relative;
+    overflow: hidden;
+}
+
+.wa-float-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%, transparent 55%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.wa-float-btn:hover {
+    transform: scale(1.06) translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 14px 36px rgba(37, 211, 102, 0.60),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+    animation: none; /* pause pulse on hover for clean feel */
+}
+
+.wa-float-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+}
+
+/* --- WhatsApp inline SVG icon --- */
+.wa-icon {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+}
+
+/* --- Label text --- */
+.wa-label {
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+
+/* --- Tooltip bubble --- */
+.wa-tooltip {
+    position: relative;
+    background: #1A1A1A;
+    color: #ffffff;
+    font-family: var(--font-main, 'Montserrat', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+    transform: translateY(6px);
+    /* Transition for auto-fade */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.wa-tooltip.wa-tooltip-show {
+    animation: waTooltipFadeIn 0.4s ease both;
+}
+
+.wa-tooltip.wa-tooltip-hide {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Small arrow pointing down */
+.wa-tooltip-arrow {
+    position: absolute;
+    bottom: -7px;
+    right: 22px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #1A1A1A;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .wa-float-wrapper {
+        bottom: 20px;
+        right: 18px;
+    }
+
+    .wa-float-btn {
+        padding: 15px 20px 15px 16px;
+        font-size: 0.95rem; /* slightly larger touch target */
+    }
+
+    .wa-icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Reduce motion: keep button visible but skip animations */
+@media (prefers-reduced-motion: reduce) {
+    .wa-float-wrapper.wa-visible { animation: none; }
+    .wa-float-btn               { animation: none; }
+    .wa-tooltip.wa-tooltip-show { animation: none; opacity: 1; transform: none; }
+}

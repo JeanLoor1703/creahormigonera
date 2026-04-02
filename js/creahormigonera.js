@@ -206,4 +206,49 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         initCoberturaReveal();
     }
+}());
+
+// =========================================
+// FLOATING WHATSAPP BUTTON — Controller
+// =========================================
+(function () {
+    'use strict';
+
+    var TOOLTIP_SHOWN_KEY = 'waTooltipShown';
+
+    function initFloatingWA() {
+        var wrapper = document.getElementById('waFloatWrapper');
+        var tooltip = document.getElementById('waTooltip');
+
+        if (!wrapper) return;
+
+        // 1. Entrance: show button after 800 ms page load
+        setTimeout(function () {
+            wrapper.classList.add('wa-visible');
+        }, 800);
+
+        // 2. Tooltip: show once per session, 2.5 s after entrance
+        var alreadyShown = sessionStorage.getItem(TOOLTIP_SHOWN_KEY);
+
+        if (!alreadyShown && tooltip) {
+            setTimeout(function () {
+                // Show
+                tooltip.classList.add('wa-tooltip-show');
+
+                // Auto-hide after 3 s
+                setTimeout(function () {
+                    tooltip.classList.remove('wa-tooltip-show');
+                    tooltip.classList.add('wa-tooltip-hide');
+                    sessionStorage.setItem(TOOLTIP_SHOWN_KEY, '1');
+                }, 3000);
+
+            }, 2500);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFloatingWA);
+    } else {
+        initFloatingWA();
+    }
 }());
