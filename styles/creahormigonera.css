@@ -84,6 +84,26 @@ body {
     display: none;
 }
 
+/* HEADER CONTACT GROUP */
+.header-contact-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* HEADER SOCIAL BUTTONS */
+.header-social-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-social-buttons .social-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+}
+
 /* BOTONES GLOSSY 3D CON BRILLO ANIMADO */
 .btn-glossy {
     display: inline-flex;
@@ -622,6 +642,10 @@ body {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
+.social-btn.facebook {
+    background-color: #1877F2;
+}
+
 .social-btn.tiktok {
     background-color: #000000;
 }
@@ -728,6 +752,7 @@ body {
         opacity: 0;
         transform: translateX(-48px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -739,6 +764,7 @@ body {
         opacity: 0;
         transform: translateX(48px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -749,6 +775,7 @@ body {
     from {
         transform: scale(0.97);
     }
+
     to {
         transform: scale(1);
     }
@@ -800,7 +827,7 @@ body {
     margin-bottom: 14px;
 }
 
-.cobertura-nueva-texto > p {
+.cobertura-nueva-texto>p {
     font-size: 1rem;
     color: #555;
     line-height: 1.7;
@@ -824,7 +851,8 @@ body {
     color: var(--color-text);
     display: flex;
     align-items: center;
-    gap: 0; /* icon margin is inline */
+    gap: 0;
+    /* icon margin is inline */
     line-height: 1.4;
     transition: color 0.2s;
 }
@@ -1350,6 +1378,11 @@ video {
    MOBILE MENU & HERO (max-width: 768px)
    ================================ */
 @media (max-width: 768px) {
+    /* Ocultar iconos de redes sociales en movil */
+    .header-social-buttons {
+        display: none !important;
+    }
+
     /* Navbar Hamburguesa */
     .nav {
         display: none;
@@ -1359,9 +1392,10 @@ video {
         top: 100%;
         left: 0;
         background: white;
-        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         padding: 20px;
     }
+
     .menu-toggle {
         display: block;
         background: none;
@@ -1370,6 +1404,7 @@ video {
         cursor: pointer;
         color: #333;
     }
+
     .nav-active {
         display: flex !important;
     }
@@ -1379,23 +1414,28 @@ video {
         flex-direction: column;
         text-align: center;
     }
-    .hero-text, .hero-images {
+
+    .hero-text,
+    .hero-images {
         flex: 0 0 100% !important;
         max-width: 100% !important;
         width: 100%;
         padding: 0 15px;
     }
+
     .badge {
         display: inline-block;
         white-space: normal;
         height: auto;
         padding: 8px 15px;
     }
+
     .hero-text h1 {
         font-size: 2.2rem;
         margin-bottom: 15px;
         line-height: 1.2;
     }
+
     .hero-text p {
         font-size: 1rem;
     }
@@ -1410,7 +1450,7 @@ video {
         flex-direction: column;
         gap: 32px;
     }
-    
+
     .cobertura-nueva-texto,
     .cobertura-nueva-imagen,
     .cobertura-regional .columna-texto,
@@ -1424,6 +1464,7 @@ video {
     .cobertura-nueva-texto.reveal-active {
         animation-duration: 0.55s;
     }
+
     .cobertura-nueva-imagen.reveal-active {
         animation-duration: 0.55s;
         animation-delay: 0.06s;
@@ -1432,13 +1473,13 @@ video {
     .mapa-card {
         max-width: 100%;
     }
-    
+
     .ciudades-grid,
     .cobertura-regional ul {
         grid-template-columns: repeat(2, 1fr) !important;
         text-align: left;
     }
-    
+
     .mapa-img {
         width: 100%;
         height: 300px;
@@ -1453,19 +1494,44 @@ video {
 
 /* --- Keyframes --- */
 @keyframes waEntrance {
-    0%   { opacity: 0; transform: translateY(24px) scale(0.85); }
-    70%  { opacity: 1; transform: translateY(-4px) scale(1.03); }
-    100% { opacity: 1; transform: translateY(0)    scale(1); }
+    0% {
+        opacity: 0;
+        transform: translateY(24px) scale(0.85);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.03);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @keyframes waPulse {
-    0%, 100% { box-shadow: 0 8px 28px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0.30); }
-    50%       { box-shadow: 0 8px 28px rgba(37,211,102,0.45), 0 0 0 10px rgba(37,211,102,0);  }
+
+    0%,
+    100% {
+        box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.30);
+    }
+
+    50% {
+        box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45), 0 0 0 10px rgba(37, 211, 102, 0);
+    }
 }
 
 @keyframes waTooltipFadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0);   }
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* --- Wrapper --- */
@@ -1504,9 +1570,10 @@ video {
     font-size: 0.9rem;
     letter-spacing: 0.3px;
     box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45),
-                inset 0 1px 0 rgba(255,255,255,0.25);
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-    animation: waPulse 3s ease-in-out 2s infinite; /* pulse starts after 2 s */
+    animation: waPulse 3s ease-in-out 2s infinite;
+    /* pulse starts after 2 s */
     will-change: transform;
     /* Subtle top gloss */
     position: relative;
@@ -1517,7 +1584,7 @@ video {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%, transparent 55%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, transparent 55%);
     border-radius: inherit;
     pointer-events: none;
 }
@@ -1526,8 +1593,9 @@ video {
     transform: scale(1.06) translateY(-2px);
     filter: brightness(1.08);
     box-shadow: 0 14px 36px rgba(37, 211, 102, 0.60),
-                inset 0 1px 0 rgba(255,255,255,0.3);
-    animation: none; /* pause pulse on hover for clean feel */
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    animation: none;
+    /* pause pulse on hover for clean feel */
 }
 
 .wa-float-btn:active {
@@ -1540,13 +1608,13 @@ video {
     width: 26px;
     height: 26px;
     flex-shrink: 0;
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.15));
 }
 
 /* --- Label text --- */
 .wa-label {
     white-space: nowrap;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.12);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 /* --- Tooltip bubble --- */
@@ -1562,7 +1630,7 @@ video {
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
     transform: translateY(6px);
     /* Transition for auto-fade */
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -1599,7 +1667,8 @@ video {
 
     .wa-float-btn {
         padding: 15px 20px 15px 16px;
-        font-size: 0.95rem; /* slightly larger touch target */
+        font-size: 0.95rem;
+        /* slightly larger touch target */
     }
 
     .wa-icon {
@@ -1610,7 +1679,17 @@ video {
 
 /* Reduce motion: keep button visible but skip animations */
 @media (prefers-reduced-motion: reduce) {
-    .wa-float-wrapper.wa-visible { animation: none; }
-    .wa-float-btn               { animation: none; }
-    .wa-tooltip.wa-tooltip-show { animation: none; opacity: 1; transform: none; }
+    .wa-float-wrapper.wa-visible {
+        animation: none;
+    }
+
+    .wa-float-btn {
+        animation: none;
+    }
+
+    .wa-tooltip.wa-tooltip-show {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
 }
