@@ -84,6 +84,11 @@ body {
     display: none;
 }
 
+/* Ocultar iconos sociales del menú móvil en versión desktop */
+.mobile-menu-socials {
+    display: none;
+}
+
 /* HEADER CONTACT GROUP */
 .header-contact-group {
     display: flex;
@@ -1407,6 +1412,52 @@ video {
 
     .nav-active {
         display: flex !important;
+    }
+
+    /* Redes sociales integradas en el menú móvil (al final del despliegue) */
+    .mobile-menu-socials {
+        display: flex;
+        flex-direction: column;
+        margin-top: 15px;
+        width: 100%;
+    }
+
+    .mobile-socials-divider {
+        border: none;
+        border-top: 1px solid #EAEAEA;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .mobile-socials-title {
+        font-size: 0.85rem;
+        color: #777777;
+        margin-bottom: 15px;
+        font-weight: 600;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .mobile-social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 35px; /* Espaciado generoso para pantallas táctiles */
+    }
+
+    /* Sobrescribir estilos de enlaces genéricos del .nav para los iconos */
+    .nav .mobile-social-icons a {
+        color: #333333; /* Negro carbón por defecto */
+        font-size: 24px;
+        padding: 5px; /* Evita que el área táctil sea pequeña */
+        display: inline-block;
+        transition: color 0.3s ease;
+        font-weight: normal;
+    }
+
+    .nav .mobile-social-icons a:hover,
+    .nav .mobile-social-icons a:active {
+        color: #E31E24; /* Rojo corporativo al interactuar */
     }
 
     /* Corrección Hero */
