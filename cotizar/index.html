@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cotiza tu hormigón | Hormigonera</title>
+    <meta
+      name="description"
+      content="Solicita una cotización de hormigón premezclado de forma rápida y clara."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/creacom-hormigon.svg" />
+    <link rel="shortcut icon" href="assets/creacom-hormigon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Hormigón premezclado</span>
+          <div class="brand-lockup">
+            <img
+              class="brand-logo"
+              src="assets/creacom-hormigon.svg"
+              alt="Logo de Creacom Hormigón"
+            />
+            <h1>
+              <span>Cotiza tu</span>
+              <span>proyecto en</span>
+              <span>minutos</span>
+            </h1>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <p class="hero-card-label">Resumen comercial</p>
+          <div class="stat-grid">
+            <div class="stat">
+              <span class="stat-value" id="summaryStrength">-</span>
+              <span class="stat-label">Resistencia</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value" id="summaryPlacement">-</span>
+              <span class="stat-label">Vaciado</span>
+            </div>
+            <div class="stat stat-wide">
+              <span class="stat-value" id="summaryVolume">0.00 m3</span>
+              <span class="stat-label">Volumen estimado</span>
+            </div>
+          </div>
+        </aside>
+      </header>
+
+      <main class="content-grid">
+        <section class="form-panel">
+          <div class="section-heading">
+            <span class="section-kicker">Formulario</span>
+            <h2>Solicitud de cotización</h2>
+          </div>
+
+          <form id="quoteForm" class="quote-form">
+            <div class="form-grid">
+              <label class="field field-full">
+                <span>Nombres completos <em>*</em></span>
+                <input type="text" name="fullName" placeholder="Ej. Juan Pérez" required />
+              </label>
+
+              <label class="field">
+                <span>Número de contacto <em>*</em></span>
+                <input type="tel" name="phone" placeholder="0991234567" required />
+              </label>
+
+              <label class="field">
+                <span>Cédula / RUC</span>
+                <input type="text" name="document" placeholder="Opcional" />
+              </label>
+
+              <label class="field">
+                <span>Razón social</span>
+                <input type="text" name="businessName" placeholder="Opcional" />
+              </label>
+
+              <label class="field">
+                <span>Correo electrónico</span>
+                <input type="email" name="email" placeholder="cliente@correo.com" />
+              </label>
+
+              <label class="field">
+                <span>Empresa (si aplica)</span>
+                <input type="text" name="company" placeholder="Opcional" />
+              </label>
+
+              <label class="field field-full">
+                <span>Ubicación del proyecto (ciudad y sector) <em>*</em></span>
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Ej. Guayaquil, vía a la costa"
+                  required
+                />
+              </label>
+            </div>
+
+            <div class="form-block">
+              <div class="block-title">
+                <h3>Tipo de obra <em>*</em></h3>
+                <p>Selecciona la categoría que mejor describa el proyecto.</p>
+              </div>
+              <div class="choice-grid">
+                <label class="choice-card">
+                  <input type="radio" name="projectType" value="Vivienda" required />
+                  <span>Vivienda</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="projectType" value="Comercial" />
+                  <span>Comercial</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="projectType" value="Industrial" />
+                  <span>Industrial</span>
+                </label>
+                <label class="choice-card choice-card-other">
+                  <input type="radio" name="projectType" value="Otro" />
+                  <span>Otro</span>
+                  <input
+                    class="other-input"
+                    type="text"
+                    name="projectTypeOther"
+                    placeholder="Especifica"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-block">
+              <div class="block-title">
+                <h3>Elemento a vaciar <em>*</em></h3>
+                <p>Esto ayuda a recomendar la resistencia y el método de vaciado.</p>
+              </div>
+              <div class="choice-grid">
+                <label class="choice-card">
+                  <input type="radio" name="element" value="Losa" required />
+                  <span>Losa</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="element" value="Zapata" />
+                  <span>Zapata</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="element" value="Columnas" />
+                  <span>Columnas</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="element" value="Muros" />
+                  <span>Muros</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="element" value="Aceras" />
+                  <span>Aceras</span>
+                </label>
+                <label class="choice-card choice-card-other">
+                  <input type="radio" name="element" value="Otro" />
+                  <span>Otro</span>
+                  <input
+                    class="other-input"
+                    type="text"
+                    name="elementOther"
+                    placeholder="Especifica"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <label class="field">
+                <span>Área o volumen estimado (m2 o m3) <em>*</em></span>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  name="quantity"
+                  placeholder="Ej. 35"
+                  required
+                />
+                <small>Si ya tienes el volumen en m3, no hace falta el espesor.</small>
+              </label>
+
+              <label class="field">
+                <span>Unidad <em>*</em></span>
+                <select name="quantityUnit" required>
+                  <option value="m2">m2</option>
+                  <option value="m3">m3</option>
+                </select>
+              </label>
+
+              <label class="field field-full">
+                <span>Espesor (si aplica) cm</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  name="thickness"
+                  placeholder="Ej. 12"
+                />
+              </label>
+            </div>
+
+            <div class="form-block">
+              <div class="block-title">
+                <h3>Resistencia requerida <em>*</em></h3>
+              </div>
+              <div class="choice-grid strength-grid">
+                <label class="choice-card">
+                  <input type="radio" name="strength" value="180 kg/cm2" required />
+                  <span>180 kg/cm2</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="strength" value="210 kg/cm2" />
+                  <span>210 kg/cm2</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="strength" value="240 kg/cm2" />
+                  <span>240 kg/cm2</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="strength" value="280 kg/cm2" />
+                  <span>280 kg/cm2</span>
+                </label>
+                <label class="choice-card">
+                  <input
+                    type="radio"
+                    name="strength"
+                    value="No sabe (asesoría requerida)"
+                  />
+                  <span>No sabe (asesoría requerida)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-block">
+              <div class="block-title">
+                <h3>Tipo de vaciado</h3>
+                <p>Selecciona la forma estimada de descarga en obra.</p>
+              </div>
+              <div class="choice-grid">
+                <label class="choice-card">
+                  <input type="radio" name="placementType" value="Directo (Canaleta)" />
+                  <span>Directo (Canaleta)</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="placementType" value="Con bomba de hormigón" />
+                  <span>Con bomba de hormigón</span>
+                </label>
+              </div>
+            </div>
+
+            <label class="field field-full">
+              <span>Comentarios adicionales</span>
+              <textarea
+                name="notes"
+                rows="4"
+                placeholder="Acceso a obra, fecha tentativa, requerimientos especiales, etc."
+              ></textarea>
+            </label>
+
+            <div class="actions">
+              <button type="submit" class="primary-button">Preparar solicitud</button>
+              <button type="button" class="ghost-button" id="copySummary">
+                Copiar resumen
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <aside class="summary-panel">
+          <div class="section-heading">
+            <span class="section-kicker">Vista previa</span>
+            <h2>Resumen de la cotización</h2>
+          </div>
+
+          <div class="summary-box" id="summaryBox">
+            <p class="summary-placeholder">
+              Completa el formulario para generar el resumen del pedido.
+            </p>
+          </div>
+
+          <a class="whatsapp-link" id="whatsappLink" href="#" target="_blank" rel="noreferrer">
+            Enviar por WhatsApp
+          </a>
+        </aside>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
