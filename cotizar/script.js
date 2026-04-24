@@ -10,9 +10,9 @@ const summaryPlacement = document.getElementById("summaryPlacement");
 const summaryVolume = document.getElementById("summaryVolume");
 
 // ─── Referencias a campos a validar ──────────────────────────────────────────
-const phoneInput  = form.querySelector('[name="phone"]');
-const emailInput  = form.querySelector('[name="email"]');
-const docInput    = form.querySelector('[name="document"]');
+const phoneInput = form.querySelector('[name="phone"]');
+const emailInput = form.querySelector('[name="email"]');
+const docInput = form.querySelector('[name="document"]');
 const submitButton = form.querySelector('button[type="submit"]');
 const unitSelect = form.querySelector('[name="quantityUnit"]');
 const thicknessInput = form.querySelector('[name="thickness"]');
@@ -155,27 +155,27 @@ function formatVolume(volume) {
 }
 
 function buildSummary() {
-  const fullName      = getValue("fullName");
-  const phone         = getValue("phone");
-  const documentId    = getValue("document");
-  const businessName  = getValue("businessName");
-  const email         = getValue("email");
-  const company       = getValue("company");
-  const location      = getValue("location");
-  const projectType   = resolveOption("projectType", "projectTypeOther");
-  const element       = resolveOption("element", "elementOther");
-  const quantity      = getValue("quantity");
-  const unit          = getValue("quantityUnit");
-  const thickness     = getValue("thickness");
-  const strength      = resolveOption("strength", "strengthOther");
+  const fullName = getValue("fullName");
+  const phone = getValue("phone");
+  const documentId = getValue("document");
+  const businessName = getValue("businessName");
+  const email = getValue("email");
+  const company = getValue("company");
+  const location = getValue("location");
+  const projectType = resolveOption("projectType", "projectTypeOther");
+  const element = resolveOption("element", "elementOther");
+  const quantity = getValue("quantity");
+  const unit = getValue("quantityUnit");
+  const thickness = getValue("thickness");
+  const strength = resolveOption("strength", "strengthOther");
   const placementType = getValue("placementType");
-  const notes         = getValue("notes");
+  const notes = getValue("notes");
 
   const volume = calculateVolume(quantity, unit, thickness);
 
-  summaryStrength.textContent  = strength || "-";
+  summaryStrength.textContent = strength || "-";
   summaryPlacement.textContent = placementType || "-";
-  summaryVolume.textContent    = formatVolume(volume);
+  summaryVolume.textContent = formatVolume(volume);
 
   const lines = [
     "SOLICITUD DE COTIZACION DE HORMIGON",
@@ -263,16 +263,16 @@ docInput.addEventListener("input", () => {
 // ─── Validación global de progreso ───────────────────────────────────────────
 // Reglas para campos de texto por nombre
 const TEXT_FIELD_RULES = {
-  fullName:     (v) => v.length >= 3,
-  phone:        isValidPhone,
-  email:        (v) => v.length === 0 || isValidEmail(v), // opcional
-  document:     (v) => v.length === 0 || isValidDocument(v), // opcional
+  fullName: (v) => v.length >= 3,
+  phone: isValidPhone,
+  email: (v) => v.length === 0 || isValidEmail(v), // opcional
+  document: (v) => v.length === 0 || isValidDocument(v), // opcional
   businessName: (v) => v.length > 0,
-  company:      (v) => v.length > 0,
-  location:     (v) => v.length >= 4,
-  quantity:     (v) => Number(v) > 0,
-  thickness:    (v) => Number(v) > 0, // se vuelve requerido u opcional dinámicamente
-  notes:        (v) => v.length > 0, // opcional, siempre éxito si tiene algo
+  company: (v) => v.length > 0,
+  location: (v) => v.length >= 4,
+  quantity: (v) => Number(v) > 0,
+  thickness: (v) => Number(v) > 0, // se vuelve requerido u opcional dinámicamente
+  notes: (v) => v.length > 0, // opcional, siempre éxito si tiene algo
 };
 
 // Grupos radio que marcan éxito en la tarjeta seleccionada
