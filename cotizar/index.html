@@ -51,6 +51,7 @@
             <div class="stat stat-wide">
               <span class="stat-value" id="summaryVolume">0.00 m3</span>
               <span class="stat-label">Volumen estimado</span>
+              <span class="stat-note" style="font-size: 0.6rem; color: var(--muted); margin-top: 2px; text-transform: none; font-weight: normal;">Incluye 5% de desperdicio sugerido</span>
             </div>
           </div>
         </aside>
@@ -198,7 +199,7 @@
                 </select>
               </label>
 
-              <label class="field field-full">
+              <label class="field field-full" id="thicknessFieldContainer">
                 <span>Espesor (si aplica) cm</span>
                 <input
                   type="number"
@@ -216,7 +217,11 @@
               </div>
               <div class="choice-grid strength-grid">
                 <label class="choice-card">
-                  <input type="radio" name="strength" value="180 kg/cm2" required />
+                  <input type="radio" name="strength" value="140 kg/cm2" required />
+                  <span>140 kg/cm2</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="strength" value="180 kg/cm2" />
                   <span>180 kg/cm2</span>
                 </label>
                 <label class="choice-card">
@@ -232,12 +237,17 @@
                   <span>280 kg/cm2</span>
                 </label>
                 <label class="choice-card">
-                  <input
-                    type="radio"
-                    name="strength"
-                    value="No sabe (asesoría requerida)"
-                  />
-                  <span>No sabe (asesoría requerida)</span>
+                  <input type="radio" name="strength" value="300 kg/cm2" />
+                  <span>300 kg/cm2</span>
+                </label>
+                <label class="choice-card choice-card-other">
+                  <input type="radio" name="strength" value="Otro" />
+                  <span>Otro / Especial</span>
+                  <input class="other-input" type="text" name="strengthOther" placeholder="Ej. 350" />
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="strength" value="Asesoría técnica" />
+                  <span>Asesoría técnica</span>
                 </label>
               </div>
             </div>

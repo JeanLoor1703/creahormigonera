@@ -14,6 +14,9 @@ const phoneInput  = form.querySelector('[name="phone"]');
 const emailInput  = form.querySelector('[name="email"]');
 const docInput    = form.querySelector('[name="document"]');
 const submitButton = form.querySelector('button[type="submit"]');
+const unitSelect = form.querySelector('[name="quantityUnit"]');
+const thicknessInput = form.querySelector('[name="thickness"]');
+const thicknessContainer = document.getElementById("thicknessFieldContainer");
 
 // ─── Inyectar nodo para mensajes de error ────────────────────────────────────
 function injectErrorMsg(input, message) {
@@ -133,10 +136,18 @@ function calculateVolume(quantity, unit, thickness) {
   const numericQuantity = Number(quantity);
   const numericThickness = Number(thickness);
 
+  let baseVolume = 0;
   if (!numericQuantity || numericQuantity <= 0) return 0;
-  if (unit === "m3") return numericQuantity;
-  if (!numericThickness || numericThickness <= 0) return 0;
-  return numericQuantity * (numericThickness / 100);
+
+  if (unit === "m3") {
+    baseVolume = numericQuantity;
+  } else {
+    if (!numericThickness || numericThickness <= 0) return 0;
+    baseVolume = numericQuantity * (numericThickness / 100);
+  }
+
+  // Añadir 5% de desperdicio sugerido
+  return baseVolume * 1.05;
 }
 
 function formatVolume(volume) {
@@ -156,7 +167,7 @@ function buildSummary() {
   const quantity      = getValue("quantity");
   const unit          = getValue("quantityUnit");
   const thickness     = getValue("thickness");
-  const strength      = getValue("strength");
+  const strength      = resolveOption("strength", "strengthOther");
   const placementType = getValue("placementType");
   const notes         = getValue("notes");
 
@@ -181,7 +192,7 @@ function buildSummary() {
     `Elemento a vaciar: ${element || "-"}`,
     `Cantidad ingresada: ${quantity || "0"} ${unit || ""}`.trim(),
     `Espesor: ${thickness ? `${thickness} cm` : "-"}`,
-    `Volumen estimado: ${formatVolume(volume)}`,
+    `Volumen estimado: ${formatVolume(volume)} (Incluye 5% de desperdicio sugerido)`,
     `Resistencia requerida: ${strength || "-"}`,
     `Tipo de vaciado: ${placementType || "-"}`,
     `Comentarios: ${notes || "-"}`,
@@ -215,6 +226,22 @@ function toggleOtherFields() {
 phoneInput.addEventListener("input", validateAndUpdateButtons);
 emailInput.addEventListener("input", validateAndUpdateButtons);
 
+unitSelect.addEventListener("change", () => {
+  if (unitSelect.value === "m3") {
+    thicknessContainer.classList.add("hidden");
+    thicknessInput.removeAttribute("required");
+    thicknessInput.value = "";
+    const field = thicknessInput.closest(".field");
+    if (field) field.classList.remove("field-success", "field-error");
+  } else {
+    thicknessContainer.classList.remove("hidden");
+    thicknessInput.setAttribute("required", "required");
+  }
+  buildSummary();
+  runGlobalValidation();
+  validateAndUpdateButtons();
+});
+
 // ─── Validación en tiempo real: Cédula / RUC ─────────────────────────────────
 docInput.addEventListener("input", () => {
   const value = docInput.value.trim();
@@ -244,7 +271,7 @@ const TEXT_FIELD_RULES = {
   company:      (v) => v.length > 0,
   location:     (v) => v.length >= 4,
   quantity:     (v) => Number(v) > 0,
-  thickness:    (v) => v.length === 0 || Number(v) > 0, // opcional
+  thickness:    (v) => Number(v) > 0, // se vuelve requerido u opcional dinámicamente
   notes:        (v) => v.length > 0, // opcional, siempre éxito si tiene algo
 };
 

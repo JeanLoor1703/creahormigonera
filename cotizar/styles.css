@@ -385,9 +385,16 @@ textarea {
   gap: 6px;
 }
 
-/* Anular el grid forzado anterior */
+/* Cuadrícula simétrica para las 8 opciones de resistencia */
 .strength-grid {
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.strength-grid .choice-card {
+  justify-content: center;
+  text-align: center;
 }
 
 /* Chip base */
@@ -878,6 +885,10 @@ textarea {
     gap: 5px;
   }
 
+  .strength-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .choice-card {
     padding: 5px 10px;
   }
@@ -926,4 +937,9 @@ textarea {
     margin: 8px 0;
     padding: 10px 12px;
   }
+}
+
+/* ── Utilidades ───────────────────────────────────────────────────────────── */
+.hidden {
+  display: none !important;
 }
