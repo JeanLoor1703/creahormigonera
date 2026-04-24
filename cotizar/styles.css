@@ -95,7 +95,7 @@ body {
     radial-gradient(circle at top left, rgba(232, 60, 63, 0.08) 0%, transparent 400px),
     radial-gradient(circle at top right, rgba(245, 158, 11, 0.08) 0%, transparent 400px);
   border-bottom: 1px solid var(--line);
-  padding: 16px 20px;
+  padding: 15px 20px;
   min-height: 100px;
   z-index: 10;
   width: 100%;
@@ -113,25 +113,30 @@ body {
 }
 
 .brand-lockup {
-  display: contents;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .brand-logo {
-  height: 90px;
+  height: 110px !important;
+  max-height: none !important;
   width: auto;
   filter: none;
   /* Colores originales sobre fondo blanco */
   order: 1;
+  flex-shrink: 0;
 }
 
 .eyebrow {
   display: block;
-  font-size: 1.6rem;
-  font-weight: 900;
+  font-size: 1.9rem;
+  font-weight: 800;
   color: #1a1d23;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   order: 2;
+  line-height: 1.1;
 }
 
 /* CENTRO: Mensaje */
@@ -799,13 +804,15 @@ textarea {
   }
 
   .brand-logo {
-    height: 48px;
-    /* Reducido para encajar mejor */
+    height: 52px !important;
+    max-height: none !important;
+    /* Reducido para encajar mejor en móvil */
     order: 1;
   }
 
   .eyebrow {
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 800;
     order: 2;
   }
 

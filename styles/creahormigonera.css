@@ -225,6 +225,49 @@ body {
     margin-top: 20px;
 }
 
+/* ==============================================
+   BOTÓN TÉCNICO "¡Cotiza ahora!" (Alineación Perfecta)
+   ============================================== */
+.btn-quote-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background-color: #2ecc71;
+    /* Verde vibrante y sólido */
+    color: #ffffff !important;
+    text-decoration: none;
+    font-family: var(--font-main, 'Montserrat', sans-serif);
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    /* Estilo píldora */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil */
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-quote-main:hover {
+    background-color: #2ecc71;
+    box-shadow: 0 0 22px rgba(46, 204, 113, 0.75), 0 6px 18px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+}
+
+.btn-quote-main:active {
+    transform: scale(0.98);
+}
+
+.quote-img-icon {
+    height: 22px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
 /* HERO SECTION */
 .hero {
     background: linear-gradient(135deg, var(--color-bg-light) 0%, #FFFFFF 100%);
@@ -1383,6 +1426,7 @@ video {
    MOBILE MENU & HERO (max-width: 768px)
    ================================ */
 @media (max-width: 768px) {
+
     /* Ocultar iconos de redes sociales en movil */
     .header-social-buttons {
         display: none !important;
@@ -1442,14 +1486,17 @@ video {
     .mobile-social-icons {
         display: flex;
         justify-content: center;
-        gap: 35px; /* Espaciado generoso para pantallas táctiles */
+        gap: 35px;
+        /* Espaciado generoso para pantallas táctiles */
     }
 
     /* Sobrescribir estilos de enlaces genéricos del .nav para los iconos */
     .nav .mobile-social-icons a {
-        color: #333333; /* Negro carbón por defecto */
+        color: #333333;
+        /* Negro carbón por defecto */
         font-size: 24px;
-        padding: 5px; /* Evita que el área táctil sea pequeña */
+        padding: 5px;
+        /* Evita que el área táctil sea pequeña */
         display: inline-block;
         transition: color 0.3s ease;
         font-weight: normal;
@@ -1457,7 +1504,8 @@ video {
 
     .nav .mobile-social-icons a:hover,
     .nav .mobile-social-icons a:active {
-        color: #E31E24; /* Rojo corporativo al interactuar */
+        color: #E31E24;
+        /* Rojo corporativo al interactuar */
     }
 
     /* Corrección Hero */
