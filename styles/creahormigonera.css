@@ -1800,3 +1800,32 @@ video {
         transform: none;
     }
 }
+
+/* =========================================
+   FIXES ADICIONALES (Resistencias, Sociales, Solapamiento)
+   ========================================= */
+
+/* Pointer-events: none para los iconos internos de los botones glossy (H-180 a H-280) */
+.btn-glossy i, 
+.btn-glossy img,
+.btn-glossy span {
+    pointer-events: none;
+}
+
+/* Área de clic garantizada de 44x44 en móviles para .social-btn */
+.social-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Solapamiento: Agregar espacio en móviles al final de contacto para que el botón flotante no tape el botón grande */
+@media (max-width: 768px) {
+    .contacto-info {
+        padding-bottom: 80px; /* Espacio extra para el botón flotante de WhatsApp */
+    }
+}

@@ -12,33 +12,15 @@
 
     <script>
         function gtag_report_conversion(url) {
-            var called = false;
-            var isWaMe = url && url.indexOf('wa.me') !== -1;
-            
             var callback = function () {
-                if (!called) {
-                    called = true;
-                    if (typeof(url) !== 'undefined') {
-                        if (isWaMe) {
-                            window.open(url, '_blank');
-                        } else {
-                            window.location = url;
-                        }
-                    }
+                if (typeof (url) != 'undefined') {
+                    window.location = url;
                 }
             };
-            
-            // Timeout de Seguridad: si Google no responde en 300ms, forzamos la redirección
-            setTimeout(callback, 300);
-
-            if (typeof gtag === 'function') {
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-17780502582/Z5sSCOOlp-0bELbgs55C',
-                    'event_callback': callback
-                });
-            } else {
-                callback();
-            }
+            gtag('event', 'conversion', {
+                'send_to': 'AW-17780502582/Z5sSCOOlp-0bELbgs55C',
+                'event_callback': callback
+            });
             return false;
         }
     </script>
@@ -122,7 +104,7 @@
                                 rel="noopener noreferrer" aria-label="TikTok">
                                 <i class="fa-brands fa-tiktok"></i>
                             </a>
-                            <a href="https://www.instagram.com/creacomhormigonera/" target="_blank"
+                            <a href="https://www.instagram.com/creahormigonera/" target="_blank"
                                 rel="noopener noreferrer" aria-label="Instagram">
                                 <i class="fa-brands fa-instagram"></i>
                             </a>
@@ -136,7 +118,7 @@
                             class="social-btn facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                             <i class="fa-brands fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com/creacomhormigonera/" class="social-btn instagram"
+                        <a href="https://www.instagram.com/creahormigonera/" class="social-btn instagram"
                             target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
@@ -146,7 +128,7 @@
                         </a>
                     </div>
                     <a href="./cotizar/" class="btn-quote-main">
-                        <img src="imagenes/formulario.png" alt="Cotizar" class="quote-img-icon">
+                        <img src="imagenes/formulario.png" alt="" class="quote-img-icon">
                         <span>¡Cotiza ahora!</span>
                     </a>
                 </div>
@@ -174,8 +156,7 @@
 
 
                         <a href="https://wa.me/593997528670?text=Hola, necesito información sobre hormigón premezclado"
-                            class="btn-glossy btn-red"
-                            onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito información sobre hormigón premezclado'); return false; }">
+                            class="btn-glossy btn-red">
                             <i class="fa-solid fa-phone"></i> COTIZAR AHORA
                         </a>
                         <p class="pedido-minimo">Pedido mínimo: 5 metros cúbicos</p>
@@ -282,8 +263,7 @@
                             <h3>H-180</h3>
                             <p>Contra Pisos</p>
                             <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-180"
-                                class="btn-glossy btn-red" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito información sobre H-180'); return false; }">
+                                class="btn-glossy btn-red" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                             </a>
                         </div>
@@ -294,8 +274,7 @@
                             <h3>H-210</h3>
                             <p>Pisos</p>
                             <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-210"
-                                class="btn-glossy btn-red" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito información sobre H-210'); return false; }">
+                                class="btn-glossy btn-red" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                             </a>
                         </div>
@@ -306,8 +285,7 @@
                             <h3>H-240</h3>
                             <p>Loza y Muros</p>
                             <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-240"
-                                class="btn-glossy btn-red" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito información sobre H-240'); return false; }">
+                                class="btn-glossy btn-red" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                             </a>
                         </div>
@@ -318,8 +296,7 @@
                             <h3>H-280</h3>
                             <p>Pavimentación de Calzadas </p>
                             <a href="https://wa.me/593968188499?text=Hola, necesito información sobre H-280"
-                                class="btn-glossy btn-red" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593968188499?text=Hola, necesito información sobre H-280'); return false; }">
+                                class="btn-glossy btn-red" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                             </a>
                         </div>
@@ -367,8 +344,7 @@
                             <div class="equipo-enlace">
                                 <p>¿Listo para iniciar tu obra con el mejor equipo?</p>
                                 <a href="https://wa.me/593997528670?text=Hola, vi a su equipo en la web y me gustaría cotizar hormigón para mi proyecto."
-                                    class="btn-glossy btn-red" target="_blank"
-                                    onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670?text=Hola, vi a su equipo en la web y me gustaría cotizar hormigón para mi proyecto.'); return false; }">
+                                    class="btn-glossy btn-red" target="_blank">
                                     <i class="fa-brands fa-whatsapp"></i> Cotiza con un Asesor
                                 </a>
                             </div>
@@ -479,8 +455,7 @@
                                 <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
                                 <div class="info-text">
                                     <h3>WhatsApp / Teléfono</h3>
-                                    <p><a href="https://wa.me/593997528670" target="_blank"
-                                            onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670'); return false; }">+593
+                                    <p><a href="https://wa.me/593997528670" target="_blank">+593
                                             997
                                             528
                                             670</a></p>
@@ -496,13 +471,12 @@
                                     </a>
                                     <a href="https://www.tiktok.com/@creacom.hormigonera" class="social-btn tiktok"
                                         target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-                                    <a href="https://www.instagram.com/creacomhormigonera/" class="social-btn instagram"
-                                        target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="https://www.instagram.com/creahormigonera/" class="social-btn instagram"
+                                        target="_blank"><i class="fa-brands fa-instagram"></i></a>
                                 </div>
                             </div>
                             <a href="https://wa.me/593997528670?text=Hola, necesito cotizar mi proyecto"
-                                class="btn-glossy btn-red btn-large" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670?text=Hola, necesito cotizar mi proyecto'); return false; }">
+                                class="btn-glossy btn-red btn-large" target="_blank">
                                 <i class="fa-solid fa-comments"></i> COTIZAR MI PROYECTO AHORA
                             </a>
                         </div>
@@ -548,8 +522,7 @@
                                 (f'c), el volumen total de tu pedido y la distancia de envío. ¡Escríbenos y te armamos
                                 una
                                 cotización a medida y sin compromiso en minutos!</p>
-                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670'); return false; }"><i
+                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"><i
                                     class="fa-brands fa-whatsapp"></i> Chat</a>
                         </div>
                     </details>
@@ -562,8 +535,7 @@
                                 llegue fresco, manejable y con su resistencia intacta a cualquier punto dentro de
                                 nuestro
                                 radio de cobertura.</p>
-                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670'); return false; }"><i
+                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"><i
                                     class="fa-brands fa-whatsapp"></i> Chat</a>
                         </div>
                     </details>
@@ -575,8 +547,7 @@
                                 construcciones civiles. Contáctanos para confirmarte el volumen mínimo de despacho según
                                 la
                                 zona en la que te encuentres.</p>
-                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670'); return false; }"><i
+                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"><i
                                     class="fa-brands fa-whatsapp"></i> Chat</a>
                         </div>
                     </details>
@@ -587,8 +558,7 @@
                             <p>Para asegurarnos de entregarte el material exactamente en el día y horario que tu obra lo
                                 necesita, te recomendamos agendar tu pedido con al menos 24 a 48 horas de anticipación.
                             </p>
-                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670'); return false; }"><i
+                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"><i
                                     class="fa-brands fa-whatsapp"></i> Chat</a>
                         </div>
                     </details>
@@ -600,8 +570,7 @@
                                 camión o la bomba puedan parquear sin riesgo. Además, asegúrate de tener los encofrados
                                 listos, limpios y a tu equipo de trabajo preparado para recibir y esparcir el material.
                             </p>
-                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670'); return false; }"><i
+                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"><i
                                     class="fa-brands fa-whatsapp"></i> Chat</a>
                         </div>
                     </details>
@@ -615,8 +584,7 @@
                                 para que elijas la resistencia adecuada (para losas, columnas, aceras o cimientos) y
                                 evites
                                 gastar de más o comprometer la seguridad de tu estructura.</p>
-                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"
-                                onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670'); return false; }"><i
+                            <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"><i
                                     class="fa-brands fa-whatsapp"></i> Chat</a>
                         </div>
                     </details>
@@ -656,10 +624,9 @@
                         </a>
                         <a href="https://www.tiktok.com/@creacom.hormigonera" class="social-btn tiktok"
                             target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-                        <a href="https://www.instagram.com/creacomhormigonera/" class="social-btn instagram"
-                            target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/593997528670" class="social-btn whatsapp" target="_blank"
-                            onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670'); return false; }">
+                        <a href="https://www.instagram.com/creahormigonera/" class="social-btn instagram"
+                            target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/593997528670" class="social-btn whatsapp" target="_blank">
                             <i class="fa-brands fa-whatsapp"></i>
                         </a>
                     </div>
@@ -678,8 +645,7 @@
         </div>
         <a id="waFloatBtn" class="wa-float-btn"
             href="https://wa.me/593997528670?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20horm%C3%B3n%20premezclado"
-            target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp"
-            onclick="if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion('https://wa.me/593997528670?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20horm%C3%B3n%20premezclado'); return false; }">
+            target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp">
             <!-- WhatsApp SVG icon (inline — no extra HTTP request) -->
             <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true">
                 <path fill="currentColor"
