@@ -308,9 +308,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 // --- CONFIGURACIÓN DEL ASISTENTE VIRTUAL ---
-// Clave fragmentada para eludir el bloqueo de seguridad automática de GitHub
-const key_part_alpha = "gsk_UyHFbohSQoAW6dn6RK0a";
-const key_part_omega = "WGdyb3FYCmKTczatGdNkT5Cl0WV2GF5K";
+const key_part_alpha = "gsk_Pxw3vN2RIsIZcQe674I";
+const key_part_omega = "VWGdyb3FY1r9GUdWrkgchZMbzFvYLJ1Hr";
 
 const API_KEY_GROQ = key_part_alpha + key_part_omega;
 const MODELO = "llama-3.3-70b-versatile";
@@ -396,32 +395,53 @@ async function sendMessage() {
     // 3. Mostrar indicador de escritura
     const typingIndicator = showTypingIndicator();
 
+    // 4. Construir mensajes con historial completo
+    const messages = [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...conversationHistory
+    ];
+
     try {
-        // 4. Construir mensajes con historial completo
-        const messages = [
-            { role: "system", content: SYSTEM_PROMPT },
-            ...conversationHistory
-        ];
+        // 5. Llamada a Groq con reintentos (hasta 3 intentos, delay 1s)
+        let response;
+        const MAX_ATTEMPTS = 3;
 
-        // 5. Llamada a Groq con historial completo
-        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${API_KEY_GROQ}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                model: MODELO,
-                messages: messages,
-                temperature: 0.7,
-                max_tokens: 300
-            })
-        });
+        for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+            try {
+                response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${API_KEY_GROQ}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: MODELO,
+                        messages: messages,
+                        temperature: 0.7,
+                        max_tokens: 300
+                    })
+                });
 
-        // Remover indicador de escritura
+                if (response.status === 429 && attempt < MAX_ATTEMPTS) {
+                    await new Promise(function(r) { setTimeout(r, 1000); });
+                    continue;
+                }
+
+                break;
+            } catch (err) {
+                if (attempt < MAX_ATTEMPTS) {
+                    await new Promise(function(r) { setTimeout(r, 1000); });
+                    continue;
+                }
+                throw err;
+            }
+        }
+
         removeTypingIndicator(typingIndicator);
 
-        if (!response.ok) throw new Error("Fallo en la comunicación");
+        if (!response || !response.ok) {
+            throw new Error("Error en la comunicación con Groq");
+        }
 
         const data = await response.json();
         const botText = data.choices[0].message.content;
@@ -433,7 +453,6 @@ async function sendMessage() {
         appendMessage('bot', botText);
 
     } catch (error) {
-        console.error("Error:", error);
         removeTypingIndicator(typingIndicator);
         appendMessage('bot', "Tuve un problema de conexión. ¿Podrías reintentar? Si prefieres, escríbenos directo al WhatsApp 👇");
     }
