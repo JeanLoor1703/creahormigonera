@@ -27,16 +27,8 @@
     <!-- ── Font Awesome (iconos) ── -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- ── Google reCAPTCHA v2 ──
-         NOTA: Si ves el error "La clave del sitio web no es válida", significa que:
-         1. La site key no corresponde al dominio desde el que abres la página.
-         2. Solución: ve a https://www.google.com/recaptcha/admin, selecciona tu sitio
-            y agrega los dominios donde usarás este formulario:
-            - "localhost"      (para pruebas locales)
-            - "creahormigonera.com" (para producción)
-         3. Reemplaza el valor de data-sitekey con tu Site Key real (ver instrucciones abajo).
-    -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- ── Cloudflare Turnstile ── -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <!-- ============================================================
          ESTILOS — COMPLETAMENTE EMBEBIDOS (sin archivos externos de CSS)
@@ -895,7 +887,7 @@
                         del Hormigón para constructores del Ecuador.</p>
                 </div>
 
-                <!-- Caja de error de red / Supabase / reCAPTCHA -->
+                <!-- Caja de error de red / Supabase / Turnstile -->
                 <div id="err-box" role="alert">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span id="err-txt"></span>
@@ -955,37 +947,8 @@
                             placeholder="Ej: Constructora Pacífico S.A.">
                     </div>
 
-                    <!--
-                    ══════════════════════════════════════════════════════════
-                    RECAPTCHA v2 — INSTRUCCIONES DE CONFIGURACIÓN
-                    ══════════════════════════════════════════════════════════
-                    1. Ve a: https://www.google.com/recaptcha/admin
-                    2. Haz clic en "+" para crear un nuevo sitio.
-                    3. Elige tipo: "reCAPTCHA v2" → "Casilla de verificación".
-                    4. En "Dominios", añade AMBOS:
-                         - localhost          (para pruebas locales)
-                         - creahormigonera.com (para producción)
-                    5. Copia la "Site Key" (clave pública) y reemplaza
-                       "TU_SITE_KEY_AQUI" en el atributo data-sitekey de abajo.
-                    6. Guarda la "Secret Key" (privada) para validación en servidor.
-
-                    ERROR FRECUENTE: "La clave del sitio web no es válida"
-                    ─────────────────────────────────────────────────────────
-                    Este error ocurre cuando:
-                    a) El dominio desde el que abres la página NO está registrado
-                       en la consola de reCAPTCHA. Solución: agrega el dominio.
-                    b) La site key pertenece a otro proyecto o está mal copiada.
-                       Solución: copia la clave exacta del panel de reCAPTCHA.
-                    c) Usas "file://" (abrir directamente el archivo HTML).
-                       Solución: usa un servidor local (Live Server de VS Code,
-                       o python -m http.server 8080) y agrega "localhost".
-                    ══════════════════════════════════════════════════════════
-                -->
-                    <div class="cap-wrap">
-                        <div class="g-recaptcha" data-sitekey="6Le6uCgtAAAAADtzTyae3AXteJERezCT_rT__UkB"
-                            data-callback="onCapOk" data-expired-callback="onCapExp">
-                        </div>
-                    </div>
+                    <!-- Cloudflare Turnstile -->
+                    <div class="cf-turnstile" data-sitekey="TU_SITE_KEY_AQUÍ" data-callback="onCapOk" data-expired-callback="onCapExp"></div>
 
                     <!-- Checkbox de privacidad — OBLIGATORIO -->
                     <div class="chk-wrap">
@@ -999,7 +962,7 @@
                         </label>
                     </div>
 
-                    <!-- Botón de envío — deshabilitado hasta checkbox + reCAPTCHA -->
+                    <!-- Botón de envío — deshabilitado hasta checkbox + Turnstile -->
                     <button type="submit" id="btn-send" disabled>
                         <span class="sp"></span>
                         <i class="fa-solid fa-lock fa-sm si"></i>
@@ -1073,9 +1036,10 @@
                  c) Copia "Project URL"  → pégalo en SUPABASE_URL
                  d) Copia "anon public"  → pégalo en SUPABASE_ANON_KEY
     
-               PASO 2 — reCAPTCHA:
-                 Reemplaza "TU_SITE_KEY_AQUI" en el atributo data-sitekey
-                 del div.g-recaptcha (ver instrucciones en el HTML arriba).
+                PASO 2 — Cloudflare Turnstile:
+                 Reemplaza "TU_SITE_KEY_AQUÍ" en el atributo data-sitekey
+                 del div.cf-turnstile con tu Site Key real de Turnstile.
+                 La Secret Key para validación backend es: 0x4AAAAAADqorQz8VrGW8SMT
     
                PASO 3 — PDF:
                  Sube el archivo "guia-hormigon.pdf" a la raíz del proyecto
@@ -1115,6 +1079,9 @@
             const reqWhatsapp = document.getElementById('req-whatsapp');
             const contactErr = document.getElementById('contact-group-err');
 
+            /* ── Token de Cloudflare Turnstile ── */
+            let captchaToken = null;
+
             /* ── Expresiones regulares reutilizables ── */
             const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -1152,12 +1119,11 @@
             /* ============================================================
                CONTROL DEL BOTÓN DE ENVÍO
                Habilitado cuando: nombre ✓ + (email ✓ OR whatsapp ✓) +
-               checkbox ✓ + reCAPTCHA ✓
+               checkbox ✓ + Turnstile ✓
                ============================================================ */
             function syncBtn() {
                 const privOk = chkPriv && chkPriv.checked;
-                const capOk = (typeof grecaptcha !== 'undefined') &&
-                    grecaptcha.getResponse().length > 0;
+                const capOk = !!captchaToken;
                 const nombreOk = (inpNombre?.value || '').trim().length >= 3;
                 const emailOk = EMAIL_RX.test((inpEmail?.value || '').trim());
                 const whaOk = isValidEcuPhone(cleanPhone(inpWhatsapp?.value || ''));
@@ -1166,9 +1132,15 @@
                 btn.disabled = !(privOk && capOk && nombreOk && contactOk);
             }
 
-            /* Callbacks globales del widget reCAPTCHA */
-            window.onCapOk = syncBtn;   // se resuelve el reCAPTCHA
-            window.onCapExp = syncBtn;   // expira el reCAPTCHA
+            /* Callbacks globales del widget Cloudflare Turnstile */
+            window.onCapOk = function(token) {
+                captchaToken = token;
+                syncBtn();
+            };
+            window.onCapExp = function() {
+                captchaToken = null;
+                syncBtn();
+            };
 
             /* ============================================================
                MOSTRAR / OCULTAR CAMPO "NOMBRE DE EMPRESA"
@@ -1293,7 +1265,7 @@
             }
 
             /* ============================================================
-               DETECTAR TIPO DE ERROR DE SUPABASE / reCAPTCHA
+               DETECTAR TIPO DE ERROR DE SUPABASE / Turnstile
                ============================================================ */
             function friendlyError(error) {
                 if (!error) return 'Error desconocido. Inténtalo de nuevo.';
@@ -1343,10 +1315,8 @@
                     ? (document.getElementById('f-emp-nom')?.value.trim() || null)
                     : null;
 
-                /* Token del reCAPTCHA */
-                const recaptcha_token = (typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length > 0)
-                    ? grecaptcha.getResponse()
-                    : null;
+                /* Token del Turnstile */
+                const recaptcha_token = captchaToken;
 
                 /* Validar formulario */
                 const valData = {
@@ -1361,9 +1331,9 @@
                     return;
                 }
 
-                /* Bloquear si el reCAPTCHA no fue completado */
+                /* Bloquear si el Turnstile no fue completado */
                 if (!recaptcha_token) {
-                    showErr('Por favor, completa la verificación de seguridad (reCAPTCHA) antes de enviar.');
+                    showErr('Por favor, completa la verificación de seguridad antes de enviar.');
                     return;
                 }
 
@@ -1389,8 +1359,10 @@
                     if (error) {
                         console.error('[Embudo] Supabase error:', error);
                         setLoading(false);
-                        /* Resetear reCAPTCHA para que el usuario pueda reintentar */
-                        if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+                        /* Resetear Turnstile para que el usuario pueda reintentar */
+                        captchaToken = null;
+                        var turnstileEl = document.querySelector('.cf-turnstile');
+                        if (turnstileEl && typeof turnstile !== 'undefined') turnstile.reset(turnstileEl);
                         syncBtn();
                         showErr(friendlyError(error));
                         return;
@@ -1410,7 +1382,9 @@
                 } catch (err) {
                     console.error('[Embudo] Error de red:', err);
                     setLoading(false);
-                    if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+                    captchaToken = null;
+                    var turnstileEl2 = document.querySelector('.cf-turnstile');
+                    if (turnstileEl2 && typeof turnstile !== 'undefined') turnstile.reset(turnstileEl2);
                     syncBtn();
                     showErr('Error de conexión. Verifica tu Internet e inténtalo de nuevo.');
                 }
