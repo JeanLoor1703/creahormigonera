@@ -888,7 +888,7 @@
                 </div>
 
                 <!-- Caja de error de red / Supabase / Turnstile -->
-                <div id="err-box" role="alert">
+                <div id="err-box" class="hidden" role="alert" style="display:none;">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span id="err-txt"></span>
                 </div>
@@ -1233,13 +1233,19 @@
                MOSTRAR ERROR EN LA CAJA DE ALERTA
                ============================================================ */
             function showErr(msg) {
+                if (!errBox) return;
                 errTxt.textContent = msg;
+                errBox.classList.remove('hidden');
+                errBox.style.display = 'flex';
                 errBox.classList.add('show');
                 errBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                setTimeout(() => errBox.classList.remove('show'), 10000);
+                setTimeout(() => { hideErr(); }, 10000);
             }
             function hideErr() {
+                if (!errBox) return;
                 errBox.classList.remove('show');
+                errBox.classList.add('hidden');
+                errBox.style.display = 'none';
             }
 
             /* ============================================================
@@ -1413,6 +1419,9 @@
                 /* Estado inicial del botón */
                 btn.disabled = true;
 
+                /* Forzar la alerta de error oculta al iniciar */
+                hideErr();
+
                 /* Arrancar el respaldo de Turnstile (fallback) */
                 startTurnstileFallback();
 
@@ -1500,13 +1509,13 @@
                ============================================================ */
             window.addEventListener('load', function () {
                 /* Forzar el bloque de error a estar oculto por defecto al cargar */
-                if (errBox) errBox.classList.remove('show');
+                hideErr();
 
                 /* A los 3 s, si Turnstile sigue sin token, limpiar errores
                    visibles y activar el captchaFallback automático. */
                 setTimeout(function () {
                     if (!captchaToken) {
-                        if (errBox) errBox.classList.remove('show');
+                        hideErr();
                         captchaFallback = true;
                         syncBtn();
                     }
