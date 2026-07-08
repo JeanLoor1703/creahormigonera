@@ -1081,6 +1081,8 @@
 
             /* ── Token de Cloudflare Turnstile ── */
             let captchaToken = null;
+            /* ── Modo respaldo: si Turnstile no carga/responde, el botón no se bloquea ── */
+            let captchaFallback = false;
 
             /* ── Expresiones regulares reutilizables ── */
             const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -1123,7 +1125,8 @@
                ============================================================ */
             function syncBtn() {
                 const privOk = chkPriv && chkPriv.checked;
-                const capOk = !!captchaToken;
+                /* Turnstile OK, o modo respaldo activado si Cloudflare no respondió */
+                const capOk = !!captchaToken || captchaFallback;
                 const nombreOk = (inpNombre?.value || '').trim().length >= 3;
                 const emailOk = EMAIL_RX.test((inpEmail?.value || '').trim());
                 const whaOk = isValidEcuPhone(cleanPhone(inpWhatsapp?.value || ''));
@@ -1135,12 +1138,29 @@
             /* Callbacks globales del widget Cloudflare Turnstile */
             window.onCapOk = function(token) {
                 captchaToken = token;
+                captchaFallback = false; /* Turnstile respondió: desactiva el respaldo */
                 syncBtn();
             };
             window.onCapExp = function() {
                 captchaToken = null;
                 syncBtn();
             };
+
+            /* ============================================================
+               FALLBACK DE CLOUDFLARE TURNSTILE
+               Si Turnstile no entrega token tras 10s (CDN caído, sitekey
+               inválido, fallo de conexión), se activa el modo respaldo
+               para que el botón de descarga no quede bloqueado.
+               ============================================================ */
+            function startTurnstileFallback() {
+                setTimeout(function () {
+                    if (!captchaToken) {
+                        captchaFallback = true;
+                        syncBtn();
+                        console.warn('[Embudo] Turnstile sin respuesta — modo respaldo activado.');
+                    }
+                }, 10000);
+            }
 
             /* ============================================================
                MOSTRAR / OCULTAR CAMPO "NOMBRE DE EMPRESA"
@@ -1331,8 +1351,8 @@
                     return;
                 }
 
-                /* Bloquear si el Turnstile no fue completado */
-                if (!recaptcha_token) {
+                /* Bloquear si el Turnstile no fue completado y no hay modo respaldo */
+                if (!recaptcha_token && !captchaFallback) {
                     showErr('Por favor, completa la verificación de seguridad antes de enviar.');
                     return;
                 }
@@ -1347,10 +1367,11 @@
                         whatsapp,
                         trabaja_empresa,
                         nombre_empresa,
-                        origen: 'Embudo Hormigón - IG/FB',
-                        recaptcha_token
+                        origen: 'Embudo Hormigón - IG/FB'
+                        /* recaptcha_token se añade abajo solo si existe */
                         /* created_at → Supabase lo pone automáticamente con DEFAULT now() */
                     };
+                    if (recaptcha_token) payload.recaptcha_token = recaptcha_token;
 
                     const { data, error } = await db
                         .from('leads')
@@ -1368,25 +1389,18 @@
                         return;
                     }
 
-                    /* Descarga automática local del PDF */
-                    const link = document.createElement('a');
-                    link.href = PDF_PATH;
-                    link.download = 'Guia_6_Errores_Hormigon_Creacom.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                    /* Entrega inmediata del PDF: apertura en nueva pestaña */
+                    window.open(PDF_PATH, '_blank');
 
                     /* Ocultar formulario y mostrar pantalla de éxito */
                     showSuccess();
 
                 } catch (err) {
                     console.error('[Embudo] Error de red:', err);
+                    /* Entrega el PDF igualmente — el lead no se guardó pero el usuario no se queda sin la guía */
+                    window.open(PDF_PATH, '_blank');
+                    showSuccess();
                     setLoading(false);
-                    captchaToken = null;
-                    var turnstileEl2 = document.querySelector('.cf-turnstile');
-                    if (turnstileEl2 && typeof turnstile !== 'undefined') turnstile.reset(turnstileEl2);
-                    syncBtn();
-                    showErr('Error de conexión. Verifica tu Internet e inténtalo de nuevo.');
                 }
             }
 
@@ -1398,6 +1412,9 @@
 
                 /* Estado inicial del botón */
                 btn.disabled = true;
+
+                /* Arrancar el respaldo de Turnstile (fallback) */
+                startTurnstileFallback();
 
                 /* Listeners de control del botón */
                 chkPriv && chkPriv.addEventListener('change', syncBtn);
