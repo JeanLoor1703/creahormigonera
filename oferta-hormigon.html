@@ -1298,15 +1298,22 @@
                 const msg = (error.message || '').toLowerCase();
                 const code = error.code || '';
 
-                if (code === '23505' || msg.includes('unique'))
+                console.error('[Embudo] Error detallado:', { code, message: error.message, error });
+
+                if (code === '23505' || msg.includes('duplicate key') || msg.includes('unique constraint'))
                     return 'Este correo ya está registrado. ¡Revisa tu bandeja de entrada!';
                 if (msg.includes('invalid api key') || msg.includes('apikey'))
                     return 'Error de configuración: clave de API de Supabase inválida. Contacta al administrador.';
-                if (msg.includes('jwt'))
+                if (msg.includes('jwt') || msg.includes('token'))
                     return 'Error de autenticación con Supabase. Verifica la ANON KEY.';
-                if (msg.includes('network') || msg.includes('failed to fetch') || msg.includes('err_network'))
+                if (msg.includes('row-level security') || msg.includes('rls') || msg.includes('permission denied'))
+                    return 'Error de permisos en la base de datos. Contacta al administrador.';
+                if (code === 'PGRST301' || msg.includes('could not find'))
+                    return 'Error de configuración: tabla no encontrada. Contacta al administrador.';
+                if (msg.includes('failed to fetch') || msg.includes('err_network') || 
+                    (msg.includes('network') && msg.includes('error')))
                     return 'Sin conexión a Internet. Verifica tu red e inténtalo de nuevo.';
-                return `Error al guardar: ${error.message}. Inténtalo de nuevo.`;
+                return 'Error al guardar tus datos. Por favor, inténtalo de nuevo en unos segundos.';
             }
 
             /* ============================================================
@@ -1391,7 +1398,18 @@
                         var turnstileEl = document.querySelector('.cf-turnstile');
                         if (turnstileEl && typeof turnstile !== 'undefined') turnstile.reset(turnstileEl);
                         syncBtn();
-                        showErr(friendlyError(error));
+                        
+                        /* IMPORTANTE: Entregar PDF y mostrar éxito incluso si Supabase falla,
+                           excepto si es un error de configuración crítico */
+                        const errorMsg = friendlyError(error);
+                        if (errorMsg.includes('configuración') || errorMsg.includes('permisos')) {
+                            showErr(errorMsg);
+                            return;
+                        }
+                        
+                        /* Para errores menores (duplicados, red, etc.), entregar PDF y éxito */
+                        window.open(PDF_PATH, '_blank');
+                        showSuccess();
                         return;
                     }
 
