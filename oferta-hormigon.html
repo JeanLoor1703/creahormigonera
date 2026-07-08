@@ -1298,7 +1298,7 @@
                     return 'Error de configuración: clave de API de Supabase inválida. Contacta al administrador.';
                 if (msg.includes('jwt'))
                     return 'Error de autenticación con Supabase. Verifica la ANON KEY.';
-                if (msg.includes('network') || msg.includes('fetch'))
+                if (msg.includes('network') || msg.includes('failed to fetch') || msg.includes('err_network'))
                     return 'Sin conexión a Internet. Verifica tu red e inténtalo de nuevo.';
                 return `Error al guardar: ${error.message}. Inténtalo de nuevo.`;
             }
@@ -1494,6 +1494,24 @@
             } else {
                 init();
             }
+
+            /* ============================================================
+               ARRANQUE SEGURO — limpiar alertas residuales + fallback 3s
+               ============================================================ */
+            window.addEventListener('load', function () {
+                /* Forzar el bloque de error a estar oculto por defecto al cargar */
+                if (errBox) errBox.classList.remove('show');
+
+                /* A los 3 s, si Turnstile sigue sin token, limpiar errores
+                   visibles y activar el captchaFallback automático. */
+                setTimeout(function () {
+                    if (!captchaToken) {
+                        if (errBox) errBox.classList.remove('show');
+                        captchaFallback = true;
+                        syncBtn();
+                    }
+                }, 3000);
+            });
 
         })();
     </script>
