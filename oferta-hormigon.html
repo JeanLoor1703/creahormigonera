@@ -888,7 +888,7 @@
                 </div>
 
                 <!-- Caja de error de red / Supabase / Turnstile -->
-                <div id="err-box" role="alert">
+                <div id="err-box" class="hidden" role="alert" style="display:none;">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span id="err-txt"></span>
                 </div>
@@ -1081,6 +1081,8 @@
 
             /* ── Token de Cloudflare Turnstile ── */
             let captchaToken = null;
+            /* ── Modo respaldo: si Turnstile no carga/responde, el botón no se bloquea ── */
+            let captchaFallback = false;
 
             /* ── Expresiones regulares reutilizables ── */
             const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -1123,7 +1125,8 @@
                ============================================================ */
             function syncBtn() {
                 const privOk = chkPriv && chkPriv.checked;
-                const capOk = !!captchaToken;
+                /* Turnstile OK, o modo respaldo activado si Cloudflare no respondió */
+                const capOk = !!captchaToken || captchaFallback;
                 const nombreOk = (inpNombre?.value || '').trim().length >= 3;
                 const emailOk = EMAIL_RX.test((inpEmail?.value || '').trim());
                 const whaOk = isValidEcuPhone(cleanPhone(inpWhatsapp?.value || ''));
@@ -1135,12 +1138,29 @@
             /* Callbacks globales del widget Cloudflare Turnstile */
             window.onCapOk = function(token) {
                 captchaToken = token;
+                captchaFallback = false; /* Turnstile respondió: desactiva el respaldo */
                 syncBtn();
             };
             window.onCapExp = function() {
                 captchaToken = null;
                 syncBtn();
             };
+
+            /* ============================================================
+               FALLBACK DE CLOUDFLARE TURNSTILE
+               Si Turnstile no entrega token tras 10s (CDN caído, sitekey
+               inválido, fallo de conexión), se activa el modo respaldo
+               para que el botón de descarga no quede bloqueado.
+               ============================================================ */
+            function startTurnstileFallback() {
+                setTimeout(function () {
+                    if (!captchaToken) {
+                        captchaFallback = true;
+                        syncBtn();
+                        console.warn('[Embudo] Turnstile sin respuesta — modo respaldo activado.');
+                    }
+                }, 10000);
+            }
 
             /* ============================================================
                MOSTRAR / OCULTAR CAMPO "NOMBRE DE EMPRESA"
@@ -1213,13 +1233,19 @@
                MOSTRAR ERROR EN LA CAJA DE ALERTA
                ============================================================ */
             function showErr(msg) {
+                if (!errBox) return;
                 errTxt.textContent = msg;
+                errBox.classList.remove('hidden');
+                errBox.style.display = 'flex';
                 errBox.classList.add('show');
                 errBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                setTimeout(() => errBox.classList.remove('show'), 10000);
+                setTimeout(() => { hideErr(); }, 10000);
             }
             function hideErr() {
+                if (!errBox) return;
                 errBox.classList.remove('show');
+                errBox.classList.add('hidden');
+                errBox.style.display = 'none';
             }
 
             /* ============================================================
@@ -1272,15 +1298,22 @@
                 const msg = (error.message || '').toLowerCase();
                 const code = error.code || '';
 
-                if (code === '23505' || msg.includes('unique'))
+                console.error('[Embudo] Error detallado:', { code, message: error.message, error });
+
+                if (code === '23505' || msg.includes('duplicate key') || msg.includes('unique constraint'))
                     return 'Este correo ya está registrado. ¡Revisa tu bandeja de entrada!';
                 if (msg.includes('invalid api key') || msg.includes('apikey'))
                     return 'Error de configuración: clave de API de Supabase inválida. Contacta al administrador.';
-                if (msg.includes('jwt'))
+                if (msg.includes('jwt') || msg.includes('token'))
                     return 'Error de autenticación con Supabase. Verifica la ANON KEY.';
-                if (msg.includes('network') || msg.includes('fetch'))
+                if (msg.includes('row-level security') || msg.includes('rls') || msg.includes('permission denied'))
+                    return 'Error de permisos en la base de datos. Contacta al administrador.';
+                if (code === 'PGRST301' || msg.includes('could not find'))
+                    return 'Error de configuración: tabla no encontrada. Contacta al administrador.';
+                if (msg.includes('failed to fetch') || msg.includes('err_network') || 
+                    (msg.includes('network') && msg.includes('error')))
                     return 'Sin conexión a Internet. Verifica tu red e inténtalo de nuevo.';
-                return `Error al guardar: ${error.message}. Inténtalo de nuevo.`;
+                return 'Error al guardar tus datos. Por favor, inténtalo de nuevo en unos segundos.';
             }
 
             /* ============================================================
@@ -1331,8 +1364,8 @@
                     return;
                 }
 
-                /* Bloquear si el Turnstile no fue completado */
-                if (!recaptcha_token) {
+                /* Bloquear si el Turnstile no fue completado y no hay modo respaldo */
+                if (!recaptcha_token && !captchaFallback) {
                     showErr('Por favor, completa la verificación de seguridad antes de enviar.');
                     return;
                 }
@@ -1347,10 +1380,11 @@
                         whatsapp,
                         trabaja_empresa,
                         nombre_empresa,
-                        origen: 'Embudo Hormigón - IG/FB',
-                        recaptcha_token
+                        origen: 'Embudo Hormigón - IG/FB'
+                        /* recaptcha_token se añade abajo solo si existe */
                         /* created_at → Supabase lo pone automáticamente con DEFAULT now() */
                     };
+                    if (recaptcha_token) payload.recaptcha_token = recaptcha_token;
 
                     const { data, error } = await db
                         .from('leads')
@@ -1364,29 +1398,33 @@
                         var turnstileEl = document.querySelector('.cf-turnstile');
                         if (turnstileEl && typeof turnstile !== 'undefined') turnstile.reset(turnstileEl);
                         syncBtn();
-                        showErr(friendlyError(error));
+                        
+                        /* IMPORTANTE: Entregar PDF y mostrar éxito incluso si Supabase falla,
+                           excepto si es un error de configuración crítico */
+                        const errorMsg = friendlyError(error);
+                        if (errorMsg.includes('configuración') || errorMsg.includes('permisos')) {
+                            showErr(errorMsg);
+                            return;
+                        }
+                        
+                        /* Para errores menores (duplicados, red, etc.), entregar PDF y éxito */
+                        window.open(PDF_PATH, '_blank');
+                        showSuccess();
                         return;
                     }
 
-                    /* Descarga automática local del PDF */
-                    const link = document.createElement('a');
-                    link.href = PDF_PATH;
-                    link.download = 'Guia_6_Errores_Hormigon_Creacom.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                    /* Entrega inmediata del PDF: apertura en nueva pestaña */
+                    window.open(PDF_PATH, '_blank');
 
                     /* Ocultar formulario y mostrar pantalla de éxito */
                     showSuccess();
 
                 } catch (err) {
                     console.error('[Embudo] Error de red:', err);
+                    /* Entrega el PDF igualmente — el lead no se guardó pero el usuario no se queda sin la guía */
+                    window.open(PDF_PATH, '_blank');
+                    showSuccess();
                     setLoading(false);
-                    captchaToken = null;
-                    var turnstileEl2 = document.querySelector('.cf-turnstile');
-                    if (turnstileEl2 && typeof turnstile !== 'undefined') turnstile.reset(turnstileEl2);
-                    syncBtn();
-                    showErr('Error de conexión. Verifica tu Internet e inténtalo de nuevo.');
                 }
             }
 
@@ -1398,6 +1436,12 @@
 
                 /* Estado inicial del botón */
                 btn.disabled = true;
+
+                /* Forzar la alerta de error oculta al iniciar */
+                hideErr();
+
+                /* Arrancar el respaldo de Turnstile (fallback) */
+                startTurnstileFallback();
 
                 /* Listeners de control del botón */
                 chkPriv && chkPriv.addEventListener('change', syncBtn);
@@ -1477,6 +1521,24 @@
             } else {
                 init();
             }
+
+            /* ============================================================
+               ARRANQUE SEGURO — limpiar alertas residuales + fallback 3s
+               ============================================================ */
+            window.addEventListener('load', function () {
+                /* Forzar el bloque de error a estar oculto por defecto al cargar */
+                hideErr();
+
+                /* A los 3 s, si Turnstile sigue sin token, limpiar errores
+                   visibles y activar el captchaFallback automático. */
+                setTimeout(function () {
+                    if (!captchaToken) {
+                        hideErr();
+                        captchaFallback = true;
+                        syncBtn();
+                    }
+                }, 3000);
+            });
 
         })();
     </script>
