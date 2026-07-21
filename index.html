@@ -73,9 +73,30 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Preload crítico: fuente Montserrat WOFF2 para evitar FOIT y reducir CLS -->
+    <link rel="preload" as="font" type="font/woff2"
+        href="https://fonts.gstatic.com/s/montserrat/v29/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2"
+        crossorigin="anonymous">
+
+    <!-- Preload imagen hero (LCP candidate) -->
+    <link rel="preload" as="image" href="imagenes/mixer1.jpg">
+
+    <!-- CSS propio: carga bloqueante necesaria (contiene layout crítico) -->
     <link rel="stylesheet" href="styles/creahormigonera.css">
+
+    <!-- Google Fonts: carga no-bloqueante para no bloquear FCP/LCP -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
+            rel="stylesheet">
+    </noscript>
+
+    <!-- Font Awesome: carga con preload para que los íconos del header sean inmediatos -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -84,7 +105,8 @@
             <div class="header-content">
                 <div class="logo">
                     <img src="imagenes/creahormigoneralogo.png"
-                        alt="Logo Crea Hormigonera - Planta de hormigon en El Empalme y Guayas">
+                        alt="Logo Crea Hormigonera - Planta de hormigon en El Empalme y Guayas"
+                        width="182" height="50" loading="eager">
                 </div>
                 <nav class="nav">
                     <a href="#inicio">Inicio</a>
@@ -128,7 +150,8 @@
                         </a>
                     </div>
                     <a href="./cotizar/" class="btn-quote-main">
-                        <img src="imagenes/formulario.png" alt="" class="quote-img-icon">
+                        <img src="imagenes/formulario.png" alt="" class="quote-img-icon"
+                            width="39" height="39">
                         <span>¡Cotiza ahora!</span>
                     </a>
                 </div>
@@ -162,13 +185,17 @@
                         <p class="pedido-minimo">Pedido mínimo: 5 metros cúbicos</p>
                     </div>
                     <div class="hero-images">
+                        <!-- Hero principal: sin lazy para que el LCP se cargue inmediatamente -->
                         <img class="hero-img-main" src="imagenes/mixer1.jpg"
                             alt="Camión mixer descargando hormigón premezclado en obra de construcción en El Empalme"
-                            loading="lazy">
+                            width="868" height="525"
+                            fetchpriority="high">
                         <img class="hero-img-small" src="imagenes/mixer2.jpg"
-                            alt="Flota de mixers listos para despacho de concreto en Quevedo y Manabí" loading="lazy">
+                            alt="Flota de mixers listos para despacho de concreto en Quevedo y Manabí"
+                            width="498" height="280" loading="lazy">
                         <img class="hero-img-small" src="imagenes/mixer3.jpg"
-                            alt="Camión mixer transportando hormigón premezclado en Guayas" loading="lazy">
+                            alt="Camión mixer transportando hormigón premezclado en Guayas"
+                            width="498" height="280" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -214,7 +241,8 @@
                         <div class="mapa-card">
                             <img src="imagenes/creacom-hormigonera-Losrios-Guayas-Manabi.jpg"
                                 alt="Mapa de cobertura de hormigón premezclado en Guayas, Los Ríos y Manabí"
-                                class="mapa-img" loading="lazy">
+                                class="mapa-img" loading="lazy"
+                                width="630" height="622">
                         </div>
                     </div>
                 </div>
@@ -311,9 +339,13 @@
                         <p>Conoce la planta de Creacom Hormigonera en acción</p>
                     </div>
                     <div class="video-container">
-                        <video id="miVideoSmart" width="100%" height="auto" muted loop playsinline>
+                        <video id="miVideoSmart" width="100%" height="auto" muted loop playsinline
+                            preload="none">
                             <source src="video/creahormigoneravideo1.mp4" type="video/mp4">
                             Tu navegador no soporta videos HTML5.
+                            <!-- Subtítulos requeridos para accesibilidad (WCAG 1.2.2) -->
+                            <track kind="captions" src="video/captions-es.vtt" srclang="es"
+                                label="Español" default>
                         </video>
                         <div id="overlaySonido" class="overlay" onclick="activarExperiencia()">
                             <div class="btn-pulsante">
@@ -352,7 +384,8 @@
 
                         <div class="equipo-imagen">
                             <img src="imagenes/Equipo-CreacomHormigonera-Hormigon.jpg"
-                                alt="Equipo de trabajo de Creacom Hormigonera junto a camión mixer de transporte de hormigón premezclado">
+                                alt="Equipo de trabajo de Creacom Hormigonera junto a camión mixer de transporte de hormigón premezclado"
+                                width="686" height="457" loading="lazy">
                         </div>
 
                     </div>
@@ -430,6 +463,7 @@
                     <div class="contacto-grid">
                         <div class="contacto-mapa">
                             <iframe
+                                title="Mapa de ubicación Creacom Hormigonera - El Empalme, Ecuador"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.5788146469147!2d-79.6379480730357!3d-1.0427165699341405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902b5b414a4f0969%3A0x6404b2a7326e2500!2sMixer%20Hormig%C3%B3n%20Elaborado%20-%20Crea%20Hormigonera!5e0!3m2!1ses!2sec!4v1765498469509!5m2!1ses!2sec"
                                 width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -601,7 +635,8 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <img src="imagenes/creahormigoneralogo.png"
-                        alt="Logo Creacom Hormigonera - proveedor de hormigón premezclado en Guayas">
+                        alt="Logo Creacom Hormigonera - proveedor de hormigón premezclado en Guayas"
+                        width="227" height="63" loading="lazy">
                     <p class="footer-description">Tu proveedor de confianza en la venta de hormigón premezclado
                         para
                         obras en Guayas, Los Ríos y Manabí. Como tu hormigonera en El Empalme, te garantizamos
@@ -611,14 +646,14 @@
                         Escríbenos para cotizar hormigón a la medida de tu proyecto.</p>
                 </div>
                 <div class="footer-links">
-                    <h4>Enlaces Rápidos</h4>
+                    <h3>Enlaces Rápidos</h3>
                     <a href="#inicio">Inicio</a>
                     <a href="#productos">Productos</a>
                     <a href="#proyectos">Proyectos</a>
                     <a href="#contacto">Contacto</a>
                 </div>
                 <div class="footer-social">
-                    <h4>Síguenos</h4>
+                    <h3>Síguenos</h3>
                     <div class="social-buttons">
                         <a href="https://www.facebook.com/profile.php?id=61587575957183&locale=es_LA"
                             class="social-btn facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook">

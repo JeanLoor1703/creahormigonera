@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- ============================================================
+         META & SEO
+         ============================================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Experta del Hormigón — 100% Gratis | Creacom Hormigonera</title>
+    <meta name="description"
+        content="Descarga gratis la Guía Experta del Hormigón: dosificación exacta, los 7 errores que destruyen tu losa y protocolo de curado. Para constructores de Ecuador.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <!-- ── Google Fonts: Inter ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- ── Tailwind CSS ── -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ── Font Awesome (iconos) ── -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ── Cloudflare Turnstile ── -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+    <!-- ============================================================
+         ESTILOS — COMPLETAMENTE EMBEBIDOS (sin archivos externos de CSS)
+         ============================================================ -->
+    <style>
+        /* ── Reset universal ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ── Tokens de diseño ── */
+        :root {
+            --gold: #f59e0b;
+            --gold-dk: #d97706;
+            --gold-lt: #fbbf24;
+            --navy-900: #0f172a;
+            --navy-800: #1e293b;
+            --navy-700: #334155;
+            --navy-500: #64748b;
+            --navy-400: #94a3b8;
+            --navy-200: #e2e8f0;
+            --white: #ffffff;
+            --green: #10b981;
+            --red: #ef4444;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: .25s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #0f172a;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════════════════════════════
+           BARRA SUPERIOR DE MARCA
+           ═══════════════════════════════════════════ */
+        .topbar {
+            background: rgba(255, 255, 255, .96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 6px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        /* Tamaño tipográfico y color de marca se controlan con clases Tailwind */
+        .topbar-brand img {
+            width: auto;
+        }
+
+        .topbar-back {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #64748b;
+            font-size: .78rem;
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .topbar-back:hover {
+            color: var(--gold);
+        }
+
+        /* ═══════════════════════════════════════════
+           LAYOUT DE DOS COLUMNAS (Tailwind base)
+           ═══════════════════════════════════════════ */
+        .page-grid {
+            width: 100%;
+            min-height: calc(100vh - 50px);
+            align-content: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           COLUMNA IZQUIERDA — COPY
+           ═══════════════════════════════════════════ */
+        .col-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* Badge de categoría */
+        .c-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(245, 158, 11, .1);
+            border: 1px solid rgba(245, 158, 11, .28);
+            color: var(--gold);
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 100px;
+            width: fit-content;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Titular principal */
+        .c-headline {
+            font-size: clamp(1.45rem, 2vw, 1.85rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: #0f172a;
+            position: relative;
+            z-index: 1;
+        }
+
+        .c-headline .hl {
+            color: #d97706;
+            position: relative;
+        }
+
+        /* Línea divisoria dorada */
+        .gold-bar {
+            width: 52px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+            border-radius: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Subtítulo principal */
+        .c-story {
+            color: #475569;
+            font-size: .9rem;
+            line-height: 1.4;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .c-story strong {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        /* Cita destacada */
+        .c-quote {
+            border-left: 4px solid var(--gold);
+            padding: 16px 20px;
+            background: rgba(245, 158, 11, .055);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            color: var(--navy-200);
+            font-size: .95rem;
+            line-height: 1.72;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .c-quote::before {
+            content: '\201C';
+            font-size: 3rem;
+            color: var(--gold);
+            opacity: .35;
+            position: absolute;
+            top: -8px;
+            left: 12px;
+            font-style: normal;
+            line-height: 1;
+        }
+
+        /* Lista de beneficios */
+        .c-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .c-benefits-title {
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .b-ico {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: var(--radius-sm);
+            background: rgba(245, 158, 11, .08);
+            border: 1px solid rgba(245, 158, 11, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            color: var(--gold);
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        .benefit:hover .b-ico {
+            background: rgba(245, 158, 11, .18);
+            transform: scale(1.08);
+        }
+
+        .b-txt strong {
+            display: block;
+            color: var(--white);
+            font-size: .92rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .b-txt span {
+            color: var(--navy-400);
+            font-size: .83rem;
+            line-height: 1.55;
+        }
+
+        /* Social proof */
+        .sp-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 18px;
+            background: rgba(255, 255, 255, .035);
+            border: 1px solid rgba(255, 255, 255, .07);
+            border-radius: var(--radius-md);
+            position: relative;
+            z-index: 1;
+        }
+
+        .sp-avs {
+            display: flex;
+        }
+
+        .sp-av {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+            border: 2px solid var(--navy-800);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .62rem;
+            font-weight: 800;
+            color: var(--navy-900);
+            margin-left: -7px;
+        }
+
+        .sp-av:first-child {
+            margin-left: 0;
+        }
+
+        .sp-txt {
+            font-size: .79rem;
+            color: var(--navy-400);
+            line-height: 1.4;
+        }
+
+        .sp-txt strong {
+            color: var(--gold);
+        }
+
+        /* ═══════════════════════════════════════════
+           COLUMNA DERECHA — FORMULARIO
+           ═══════════════════════════════════════════ */
+        .col-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            justify-content: center;
+        }
+
+        /* Mini video */
+        .vid-wrap {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 0;
+            position: relative;
+            aspect-ratio: 16/9;
+            background: var(--navy-900);
+            border: 2px solid rgba(245, 158, 11, .22);
+            box-shadow: 0 6px 26px rgba(0, 0, 0, .14);
+        }
+
+        .vid-wrap video,
+        .vid-wrap iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: none;
+        }
+
+        .vid-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, .8);
+            backdrop-filter: blur(4px);
+            color: var(--gold);
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 7px;
+        }
+
+        /* Encabezado del formulario */
+        .fhdr {
+            margin-bottom: 8px;
+        }
+
+        .fhdr h2 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--navy-900);
+            line-height: 1.15;
+            margin-bottom: 2px;
+        }
+
+        .fhdr h2 span {
+            color: var(--gold);
+        }
+
+        .fhdr p {
+            color: var(--navy-500);
+            font-size: .72rem;
+            line-height: 1.4;
+        }
+
+        /* Formulario */
+        #lead-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .f2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .fg {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .fg label {
+            font-size: .72rem;
+            font-weight: 600;
+            color: #374151;
+            letter-spacing: .02em;
+        }
+
+        .fg label .req {
+            color: var(--red);
+            margin-left: 2px;
+        }
+
+        .fg input,
+        .fg select {
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            padding: 7px 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--radius-sm);
+            font-size: .82rem;
+            color: var(--navy-900);
+            background: #f9fafb;
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .fg input::placeholder {
+            color: #9ca3af;
+            font-size: .8rem;
+        }
+
+        .fg input:focus,
+        .fg select:focus {
+            border-color: var(--gold);
+            background: #fffbeb;
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, .13);
+        }
+
+        .fg input.err,
+        .fg select.err {
+            border-color: var(--red);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, .1);
+        }
+
+        /* Hint bajo el campo */
+        .f-hint {
+            font-size: .65rem;
+            color: var(--navy-500);
+            margin-top: 0;
+        }
+
+        /* Error inline debajo del campo */
+        .field-err {
+            font-size: .65rem;
+            color: var(--red);
+            display: none;
+        }
+
+        /* Campo empresa — oculto hasta elegir "Sí" */
+        #div-empresa {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height .42s ease, opacity .38s ease;
+        }
+
+        #div-empresa.show {
+            max-height: 70px;
+            opacity: 1;
+        }
+
+        /* Select con icono de flecha personalizado */
+        .fg select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+
+        /* reCAPTCHA */
+        .cap-wrap {
+            transform: scale(.78);
+            transform-origin: left center;
+        }
+
+        /* Checkbox de privacidad */
+        .chk-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+        }
+
+        .chk-wrap input[type="checkbox"] {
+            width: 15px;
+            min-width: 15px;
+            height: 15px;
+            margin-top: 1px;
+            accent-color: var(--gold);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .chk-wrap label {
+            font-size: .7rem;
+            color: #4b5563;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .chk-wrap label a {
+            color: var(--gold);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dotted var(--gold);
+            transition: color var(--transition);
+        }
+
+        .chk-wrap label a:hover {
+            color: var(--gold-dk);
+        }
+
+        /* Botón de envío */
+        #btn-send {
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dk) 100%);
+            color: var(--navy-900);
+            font-size: .86rem;
+            font-weight: 800;
+            letter-spacing: .045em;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition), box-shadow var(--transition);
+            box-shadow: 0 4px 18px rgba(245, 158, 11, .42);
+            margin-top: 0;
+        }
+
+        /* Capa brillante sobre el botón */
+        #btn-send::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .18) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        #btn-send:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 26px rgba(245, 158, 11, .55);
+        }
+
+        #btn-send:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        #btn-send:disabled {
+            background: linear-gradient(135deg, #d1d5db, #9ca3af);
+            color: #6b7280;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #btn-send:disabled::before {
+            display: none;
+        }
+
+        /* Spinner del botón */
+        .sp {
+            display: none;
+            width: 17px;
+            height: 17px;
+            border: 3px solid rgba(15, 23, 42, .22);
+            border-top-color: var(--navy-900);
+            border-radius: 50%;
+            animation: spin .75s linear infinite;
+        }
+
+        #btn-send.loading .sp {
+            display: block;
+        }
+
+        #btn-send.loading .si {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Nota de seguridad */
+        .sec {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: #9ca3af;
+            font-size: .65rem;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .sec i {
+            color: var(--green);
+        }
+
+        /* Alerta de error de red / Supabase */
+        #err-box {
+            display: none;
+            align-items: flex-start;
+            gap: 7px;
+            padding: 8px 10px;
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-radius: var(--radius-sm);
+            color: #dc2626;
+            font-size: .75rem;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        #err-box.show {
+            display: flex;
+        }
+
+        #err-box i {
+            margin-top: 2px;
+            min-width: 14px;
+        }
+
+        /* ═══════════════════════════════════════════
+           BLOQUE DE ÉXITO
+           ═══════════════════════════════════════════ */
+        #success {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            padding: 28px 8px;
+            animation: fadeUp .55s ease both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ok-ico {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green), #059669);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.3rem;
+            color: var(--white);
+            box-shadow: 0 8px 22px rgba(16, 185, 129, .38);
+            animation: popIn .5s cubic-bezier(.34, 1.56, .64, 1) both;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .ok-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--navy-900);
+        }
+
+        .ok-body {
+            color: var(--navy-500);
+            font-size: .91rem;
+            line-height: 1.65;
+            max-width: 360px;
+        }
+
+        .btn-pdf {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 26px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+            color: var(--navy-900);
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: .92rem;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            transition: transform var(--transition), box-shadow var(--transition);
+            box-shadow: 0 4px 18px rgba(245, 158, 11, .42);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-pdf::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .16) 0%, transparent 55%);
+        }
+
+        .btn-pdf:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 26px rgba(245, 158, 11, .55);
+            color: var(--navy-900);
+            text-decoration: none;
+        }
+
+        .ok-note {
+            font-size: .77rem;
+            color: #94a3b8;
+            line-height: 1.55;
+            max-width: 300px;
+        }
+
+        .ok-note strong {
+            color: var(--navy-900);
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER MÍNIMO
+           ═══════════════════════════════════════════ */
+        .lp-footer {
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            padding: 10px 24px;
+            text-align: center;
+            font-size: .74rem;
+            color: #64748b;
+        }
+
+        .lp-footer a {
+            color: #475569;
+            text-decoration: none;
+        }
+
+        .lp-footer a:hover {
+            color: var(--gold-dk);
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVO — Mobile First
+           ═══════════════════════════════════════════ */
+        @media (max-width: 780px) {
+            .c-headline {
+                font-size: 1.55rem;
+            }
+
+            .f2col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .c-headline {
+                font-size: 1.4rem;
+            }
+
+            .cap-wrap {
+                transform: scale(.72);
+                transform-origin: left center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── Barra de marca ── -->
+    <nav class="topbar">
+        <a href="index.html" class="topbar-brand items-center">
+            <img src="imagenes/creahormigoneralogo.png" alt="Logo Creacom Hormigonera" class="h-14 w-auto"
+                onerror="this.style.display='none'">
+        </a>
+        <a href="index.html" class="topbar-back">
+            <i class="fa-solid fa-arrow-left fa-sm"></i>
+            Volver al sitio
+        </a>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         LAYOUT PRINCIPAL
+         ═══════════════════════════════════════════════════════════ -->
+    <main class="page-grid grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-7xl mx-auto px-4 py-4">
+
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             COLUMNA IZQUIERDA — COPY + VIDEO
+             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <article class="col-copy lg:col-span-7" aria-label="Propuesta de valor">
+
+            <!-- Badge de alta conversión -->
+            <span class="bg-amber-500 text-slate-950 px-3 py-1 rounded-full text-xs font-bold inline-block mb-3">
+                🎁 RECURSO 100% GRATUITO PARA PROFESIONALES
+            </span>
+
+            <!-- Titular -->
+            <h1 class="c-headline">
+                ¿Planeas fundir pronto? Evita los errores que arruinan tu hormigón
+            </h1>
+
+            <!-- Subtítulo profesional -->
+            <p class="c-story">
+                Te obsequiamos la Guía Técnica Definitiva 2026. Diseñada exclusivamente para maestros, ingenieros y
+                constructores que exigen la máxima resistencia estructural sin sorpresas, sin retrabajos y sin
+                desperdiciar dinero en obra.
+            </p>
+
+            <!-- Video de la planta / obra -->
+            <div class="vid-wrap">
+                <!--
+                    OPCIÓN A — YouTube (descomenta y reemplaza VIDEO_ID):
+                    <iframe
+                        src="https://www.youtube.com/embed/VIDEO_ID?rel=0&autoplay=1&mute=1&loop=1&playlist=VIDEO_ID"
+                        allowfullscreen allow="autoplay; encrypted-media"></iframe>
+
+                    OPCIÓN B — Video local (activo por defecto):
+                    Asegúrate de que el archivo exista en la carpeta /video/
+                -->
+                <video autoplay muted loop playsinline>
+                    <source src="video/creahormigoneravideo1.mp4" type="video/mp4">
+                    Tu navegador no soporta video HTML5.
+                </video>
+                <div class="vid-label">
+                    <i class="fa-solid fa-play fa-xs" style="margin-right:5px;"></i>
+                    Así trabajamos cada fundición en Creacom
+                </div>
+            </div>
+
+        </article><!-- /col-copy -->
+
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             COLUMNA DERECHA — FORMULARIO
+             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <section class="col-form lg:col-span-5" aria-label="Formulario para descargar la guía">
+
+            <!-- Tarjeta del formulario -->
+            <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-lg">
+
+                <!-- Encabezado del formulario -->
+                <div class="fhdr">
+                    <h2>Descarga la guía <span>100% gratis</span></h2>
+                    <p>Llena el formulario y recibe acceso inmediato a la Guía Experta
+                        del Hormigón para constructores del Ecuador.</p>
+                </div>
+
+                <!-- Caja de error de red / Supabase / Turnstile -->
+                <div id="err-box" class="hidden" role="alert" style="display:none;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="err-txt"></span>
+                </div>
+
+                <!-- ══════════════════════════════════
+                 FORMULARIO DE CAPTURA
+                 ══════════════════════════════════ -->
+                <form id="lead-form" novalidate autocomplete="off">
+
+                    <!-- Fila 1: Nombre completo -->
+                    <div class="fg">
+                        <label for="f-nombre">Nombre completo <span class="req">*</span></label>
+                        <input type="text" id="f-nombre" name="nombre" placeholder="Ej: Carlos Mendoza"
+                            autocomplete="name" required>
+                    </div>
+
+                    <!-- Fila 2: Email + WhatsApp (condicional — al menos uno requerido) -->
+                    <div class="f2col">
+                        <div class="fg">
+                            <label for="f-email">Correo electrónico <span id="req-email" class="req">*</span></label>
+                            <input type="email" id="f-email" name="email" placeholder="tu@correo.com"
+                                autocomplete="email">
+                            <span id="email-err" class="field-err">Correo incorrecto. Por favor, ingresa un email
+                                válido.</span>
+                        </div>
+                        <div class="fg">
+                            <label for="f-whatsapp">WhatsApp <span id="req-whatsapp" class="req">*</span></label>
+                            <input type="tel" id="f-whatsapp" name="whatsapp" placeholder="0991234567"
+                                autocomplete="tel">
+                            <span class="f-hint">Ej: 0991234567</span>
+                            <span id="whatsapp-err" class="field-err">Número incorrecto. Ingresa un celular válido de
+                                Ecuador.</span>
+                        </div>
+                    </div>
+                    <!-- Mensaje de error grupo contacto -->
+                    <p id="contact-group-err"
+                        style="display:none; color:var(--red); font-size:.78rem; margin-top:-6px;">
+                        <i class="fa-solid fa-triangle-exclamation" style="margin-right:4px;"></i>
+                        Debes proporcionar al menos un método de contacto válido (correo o WhatsApp).
+                    </p>
+
+                    <!-- Selector empresa -->
+                    <div class="fg">
+                        <label for="f-emp-sel">¿Trabajas para una empresa? <span class="req">*</span></label>
+                        <select id="f-emp-sel" name="trabaja_empresa" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="no">No, trabajo de forma independiente</option>
+                            <option value="si">Sí, trabajo para una empresa</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo empresa (aparece con animación si elige "Sí") -->
+                    <div id="div-empresa" class="fg">
+                        <label for="f-emp-nom">Nombre de la empresa <span class="req">*</span></label>
+                        <input type="text" id="f-emp-nom" name="nombre_empresa"
+                            placeholder="Ej: Constructora Pacífico S.A.">
+                    </div>
+
+                    <!-- Cloudflare Turnstile -->
+                    <div class="cf-turnstile" data-sitekey="0x4AAAAAADqorQz8VrGW8SMT" data-callback="onCapOk" data-expired-callback="onCapExp"></div>
+
+                    <!-- Checkbox de privacidad — OBLIGATORIO -->
+                    <div class="chk-wrap">
+                        <input type="checkbox" id="chk-priv" name="privacidad">
+                        <label for="chk-priv">
+                            He leído y acepto la
+                            <a href="javascript:void(0)" rel="noopener" id="open-privacy-modal">Política de
+                                Privacidad</a>.
+                            Entiendo que mis datos serán usados únicamente para enviarme
+                            información de valor de Creacom Hormigonera.
+                        </label>
+                    </div>
+
+                    <!-- Botón de envío — deshabilitado hasta checkbox + Turnstile -->
+                    <button type="submit" id="btn-send" disabled>
+                        <span class="sp"></span>
+                        <i class="fa-solid fa-lock fa-sm si"></i>
+                        <span class="st">DESCARGAR GUÍA GRATIS</span>
+                    </button>
+
+                    <p class="sec">
+                        <i class="fa-solid fa-shield-halved fa-sm"></i>
+                        Tus datos están 100% protegidos · Sin spam, nunca
+                    </p>
+
+                </form><!-- /lead-form -->
+
+                <!-- ══════════════════════════════════
+                 BLOQUE DE ÉXITO (oculto al inicio)
+                 ══════════════════════════════════ -->
+                <div id="success">
+                    <div class="ok-ico">✓</div>
+                    <p class="ok-title">¡Registro exitoso!</p>
+                    <p class="ok-body">
+                        Tu guía se está descargando automáticamente.<br>
+                        Si la descarga no inicia, usa el botón de abajo.
+                    </p>
+                    <a href="./ebook_creacom_6_errores_hormigon%20.pdf" id="btn-pdf" class="btn-pdf"
+                        download="Guia_6_Errores_Hormigon_Creacom.pdf">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        DESCARGAR GUÍA DEL HORMIGÓN
+                    </a>
+                    <p class="ok-note">
+                        ¿Dudas sobre tu próxima obra? Escríbenos a<br>
+                        <strong>hormigonera.admin@creacomsa.com</strong>
+                        o contáctanos por WhatsApp.
+                    </p>
+                </div>
+
+            </div><!-- /tarjeta del formulario -->
+
+        </section><!-- /col-form -->
+
+    </main>
+
+    <!-- ── Footer mínimo ── -->
+    <footer class="lp-footer">
+        <p>
+            &copy; 2025 Creacom Hormigonera &nbsp;&middot;&nbsp; Todos los derechos reservados
+            &nbsp;&middot;&nbsp;
+            <a href="index.html">Volver al sitio principal</a>
+        </p>
+    </footer>
+
+
+    <!-- ============================================================
+         SUPABASE JS CDN v2
+         ============================================================ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- ============================================================
+         SCRIPT DEL EMBUDO — COMPLETAMENTE EMBEBIDO
+         ============================================================ -->
+    <script>
+        (function () {
+            'use strict';
+
+            /* ============================================================
+               🔑  CONFIGURACIÓN — REEMPLAZA ESTOS VALORES ANTES DE PUBLICAR
+               ============================================================
+    
+               PASO 1 — Supabase:
+                 a) Ve a https://supabase.com/dashboard → tu proyecto
+                 b) Menú: Project Settings → API
+                 c) Copia "Project URL"  → pégalo en SUPABASE_URL
+                 d) Copia "anon public"  → pégalo en SUPABASE_ANON_KEY
+    
+                PASO 2 — Cloudflare Turnstile:
+                 Reemplaza "TU_SITE_KEY_AQUÍ" en el atributo data-sitekey
+                 del div.cf-turnstile con tu Site Key real de Turnstile.
+                 La Secret Key para validación backend es: 0x4AAAAAADqorQz8VrGW8SMT
+    
+               PASO 3 — PDF:
+                 Sube el archivo "guia-hormigon.pdf" a la raíz del proyecto
+                 (misma carpeta que oferta-hormigon.html).
+                 Si cambias el nombre, actualiza PDF_PATH aquí abajo.
+               ============================================================ */
+
+            const SUPABASE_URL = 'https://xrglxgwkepvpjikvcfot.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZ2x4Z3drZXB2cGppa3ZjZm90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTYxNzEsImV4cCI6MjA5MTQzMjE3MX0.Ut1Sxww-xDeZVUAeiAkWYwK6jb1wkLTE-RWzHjeX3Cc';
+            const PDF_PATH = 'ebook_creacom_6_errores_hormigon%20.pdf';       // ← nombre del PDF
+
+            /* ── Inicializar cliente Supabase ── */
+            let db = null;
+            function initDB() {
+                if (typeof supabase === 'undefined') {
+                    console.error('[Embudo] Supabase CDN no disponible.');
+                    return;
+                }
+                db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+
+            /* ── Referencias al DOM ── */
+            const form = document.getElementById('lead-form');
+            const btn = document.getElementById('btn-send');
+            const chkPriv = document.getElementById('chk-priv');
+            const selEmp = document.getElementById('f-emp-sel');
+            const divEmp = document.getElementById('div-empresa');
+            const successEl = document.getElementById('success');
+            const errBox = document.getElementById('err-box');
+            const errTxt = document.getElementById('err-txt');
+
+            /* ── Referencias adicionales al DOM ── */
+            const inpEmail = document.getElementById('f-email');
+            const inpWhatsapp = document.getElementById('f-whatsapp');
+            const inpNombre = document.getElementById('f-nombre');
+            const reqEmail = document.getElementById('req-email');
+            const reqWhatsapp = document.getElementById('req-whatsapp');
+            const contactErr = document.getElementById('contact-group-err');
+
+            /* ── Token de Cloudflare Turnstile ── */
+            let captchaToken = null;
+            /* ── Modo respaldo: si Turnstile no carga/responde, el botón no se bloquea ── */
+            let captchaFallback = false;
+
+            /* ── Expresiones regulares reutilizables ── */
+            const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+            /* ── Validación flexible: celular de Ecuador ── */
+            function isValidEcuPhone(cleaned) {
+                return /^09\d{8}$/.test(cleaned) || /^5939\d{8}$/.test(cleaned);
+            }
+
+            /* ── Referencias a los spans de error inline ── */
+            const emailErr = document.getElementById('email-err');
+            const whatsappErr = document.getElementById('whatsapp-err');
+
+            /* ── Limpiador de número de teléfono ── */
+            function cleanPhone(raw) {
+                return (raw || '').replace(/[\s\-\(\)\.\+]/g, '');
+            }
+
+            /* ============================================================
+               ACTUALIZACIÓN DINÁMICA DE ASTERISCOS (tiempo real)
+               ============================================================ */
+            function updateContactAsterisks() {
+                const emailVal = (inpEmail?.value || '').trim();
+                const whaVal = cleanPhone(inpWhatsapp?.value || '');
+                const emailOk = EMAIL_RX.test(emailVal);
+                const whaOk = isValidEcuPhone(whaVal);
+
+                if (reqWhatsapp) reqWhatsapp.style.display = emailOk ? 'none' : '';
+                if (reqEmail) reqEmail.style.display = whaOk ? 'none' : '';
+
+                if (contactErr && (emailOk || whaOk)) {
+                    contactErr.style.display = 'none';
+                }
+            }
+
+            /* ============================================================
+               CONTROL DEL BOTÓN DE ENVÍO
+               Habilitado cuando: nombre ✓ + (email ✓ OR whatsapp ✓) +
+               checkbox ✓ + Turnstile ✓
+               ============================================================ */
+            function syncBtn() {
+                const privOk = chkPriv && chkPriv.checked;
+                /* Turnstile OK, o modo respaldo activado si Cloudflare no respondió */
+                const capOk = !!captchaToken || captchaFallback;
+                const nombreOk = (inpNombre?.value || '').trim().length >= 3;
+                const emailOk = EMAIL_RX.test((inpEmail?.value || '').trim());
+                const whaOk = isValidEcuPhone(cleanPhone(inpWhatsapp?.value || ''));
+                const contactOk = emailOk || whaOk;
+
+                btn.disabled = !(privOk && capOk && nombreOk && contactOk);
+            }
+
+            /* Callbacks globales del widget Cloudflare Turnstile */
+            window.onCapOk = function(token) {
+                captchaToken = token;
+                captchaFallback = false; /* Turnstile respondió: desactiva el respaldo */
+                syncBtn();
+            };
+            window.onCapExp = function() {
+                captchaToken = null;
+                syncBtn();
+            };
+
+            /* ============================================================
+               FALLBACK DE CLOUDFLARE TURNSTILE
+               Si Turnstile no entrega token tras 10s (CDN caído, sitekey
+               inválido, fallo de conexión), se activa el modo respaldo
+               para que el botón de descarga no quede bloqueado.
+               ============================================================ */
+            function startTurnstileFallback() {
+                setTimeout(function () {
+                    if (!captchaToken) {
+                        captchaFallback = true;
+                        syncBtn();
+                        console.warn('[Embudo] Turnstile sin respuesta — modo respaldo activado.');
+                    }
+                }, 10000);
+            }
+
+            /* ============================================================
+               MOSTRAR / OCULTAR CAMPO "NOMBRE DE EMPRESA"
+               ============================================================ */
+            function toggleEmpresa() {
+                if (!selEmp || !divEmp) return;
+                if (selEmp.value === 'si') {
+                    divEmp.classList.add('show');
+                } else {
+                    divEmp.classList.remove('show');
+                    const inp = document.getElementById('f-emp-nom');
+                    if (inp) inp.value = '';
+                }
+            }
+
+            /* ============================================================
+               VALIDACIÓN Y MARCADO VISUAL DE ERRORES
+               ============================================================ */
+            function markErr(id) {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('err');
+            }
+            function clearErrs() {
+                document.querySelectorAll('#lead-form .err')
+                    .forEach(el => el.classList.remove('err'));
+                if (contactErr) contactErr.style.display = 'none';
+                if (emailErr) emailErr.style.display = 'none';
+                if (whatsappErr) whatsappErr.style.display = 'none';
+            }
+
+            function validate(d) {
+                let ok = true;
+                clearErrs();
+
+                // Nombre completo (mínimo 3 caracteres)
+                if (!d.nombre || d.nombre.length < 3) { markErr('f-nombre'); ok = false; }
+
+                // Email
+                const emailOk = EMAIL_RX.test(d.email || '');
+                if (d.email && !emailOk) {
+                    markErr('f-email');
+                    if (emailErr) emailErr.style.display = 'block';
+                    ok = false;
+                }
+
+                // WhatsApp — validación flexible Ecuador (local o internacional)
+                const whaClean = cleanPhone(d.whatsapp || '');
+                const whaOk = isValidEcuPhone(whaClean);
+                if (d.whatsapp && !whaOk) {
+                    markErr('f-whatsapp');
+                    if (whatsappErr) whatsappErr.style.display = 'block';
+                    ok = false;
+                }
+
+                // Al menos uno de los dos válido
+                if (!emailOk && !whaOk) {
+                    if (!d.email) markErr('f-email');
+                    if (!d.whatsapp) markErr('f-whatsapp');
+                    if (contactErr) contactErr.style.display = 'block';
+                    ok = false;
+                }
+
+                // Selector empresa
+                if (!d.trabaja_empresa_val) { markErr('f-emp-sel'); ok = false; }
+                if (d.trabaja_empresa && !d.nombre_empresa) { markErr('f-emp-nom'); ok = false; }
+                return ok;
+            }
+
+            /* ============================================================
+               MOSTRAR ERROR EN LA CAJA DE ALERTA
+               ============================================================ */
+            function showErr(msg) {
+                if (!errBox) return;
+                errTxt.textContent = msg;
+                errBox.classList.remove('hidden');
+                errBox.style.display = 'flex';
+                errBox.classList.add('show');
+                errBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                setTimeout(() => { hideErr(); }, 10000);
+            }
+            function hideErr() {
+                if (!errBox) return;
+                errBox.classList.remove('show');
+                errBox.classList.add('hidden');
+                errBox.style.display = 'none';
+            }
+
+            /* ============================================================
+               DESCARGA AUTOMÁTICA DEL PDF
+               ============================================================ */
+            function autoPDF() {
+                try {
+                    const a = document.createElement('a');
+                    a.href = PDF_PATH;
+                    a.download = 'Guia_6_Errores_Hormigon_Creacom.pdf';
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } catch (e) {
+                    console.warn('[Embudo] Descarga automática bloqueada por el navegador:', e);
+                }
+            }
+
+            /* ============================================================
+               MOSTRAR PANTALLA DE ÉXITO
+               ============================================================ */
+            function showSuccess() {
+                form.style.display = 'none';
+                successEl.style.display = 'flex';
+                successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            /* ============================================================
+               ESTADO DE CARGA DEL BOTÓN
+               ============================================================ */
+            function setLoading(on) {
+                const spanTxt = btn.querySelector('.st');
+                if (on) {
+                    if (spanTxt) spanTxt.textContent = 'ENVIANDO...';
+                    btn.classList.add('loading');
+                    btn.disabled = true;
+                } else {
+                    if (spanTxt) spanTxt.textContent = 'DESCARGAR GUÍA GRATIS';
+                    btn.classList.remove('loading');
+                    syncBtn(); // restaura el estado correcto
+                }
+            }
+
+            /* ============================================================
+               DETECTAR TIPO DE ERROR DE SUPABASE / Turnstile
+               ============================================================ */
+            function friendlyError(error) {
+                if (!error) return 'Error desconocido. Inténtalo de nuevo.';
+                const msg = (error.message || '').toLowerCase();
+                const code = error.code || '';
+
+                console.error('[Embudo] Error detallado:', { code, message: error.message, error });
+
+                if (code === '23505' || msg.includes('duplicate key') || msg.includes('unique constraint'))
+                    return 'Este correo ya está registrado. ¡Revisa tu bandeja de entrada!';
+                if (msg.includes('invalid api key') || msg.includes('apikey'))
+                    return 'Error de configuración: clave de API de Supabase inválida. Contacta al administrador.';
+                if (msg.includes('jwt') || msg.includes('token'))
+                    return 'Error de autenticación con Supabase. Verifica la ANON KEY.';
+                if (msg.includes('row-level security') || msg.includes('rls') || msg.includes('permission denied'))
+                    return 'Error de permisos en la base de datos. Contacta al administrador.';
+                if (code === 'PGRST301' || msg.includes('could not find'))
+                    return 'Error de configuración: tabla no encontrada. Contacta al administrador.';
+                if (msg.includes('failed to fetch') || msg.includes('err_network') || 
+                    (msg.includes('network') && msg.includes('error')))
+                    return 'Sin conexión a Internet. Verifica tu red e inténtalo de nuevo.';
+                return 'Error al guardar tus datos. Por favor, inténtalo de nuevo en unos segundos.';
+            }
+
+            /* ============================================================
+               ENVÍO DEL FORMULARIO → SUPABASE
+               ============================================================ */
+            async function handleSubmit(e) {
+                e.preventDefault();
+                hideErr();
+
+                if (!db) {
+                    showErr('Error de configuración: base de datos no disponible. Contacta al administrador.');
+                    return;
+                }
+
+                /* Recoger valores */
+                const nombre = document.getElementById('f-nombre')?.value.trim() || '';
+                const email = document.getElementById('f-email')?.value.trim() || '';
+                const whatsappRaw = document.getElementById('f-whatsapp')?.value.trim() || '';
+                const whatsappClean = cleanPhone(whatsappRaw);
+                let whatsapp = whatsappClean;
+
+                /* Convertir a +593xxxxxxxx para compatibilidad con WhatsApp CRM */
+                if (/^09\d{8}$/.test(whatsappClean)) {
+                    whatsapp = '+593' + whatsappClean.substring(1);
+                } else if (/^5939\d{8}$/.test(whatsappClean)) {
+                    whatsapp = '+' + whatsappClean;
+                }
+
+                const empVal = selEmp?.value || '';
+                const trabaja_empresa = empVal === 'si';
+                const nombre_empresa = (empVal === 'si')
+                    ? (document.getElementById('f-emp-nom')?.value.trim() || null)
+                    : null;
+
+                /* Token del Turnstile */
+                const recaptcha_token = captchaToken;
+
+                /* Validar formulario */
+                const valData = {
+                    nombre, email,
+                    whatsapp: whatsappRaw,
+                    trabaja_empresa,
+                    nombre_empresa,
+                    trabaja_empresa_val: empVal // para validar que algo fue seleccionado
+                };
+                if (!validate(valData)) {
+                    showErr('Revisa los campos marcados en rojo antes de continuar.');
+                    return;
+                }
+
+                /* Bloquear si el Turnstile no fue completado y no hay modo respaldo */
+                if (!recaptcha_token && !captchaFallback) {
+                    showErr('Por favor, completa la verificación de seguridad antes de enviar.');
+                    return;
+                }
+
+                /* Iniciar carga */
+                setLoading(true);
+
+                try {
+                    const payload = {
+                        nombre,
+                        email,
+                        whatsapp,
+                        trabaja_empresa,
+                        nombre_empresa,
+                        origen: 'Embudo Hormigón - IG/FB'
+                        /* recaptcha_token se añade abajo solo si existe */
+                        /* created_at → Supabase lo pone automáticamente con DEFAULT now() */
+                    };
+                    if (recaptcha_token) payload.recaptcha_token = recaptcha_token;
+
+                    const { data, error } = await db
+                        .from('leads')
+                        .insert([payload]);
+
+                    if (error) {
+                        console.error('[Embudo] Supabase error:', error);
+                        setLoading(false);
+                        /* Resetear Turnstile para que el usuario pueda reintentar */
+                        captchaToken = null;
+                        var turnstileEl = document.querySelector('.cf-turnstile');
+                        if (turnstileEl && typeof turnstile !== 'undefined') turnstile.reset(turnstileEl);
+                        syncBtn();
+                        
+                        /* IMPORTANTE: Entregar PDF y mostrar éxito incluso si Supabase falla,
+                           excepto si es un error de configuración crítico */
+                        const errorMsg = friendlyError(error);
+                        if (errorMsg.includes('configuración') || errorMsg.includes('permisos')) {
+                            showErr(errorMsg);
+                            return;
+                        }
+                        
+                        /* Para errores menores (duplicados, red, etc.), entregar PDF y éxito */
+                        window.open(PDF_PATH, '_blank');
+                        showSuccess();
+                        return;
+                    }
+
+                    /* Entrega inmediata del PDF: apertura en nueva pestaña */
+                    window.open(PDF_PATH, '_blank');
+
+                    /* Ocultar formulario y mostrar pantalla de éxito */
+                    showSuccess();
+
+                } catch (err) {
+                    console.error('[Embudo] Error de red:', err);
+                    /* Entrega el PDF igualmente — el lead no se guardó pero el usuario no se queda sin la guía */
+                    window.open(PDF_PATH, '_blank');
+                    showSuccess();
+                    setLoading(false);
+                }
+            }
+
+            /* ============================================================
+               INICIALIZACIÓN
+               ============================================================ */
+            function init() {
+                initDB();
+
+                /* Estado inicial del botón */
+                btn.disabled = true;
+
+                /* Forzar la alerta de error oculta al iniciar */
+                hideErr();
+
+                /* Arrancar el respaldo de Turnstile (fallback) */
+                startTurnstileFallback();
+
+                /* Listeners de control del botón */
+                chkPriv && chkPriv.addEventListener('change', syncBtn);
+
+                /* Validación al perder el foco (onBlur) — muestra errores de inmediato */
+                inpEmail && inpEmail.addEventListener('blur', () => {
+                    const val = (inpEmail?.value || '').trim();
+                    if (val && !EMAIL_RX.test(val)) {
+                        markErr('f-email');
+                        if (emailErr) emailErr.style.display = 'block';
+                    } else {
+                        const el = document.getElementById('f-email');
+                        if (el) el.classList.remove('err');
+                        if (emailErr) emailErr.style.display = 'none';
+                    }
+                });
+                inpWhatsapp && inpWhatsapp.addEventListener('blur', () => {
+                    const val = cleanPhone(inpWhatsapp?.value || '');
+                    if (val && !isValidEcuPhone(val)) {
+                        markErr('f-whatsapp');
+                        if (whatsappErr) whatsappErr.style.display = 'block';
+                    } else {
+                        const el = document.getElementById('f-whatsapp');
+                        if (el) el.classList.remove('err');
+                        if (whatsappErr) whatsappErr.style.display = 'none';
+                    }
+                });
+
+                /* Listeners en tiempo real para asteriscos dinámicos, syncBtn y limpieza de errores al corregir */
+                inpEmail && inpEmail.addEventListener('input', () => {
+                    updateContactAsterisks();
+                    syncBtn();
+                    const val = (inpEmail?.value || '').trim();
+                    if (EMAIL_RX.test(val)) {
+                        const el = document.getElementById('f-email');
+                        if (el) el.classList.remove('err');
+                        if (emailErr) emailErr.style.display = 'none';
+                    }
+                });
+                inpWhatsapp && inpWhatsapp.addEventListener('input', () => {
+                    updateContactAsterisks();
+                    syncBtn();
+                    const val = cleanPhone(inpWhatsapp?.value || '');
+                    if (isValidEcuPhone(val)) {
+                        const el = document.getElementById('f-whatsapp');
+                        if (el) el.classList.remove('err');
+                        if (whatsappErr) whatsappErr.style.display = 'none';
+                    }
+                });
+                inpNombre && inpNombre.addEventListener('input', syncBtn);
+
+                /* Estado inicial de asteriscos */
+                updateContactAsterisks();
+
+                /* Listener del selector de empresa */
+                selEmp && selEmp.addEventListener('change', toggleEmpresa);
+
+                /* Listener del formulario */
+                form && form.addEventListener('submit', handleSubmit);
+
+                /* Limpiar error visual al hacer foco en un campo */
+                document.querySelectorAll('#lead-form input, #lead-form select')
+                    .forEach(el => el.addEventListener('focus', () => {
+                        el.classList.remove('err');
+                        /* Ocultar mensajes de error inline del campo correspondiente */
+                        const fid = el.getAttribute('id');
+                        if (fid === 'f-email' && emailErr) emailErr.style.display = 'none';
+                        if (fid === 'f-whatsapp' && whatsappErr) whatsappErr.style.display = 'none';
+                        /* Ocultar caja de error al empezar a corregir */
+                        hideErr();
+                    }));
+            }
+
+            /* Arrancar cuando el DOM esté listo */
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+            /* ============================================================
+               ARRANQUE SEGURO — limpiar alertas residuales + fallback 3s
+               ============================================================ */
+            window.addEventListener('load', function () {
+                /* Forzar el bloque de error a estar oculto por defecto al cargar */
+                hideErr();
+
+                /* A los 3 s, si Turnstile sigue sin token, limpiar errores
+                   visibles y activar el captchaFallback automático. */
+                setTimeout(function () {
+                    if (!captchaToken) {
+                        hideErr();
+                        captchaFallback = true;
+                        syncBtn();
+                    }
+                }, 3000);
+            });
+
+        })();
+    </script>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MODAL DE POLÍTICA DE PRIVACIDAD
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="privacy-modal" class="fixed inset-0 z-[300] hidden" aria-modal="true" role="dialog"
+        aria-labelledby="privacy-title">
+        <!-- Fondo oscuro semitransparente -->
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" id="privacy-backdrop"></div>
+
+        <!-- Contenedor centrado -->
+        <div class="relative z-10 flex min-h-full items-center justify-center p-4">
+            <!-- Tarjeta del modal -->
+            <div class="max-w-2xl w-full max-h-[80vh] overflow-y-auto bg-white rounded-lg p-6 shadow-xl relative">
+
+                <!-- Botón cerrar (X) -->
+                <button type="button" id="close-privacy-modal"
+                    class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
+                    aria-label="Cerrar política de privacidad">
+                    <i class="fa-solid fa-xmark fa-lg"></i>
+                </button>
+
+                <h2 id="privacy-title" class="text-xl font-bold text-slate-900 mb-4 pr-8">Política de Privacidad</h2>
+
+                <div class="text-slate-600 text-sm leading-relaxed space-y-3">
+                    <p><strong>1. Responsable del tratamiento</strong><br>
+                        El responsable de los datos personales recogidos a través de este formulario es <strong>Creacom
+                            Hormigonera</strong>, con fines comerciales y de contacto directo con nuestros clientes y
+                        prospectos en el Ecuador.</p>
+
+                    <p><strong>2. Datos que recopilamos</strong><br>
+                        Solicitamos únicamente la información necesaria para atender tu solicitud: nombre completo,
+                        correo electrónico y número de WhatsApp.</p>
+
+                    <p><strong>3. Finalidad del tratamiento</strong><br>
+                        Tus datos serán utilizados exclusivamente para:
+                        <span class="block pl-5 mt-1">• Enviar cotizaciones comerciales de hormigón dosificado.</span>
+                        <span class="block pl-5">• Compartir información técnica, guías y material de valor sobre
+                            nuestros servicios.</span>
+                        <span class="block pl-5">• Realizar seguimiento del embudo de ventas y brindar atención
+                            personalizada.</span>
+                    </p>
+
+                    <p><strong>4. Conservación y protección</strong><br>
+                        Conservamos tus datos mientras mantengas una relación comercial activa con nosotros o hasta que
+                        solicites su eliminación. Aplicamos medidas de seguridad físicas, técnicas y administrativas
+                        para proteger tu información contra acceso no autorizado.</p>
+
+                    <p><strong>5. Terceros</strong><br>
+                        <strong>Creacom Hormigonera no comparte, vende ni transfiere tus datos personales a terceros
+                            ajenos a nuestra organización.</strong> Solo hacemos uso interno de la información para los
+                        fines descritos.
+                    </p>
+
+                    <p><strong>6. Derechos de los titulares</strong><br>
+                        Puedes ejercer tus derechos de acceso, rectificación, cancelación u oposición escribiendo a
+                        nuestros canales oficiales de atención o solicitando la baja directamente al correo <a
+                            href="mailto:hormigonera.admin@creacomsa.com"
+                            class="text-amber-600 hover:underline">hormigonera.admin@creacomsa.com</a>.</p>
+
+                    <p><strong>7. Aceptación</strong><br>
+                        Al marcar la casilla de aceptación y enviar el formulario, declaras que has leído esta política
+                        y autorizas a Creacom Hormigonera a tratar tus datos para los fines indicados.</p>
+                </div>
+
+                <!-- Botón cerrar al final -->
+                <div class="mt-6 flex justify-end">
+                    <button type="button" id="close-privacy-modal-bottom"
+                        class="px-4 py-2 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-colors">
+                        Cerrar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de control del modal de privacidad -->
+    <script>
+        (function () {
+            'use strict';
+
+            const modal = document.getElementById('privacy-modal');
+            const openBtn = document.getElementById('open-privacy-modal');
+            const closeBtns = document.querySelectorAll('#close-privacy-modal, #close-privacy-modal-bottom');
+
+            if (!modal || !openBtn) return;
+
+            function openModal(e) {
+                if (e && e.preventDefault) e.preventDefault();
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+
+            openBtn.addEventListener('click', openModal);
+
+            closeBtns.forEach(function (btn) {
+                btn.addEventListener('click', closeModal);
+            });
+
+            /* Cerrar al hacer clic fuera de la tarjeta (sobre el fondo) */
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal || e.target.id === 'privacy-backdrop') {
+                    closeModal();
+                }
+            });
+
+            /* Cerrar con la tecla Escape */
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

@@ -57,7 +57,7 @@ function calcularVolumen() {
 }
 // Permitir calcular con Enter
 document.addEventListener('DOMContentLoaded', function () {
-    const inputs = document.querySelectorAll('. calculator-form input');
+    const inputs = document.querySelectorAll('.calculator-form input');
     inputs.forEach(input => {
         input.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {

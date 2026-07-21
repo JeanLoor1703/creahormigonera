@@ -1,0 +1,32 @@
+name: Despertador de Supabase
+
+on:
+  schedule:
+    # Ejecutar domingos y miércoles a las 00:00 UTC
+    - cron: '0 0 * * 0,3'
+  
+  # Permitir ejecución manual desde la pestaña Actions
+  workflow_dispatch:
+
+jobs:
+  ping-supabase:
+    name: Ping a Supabase
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        run: npm install @supabase/supabase-js
+
+      - name: Ejecutar ping a Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: node ping-supabase.js
