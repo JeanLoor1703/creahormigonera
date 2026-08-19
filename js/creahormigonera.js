@@ -423,14 +423,14 @@ async function sendMessage() {
                 });
 
                 if (response.status === 429 && attempt < MAX_ATTEMPTS) {
-                    await new Promise(function(r) { setTimeout(r, 1000); });
+                    await new Promise(function (r) { setTimeout(r, 1000); });
                     continue;
                 }
 
                 break;
             } catch (err) {
                 if (attempt < MAX_ATTEMPTS) {
-                    await new Promise(function(r) { setTimeout(r, 1000); });
+                    await new Promise(function (r) { setTimeout(r, 1000); });
                     continue;
                 }
                 throw err;

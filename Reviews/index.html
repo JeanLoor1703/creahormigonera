@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opiniones | Crea Hormigonera</title>
+    <meta name="description" content="Dejanos tu opinión sobre Crea Hormigonera. Tu feedback nos ayuda a mejorar.">
+    <link rel="icon" href="../favicon.png" type="image/png" sizes="192x192">
+    <link rel="canonical" href="https://creahormigonera.com/Reviews">
+
+    <!-- Google Ads tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17780502582"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'AW-17780502582');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Animated background particles */
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-glow::before,
+        .bg-glow::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        .bg-glow::before {
+            width: 400px;
+            height: 400px;
+            background: #1a73e8;
+            top: -100px;
+            left: -100px;
+        }
+
+        .bg-glow::after {
+            width: 350px;
+            height: 350px;
+            background: #fbbc04;
+            bottom: -80px;
+            right: -80px;
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.2; }
+            100% { transform: scale(1.3); opacity: 0.4; }
+        }
+
+        /* Card */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px 40px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            animation: cardEntry 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }
+
+        @keyframes cardEntry {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Fade out animation */
+        .card.fade-out {
+            animation: cardExit 0.5s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+        }
+
+        @keyframes cardExit {
+            to {
+                opacity: 0;
+                transform: translateY(-20px) scale(1.02);
+            }
+        }
+
+        /* Logo */
+        .logo {
+            width: 160px;
+            margin: 0 auto 28px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Google stars */
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 20px;
+            animation: starsIn 0.8s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        @keyframes starsIn {
+            to { opacity: 1; }
+        }
+
+        .star {
+            width: 32px;
+            height: 32px;
+        }
+
+        .star svg {
+            width: 100%;
+            height: 100%;
+            fill: #fbbc04;
+            filter: drop-shadow(0 0 6px rgba(251, 188, 4, 0.4));
+            animation: starPop 0.3s ease-out forwards;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .star:nth-child(1) svg { animation-delay: 0.4s; }
+        .star:nth-child(2) svg { animation-delay: 0.5s; }
+        .star:nth-child(3) svg { animation-delay: 0.6s; }
+        .star:nth-child(4) svg { animation-delay: 0.7s; }
+        .star:nth-child(5) svg { animation-delay: 0.8s; }
+
+        @keyframes starPop {
+            0% { opacity: 0; transform: scale(0) rotate(-20deg); }
+            70% { transform: scale(1.2) rotate(5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0); }
+        }
+
+        /* Text */
+        h1 {
+            color: #ffffff;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            animation: textIn 0.6s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 32px;
+            animation: textIn 0.6s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+
+        @keyframes textIn {
+            to { opacity: 1; }
+        }
+
+        /* Spinner */
+        .spinner-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            animation: textIn 0.6s ease-out 0.7s forwards;
+            opacity: 0;
+        }
+
+        .spinner {
+            width: 28px;
+            height: 28px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #1a73e8;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 28px;
+            animation: textIn 0.6s ease-out 0.7s forwards;
+            opacity: 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1a73e8, #4285f4, #fbbc04);
+            border-radius: 4px;
+            width: 0%;
+            animation: fillBar 1.8s ease-in-out 0.8s forwards;
+        }
+
+        @keyframes fillBar {
+            to { width: 100%; }
+        }
+
+        /* Manual link */
+        .manual-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #1a73e8, #4285f4);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(26, 115, 232, 0.3);
+            animation: textIn 0.6s ease-out 0.8s forwards;
+            opacity: 0;
+        }
+
+        .manual-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(26, 115, 232, 0.5);
+        }
+
+        .manual-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Google icon */
+        .google-icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+            animation: textIn 0.6s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .google-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <div class="card" id="card">
+        <!-- Logo Crea Hormigonera -->
+        <div class="logo">
+            <img src="../imagenes/creahormigoneralogo.png" alt="Logo Crea Hormigonera" width="160" height="44">
+        </div>
+
+        <!-- Google icon -->
+        <div class="google-icon">
+            <svg viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.998 23.998 0 0 0 0 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+        </div>
+
+        <!-- Stars -->
+        <div class="stars">
+            <div class="star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div class="star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div class="star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div class="star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div class="star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        </div>
+
+        <h1>¡Tu opinión nos importa!</h1>
+        <p class="subtitle">Te estamos llevando a Google para que dejes tu reseña sobre Crea Hormigonera...</p>
+
+        <!-- Progress bar -->
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <!-- Spinner -->
+        <div class="spinner-wrap">
+            <div class="spinner"></div>
+            <span class="spinner-text">Redirigiendo...</span>
+        </div>
+
+        <!-- Fallback manual link -->
+        <a id="review-link" class="manual-link" href="https://g.page/r/CQAlbjKnsgRkEBM/review" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Dejar mi opinión
+        </a>
+    </div>
+
+    <script>
+        // Redirect after ~2.5 seconds (enough time to see the animation)
+        var REDIRECT_DELAY = 2500;
+        var reviewUrl = 'https://g.page/r/CQAlbjKnsgRkEBM/review';
+
+        setTimeout(function() {
+            var card = document.getElementById('card');
+            card.classList.add('fade-out');
+
+            // Navigate after the exit animation
+            setTimeout(function() {
+                window.location.href = reviewUrl;
+            }, 400);
+        }, REDIRECT_DELAY);
+    </script>
+</body>
+</html>
