@@ -239,6 +239,8 @@
             grid-template-columns: repeat(2,minmax(0,1fr));
             gap: 11px 12px;
             margin-bottom: 17px;
+            position: relative;
+            z-index: 10;
         }
         .form-group { min-width: 0; }
         .form-label { display: block; margin-bottom: 5px; color: #3f4247; font-size: .63rem; font-weight: 600; }
@@ -272,14 +274,89 @@
         .form-control::placeholder { color: #a3a5aa; font-weight: 400; }
         .form-control:hover { border-color: #b9bbc0; }
         .form-control:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(210,11,27,.1); }
-        select.form-control {
-            appearance: none;
-            cursor: pointer;
-            padding-right: 28px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2376787d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-            background-position: right 9px center;
-            background-repeat: no-repeat;
+        .select-wrap { z-index: 20; }
+        .select-native {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
         }
+        .select-trigger {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-right: 34px;
+            text-align: left;
+            cursor: pointer;
+        }
+        .select-trigger::after {
+            content: "";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            width: 7px;
+            height: 7px;
+            border-right: 1.5px solid #76787d;
+            border-bottom: 1.5px solid #76787d;
+            transform: translateY(-65%) rotate(45deg);
+            transition: transform .22s ease, border-color .22s ease;
+        }
+        .select-trigger.is-open::after {
+            border-color: var(--red);
+            transform: translateY(-25%) rotate(225deg);
+        }
+        .select-trigger.is-open {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(210,11,27,.1);
+        }
+        .select-menu {
+            position: absolute;
+            top: calc(100% + 7px);
+            left: 0;
+            right: 0;
+            z-index: 30;
+            padding: 6px;
+            border: 1px solid rgba(210,11,27,.14);
+            border-radius: 9px;
+            background: rgba(255,255,255,.98);
+            box-shadow: 0 18px 34px rgba(27,29,32,.18);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px) scaleY(.82);
+            transform-origin: top center;
+            pointer-events: none;
+        }
+        .select-menu.is-open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .select-option {
+            width: 100%;
+            display: block;
+            padding: 10px 11px;
+            border: 0;
+            border-radius: 6px;
+            background: transparent;
+            color: #35383d;
+            font-size: .7rem;
+            font-weight: 500;
+            line-height: 1.25;
+            text-align: left;
+            cursor: pointer;
+            transition: background .16s ease, color .16s ease;
+        }
+        .select-option:hover,
+        .select-option:focus-visible,
+        .select-option[aria-selected="true"] {
+            background: #fff0f1;
+            color: var(--red);
+            outline: none;
+        }
+        .select-option[aria-selected="true"] { font-weight: 700; }
         textarea.form-control { min-height: 78px; padding: 10px 11px; line-height: 1.45; resize: vertical; }
         .experience-group { margin-bottom: 14px; }
         .experience-group textarea { border-color: #c9878f; }
@@ -530,12 +607,12 @@
     <main class="feedback-stage">
         <div class="visual-wall" aria-label="Video institucional de Creacom Hormigonera">
             <figure class="video-panel video-panel--left" aria-hidden="true">
-                <video autoplay muted loop playsinline preload="auto" tabindex="-1" data-ambient-video>
+                <video autoplay muted loop playsinline preload="metadata" tabindex="-1" data-ambient-video>
                     <source src="../video/creahormigoneravideo1.mp4" type="video/mp4">
                 </video>
             </figure>
             <figure class="video-panel video-panel--right">
-                <video autoplay muted loop controls playsinline preload="auto" data-ambient-video aria-label="Video de la planta de hormigón; usa los controles para activar el sonido">
+                <video autoplay muted loop controls playsinline preload="metadata" data-ambient-video aria-label="Video de la planta de hormigón; usa los controles para activar el sonido">
                     <source src="Planta-hormigon.mp4" type="video/mp4">
                 </video>
             </figure>
@@ -580,10 +657,21 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="servicio">Servicio solicitado</label>
-                        <div class="input-wrap">
+                        <label class="form-label" id="servicioLabel" for="servicioTrigger">Servicio solicitado</label>
+                        <div class="input-wrap select-wrap">
                             <svg class="icon" aria-hidden="true"><use href="#i-truck"/></svg>
-                            <select class="form-control" id="servicio" name="servicio">
+                            <button class="form-control select-trigger" id="servicioTrigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="servicioOptions" aria-labelledby="servicioLabel servicioValue">
+                                <span id="servicioValue">Selecciona el servicio recibido</span>
+                            </button>
+                            <div class="select-menu" id="servicioOptions" role="listbox" aria-labelledby="servicioLabel" tabindex="-1">
+                                <button class="select-option" type="button" role="option" data-value="" aria-selected="true">Selecciona el servicio recibido</button>
+                                <button class="select-option" type="button" role="option" data-value="Hormigón Premezclado" aria-selected="false">Hormigón premezclado</button>
+                                <button class="select-option" type="button" role="option" data-value="Servicio de Bombeo" aria-selected="false">Servicio de bombeo</button>
+                                <button class="select-option" type="button" role="option" data-value="Hormigón + Bombeo" aria-selected="false">Hormigón + bombeo</button>
+                                <button class="select-option" type="button" role="option" data-value="Asesoría Técnica / Laboratorio" aria-selected="false">Asesoría técnica / laboratorio</button>
+                                <button class="select-option" type="button" role="option" data-value="Otro" aria-selected="false">Otro servicio</button>
+                            </div>
+                            <select class="select-native" id="servicio" name="servicio" tabindex="-1" aria-hidden="true">
                                 <option value="" selected>Selecciona el servicio recibido</option>
                                 <option value="Hormigón Premezclado">Hormigón premezclado</option>
                                 <option value="Servicio de Bombeo">Servicio de bombeo</option>
@@ -624,7 +712,7 @@
 
         <section class="mobile-gallery" aria-label="Video institucional de Creacom Hormigonera">
             <figure>
-                <video autoplay muted loop controls playsinline preload="auto" data-ambient-video aria-label="Video institucional de Creacom Hormigonera; usa los controles para activar el sonido">
+                <video autoplay muted loop controls playsinline preload="metadata" data-ambient-video aria-label="Video institucional de Creacom Hormigonera; usa los controles para activar el sonido">
                     <source src="../video/creahormigoneravideo1.mp4" type="video/mp4">
                     <track kind="captions" src="../video/captions-es.vtt" srclang="es" label="Español" default>
                 </video>
@@ -667,6 +755,12 @@
         const modalSymbol = successModal.querySelector('.modal-symbol');
         const modalContent = Array.from(successModal.querySelectorAll('.modal-title, .modal-text, .modal-action'));
         const formControls = Array.from(document.querySelectorAll('.form-control'));
+        const serviceWrap = document.querySelector('.select-wrap');
+        const serviceSelect = document.getElementById('servicio');
+        const serviceTrigger = document.getElementById('servicioTrigger');
+        const serviceMenu = document.getElementById('servicioOptions');
+        const serviceValue = document.getElementById('servicioValue');
+        const serviceOptions = Array.from(serviceMenu.querySelectorAll('.select-option'));
         const sendIcon = btnSubmit.querySelector('.icon');
         const WHATSAPP_NUMBER = '593997528670';
         const motionApi = window.anime || null;
@@ -824,45 +918,118 @@
             if (surface) surface.classList.add('is-ready');
         }
 
-        function waitForVisibleVideos() {
-            const visibleVideos = ambientVideos.filter(function (video) {
-                return video.offsetParent !== null;
-            });
+        ambientVideos.forEach(function (video) {
+            const markReady = function () { markVideoReady(video); };
+            video.addEventListener('loadeddata', markReady, { once: true });
+            video.addEventListener('canplay', markReady, { once: true });
+            if (video.readyState >= 2) markReady();
+        });
 
-            return Promise.all(visibleVideos.map(function (video) {
-                if (video.readyState >= 2) {
-                    markVideoReady(video);
-                    return Promise.resolve();
-                }
-
-                return new Promise(function (resolve) {
-                    let resolved = false;
-                    let readyMarked = false;
-                    const markReady = function () {
-                        if (readyMarked) return;
-                        readyMarked = true;
-                        markVideoReady(video);
-                        if (!resolved) {
-                            resolved = true;
-                            resolve();
-                        }
-                    };
-                    video.addEventListener('loadeddata', markReady, { once: true });
-                    video.addEventListener('canplay', markReady, { once: true });
-                    window.setTimeout(function () {
-                        if (resolved) return;
-                        resolved = true;
-                        resolve();
-                    }, 1400);
-                });
-            }));
+        function bootPage() {
+            startVisibleVideos();
+            window.requestAnimationFrame(runEntryMotion);
         }
 
-        window.addEventListener('load', function () {
-            startVisibleVideos();
-            waitForVisibleVideos().then(runEntryMotion);
-        });
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', bootPage, { once: true });
+        } else {
+            bootPage();
+        }
         mobileVideoQuery.addEventListener('change', startVisibleVideos);
+
+        function openServiceMenu() {
+            if (serviceMenu.classList.contains('is-open')) return;
+            serviceMenu.classList.add('is-open');
+            serviceTrigger.classList.add('is-open');
+            serviceTrigger.setAttribute('aria-expanded', 'true');
+            if (!canAnimate()) return;
+
+            animateElement(serviceMenu, {
+                opacity: { from: 0, to: 1 },
+                scaleY: { from: .82, to: 1 },
+                y: { from: -8, to: 0 },
+                duration: 280,
+                ease: 'out(4)'
+            });
+            animateElement(serviceOptions, {
+                opacity: { from: 0, to: 1 },
+                y: { from: -7, to: 0 },
+                delay: motionApi.stagger(32, { start: 45 }),
+                duration: 220,
+                ease: 'outQuad'
+            });
+        }
+
+        function closeServiceMenu(restoreFocus) {
+            if (!serviceMenu.classList.contains('is-open')) return;
+            serviceTrigger.classList.remove('is-open');
+            serviceTrigger.setAttribute('aria-expanded', 'false');
+
+            const finishClose = function () {
+                serviceMenu.classList.remove('is-open');
+                if (restoreFocus) serviceTrigger.focus();
+            };
+            if (!canAnimate()) {
+                finishClose();
+                return;
+            }
+            animateElement(serviceMenu, {
+                opacity: { to: 0 },
+                scaleY: { to: .82 },
+                y: { to: -8 },
+                duration: 160,
+                ease: 'inQuad',
+                onComplete: finishClose
+            });
+        }
+
+        function selectServiceOption(option) {
+            const value = option.dataset.value;
+            serviceSelect.value = value;
+            serviceValue.textContent = option.textContent;
+            serviceOptions.forEach(function (item) {
+                item.setAttribute('aria-selected', item === option ? 'true' : 'false');
+            });
+            serviceSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            closeServiceMenu(true);
+        }
+
+        serviceTrigger.addEventListener('click', function () {
+            if (serviceMenu.classList.contains('is-open')) closeServiceMenu(false);
+            else openServiceMenu();
+        });
+        serviceOptions.forEach(function (option) {
+            option.addEventListener('click', function () { selectServiceOption(option); });
+        });
+        serviceMenu.addEventListener('keydown', function (event) {
+            const currentIndex = serviceOptions.indexOf(document.activeElement);
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeServiceMenu(true);
+                return;
+            }
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                const direction = event.key === 'ArrowDown' ? 1 : -1;
+                const nextIndex = currentIndex < 0
+                    ? 0
+                    : (currentIndex + direction + serviceOptions.length) % serviceOptions.length;
+                serviceOptions[nextIndex].focus();
+            }
+        });
+        serviceTrigger.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openServiceMenu();
+                serviceOptions.find(function (option) {
+                    return option.getAttribute('aria-selected') === 'true';
+                }).focus();
+            }
+            if (event.key === 'Escape') closeServiceMenu(false);
+        });
+        document.addEventListener('click', function (event) {
+            if (!serviceWrap.contains(event.target)) closeServiceMenu(false);
+        });
 
         function setNameError(message) {
             nombreError.textContent = message;
