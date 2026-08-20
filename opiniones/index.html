@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Buzón de Opiniones y Mejoras | Creacom Hormigonera</title>
+    <meta name="description" content="Comparte tu experiencia y sugerencias de mejora con Creacom Hormigonera. Tu opinión nos ayuda a seguir construyendo un mejor servicio.">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="../favicon.png" type="image/png" sizes="192x192">
+    <link rel="canonical" href="https://creahormigonera.com/opiniones">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17780502582"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'AW-17780502582');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --red: #d20b1b;
+            --red-dark: #aa0714;
+            --ink: #171719;
+            --body: #5f6268;
+            --muted: #8b8e94;
+            --line: #dedfe2;
+            --canvas: #f5f5f3;
+            --paper: #fff;
+            --idea: #fff9d9;
+            --idea-line: #edcf41;
+            --success: #1b8d4b;
+            --danger: #b90818;
+            --shadow: 0 22px 56px rgba(24,24,27,.15), 0 3px 10px rgba(24,24,27,.08);
+            --font: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            min-width: 320px;
+            min-height: 100vh;
+            background: var(--canvas);
+            color: var(--ink);
+            font-family: var(--font);
+            line-height: 1.45;
+        }
+        button, input, select, textarea { font: inherit; }
+        img, video { display: block; max-width: 100%; }
+        a { color: inherit; }
+        .icon {
+            width: 1em;
+            height: 1em;
+            flex: 0 0 auto;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.8;
+        }
+
+        .site-header {
+            position: relative;
+            z-index: 20;
+            height: 70px;
+            background: rgba(255,255,255,.97);
+            border-bottom: 1px solid rgba(23,23,25,.07);
+        }
+        .header-inner {
+            width: min(100% - 40px, 1480px);
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .brand { display: inline-flex; align-items: center; text-decoration: none; }
+        .brand img { width: 128px; height: auto; }
+        .back-link {
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 12px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            background: var(--paper);
+            color: #4d5055;
+            font-size: .72rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: border-color .18s ease, color .18s ease, transform .18s ease;
+        }
+        .back-link:hover { border-color: var(--red); color: var(--red); transform: translateY(-1px); }
+        :is(.back-link,.btn-submit,.modal-close,.modal-action,.form-control):focus-visible {
+            outline: 3px solid rgba(210,11,27,.22);
+            outline-offset: 2px;
+        }
+
+        .feedback-stage {
+            position: relative;
+            width: min(100%, 1536px);
+            min-height: calc(100vh - 70px);
+            min-height: calc(100dvh - 70px);
+            margin: 0 auto;
+            padding: 24px 20px 30px;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .feedback-stage::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -3;
+            background: var(--canvas);
+        }
+
+        .visual-wall {
+            position: absolute;
+            inset: 26px 20px 30px;
+            z-index: -1;
+            display: grid;
+            grid-template-columns: minmax(220px,1fr) 548px minmax(220px,1fr);
+            gap: 0;
+            pointer-events: none;
+        }
+        .video-panel {
+            position: relative;
+            margin: 0;
+            align-self: stretch;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.48);
+            border-radius: 16px;
+            background: linear-gradient(118deg,#dfe3e0 0%,#f3f2ef 42%,#cbd1cf 100%);
+            box-shadow: 0 24px 60px rgba(19,20,22,.22);
+        }
+        .video-panel video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            filter: saturate(.82) contrast(1.08) brightness(.8);
+            transition: opacity .65s ease;
+        }
+        .video-panel.is-ready video,
+        .mobile-gallery.is-ready video {
+            opacity: 1;
+        }
+        .video-panel::before,
+        .video-panel::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .video-panel::before {
+            background:
+                radial-gradient(circle at 50% 34%,transparent 30%,rgba(8,9,11,.34) 100%),
+                linear-gradient(180deg,rgba(5,6,8,.2),transparent 30%,rgba(5,6,8,.4));
+        }
+        .video-panel:not(.is-ready)::before {
+            background:
+                linear-gradient(112deg,rgba(255,255,255,.2),rgba(255,255,255,.62),rgba(255,255,255,.16)),
+                linear-gradient(135deg,#dfe3e0,#f5f3ef 52%,#cdd3d0);
+            background-size: 200% 100%;
+            animation: video-sheen 1.6s ease-in-out infinite;
+        }
+        @keyframes video-sheen {
+            0%,100% { background-position: 100% 0; }
+            50% { background-position: 0 0; }
+        }
+        .video-panel--left {
+            grid-column: 1;
+            margin-right: -54px;
+        }
+        .video-panel--left::after {
+            background:
+                linear-gradient(90deg,transparent 46%,rgba(245,245,243,.18) 70%,var(--canvas) 100%),
+                linear-gradient(0deg,var(--canvas) 0%,var(--canvas) 8%,rgba(245,245,243,.65) 15%,transparent 25%);
+        }
+        .video-panel--right {
+            grid-column: 3;
+            margin-left: -54px;
+            pointer-events: auto;
+        }
+        .video-panel--right::after {
+            background:
+                linear-gradient(270deg,transparent 46%,rgba(245,245,243,.18) 70%,var(--canvas) 100%),
+                linear-gradient(0deg,var(--canvas) 0%,var(--canvas) 8%,rgba(245,245,243,.65) 15%,transparent 25%);
+        }
+        .form-panel {
+            position: relative;
+            z-index: 5;
+            width: min(100%,548px);
+            margin: auto;
+            padding: 26px 30px 22px;
+            border: 1px solid rgba(23,23,25,.09);
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: var(--shadow);
+        }
+        .loading-state .form-panel,
+        .loading-state .mobile-gallery {
+            opacity: 0;
+        }
+        .form-intro { max-width: 430px; margin: 0 auto 20px; text-align: center; }
+        .form-intro h1 {
+            margin: 0;
+            font-size: clamp(1.55rem,2.4vw,2rem);
+            font-weight: 800;
+            letter-spacing: -.045em;
+            line-height: 1.04;
+        }
+        .form-intro h1 span { color: var(--red); }
+        .form-intro p:last-child { margin: 8px auto 0; color: var(--body); font-size: .72rem; line-height: 1.45; }
+        .section-label {
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #2e3034;
+            font-size: .65rem;
+            font-weight: 800;
+            letter-spacing: .035em;
+            text-transform: uppercase;
+        }
+        .section-label .icon { color: var(--red); font-size: .9rem; }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2,minmax(0,1fr));
+            gap: 11px 12px;
+            margin-bottom: 17px;
+        }
+        .form-group { min-width: 0; }
+        .form-label { display: block; margin-bottom: 5px; color: #3f4247; font-size: .63rem; font-weight: 600; }
+        .required-mark { color: var(--red); }
+        .input-wrap { position: relative; }
+        .input-wrap > .icon {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            z-index: 1;
+            color: #9b9da2;
+            font-size: .82rem;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        .form-control {
+            width: 100%;
+            min-height: 36px;
+            padding: 8px 10px 8px 32px;
+            border: 1px solid #d8dade;
+            border-radius: 4px;
+            background: #fff;
+            color: var(--ink);
+            font-size: .7rem;
+            font-weight: 500;
+            outline: none;
+            transform-origin: center;
+            will-change: transform;
+            transition: border-color .16s ease, box-shadow .16s ease;
+        }
+        .form-control::placeholder { color: #a3a5aa; font-weight: 400; }
+        .form-control:hover { border-color: #b9bbc0; }
+        .form-control:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(210,11,27,.1); }
+        select.form-control {
+            appearance: none;
+            cursor: pointer;
+            padding-right: 28px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2376787d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-position: right 9px center;
+            background-repeat: no-repeat;
+        }
+        textarea.form-control { min-height: 78px; padding: 10px 11px; line-height: 1.45; resize: vertical; }
+        .experience-group { margin-bottom: 14px; }
+        .experience-group textarea { border-color: #c9878f; }
+        .idea-box {
+            margin-bottom: 16px;
+            padding: 11px;
+            border: 1px dashed var(--idea-line);
+            border-radius: 5px;
+            background: var(--idea);
+        }
+        .idea-box .section-label { margin-bottom: 6px; color: #665a18; }
+        .idea-box .section-label .icon { color: #b78e00; }
+        .idea-box textarea.form-control { min-height: 72px; border-color: #dfca61; background: rgba(255,255,255,.86); }
+        .field-error { min-height: 0; margin: 4px 0 0; color: var(--danger); font-size: .62rem; font-weight: 600; }
+        .btn-submit {
+            width: 100%;
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border: 0;
+            border-radius: 4px;
+            background: var(--red);
+            color: #fff;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .035em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 7px 18px rgba(210,11,27,.23);
+            transform-origin: center;
+            will-change: transform;
+            transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+        }
+        .btn-submit:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 9px 22px rgba(210,11,27,.3); }
+        .btn-submit:disabled { cursor: wait; opacity: .7; transform: none; box-shadow: none; }
+        .btn-submit .icon { font-size: .95rem; }
+        .submit-note {
+            margin: 9px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--muted);
+            font-size: .58rem;
+            text-align: center;
+        }
+        .submit-note .icon { color: var(--success); font-size: .8rem; }
+        .mobile-gallery { display: none; }
+
+        .site-footer { padding: 14px 20px 18px; background: #fff; color: #777a80; font-size: .67rem; text-align: center; }
+        .site-footer a { color: var(--red); font-weight: 700; text-decoration: none; }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background: rgba(17,18,20,.7);
+            opacity: 0;
+            visibility: hidden;
+            backdrop-filter: blur(5px);
+            transition: opacity .18s ease, visibility .18s ease;
+        }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+        .modal-box {
+            position: relative;
+            width: min(100%,430px);
+            padding: 34px 28px 26px;
+            border-radius: 8px;
+            background: #fff;
+            text-align: center;
+            box-shadow: 0 26px 70px rgba(0,0,0,.28);
+            transform: translateY(12px) scale(.98);
+            transition: transform .2s ease;
+        }
+        .modal-overlay.show .modal-box { transform: translateY(0) scale(1); }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border: 0;
+            border-radius: 50%;
+            background: #f1f1ef;
+            color: #5f6268;
+            cursor: pointer;
+        }
+        .modal-symbol {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 15px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #e5f6eb;
+            color: var(--success);
+            font-size: 1.65rem;
+        }
+        .modal-title { margin: 0 0 8px; font-size: 1.35rem; line-height: 1.16; }
+        .modal-text { margin: 0 0 20px; color: var(--body); font-size: .82rem; }
+        .modal-actions { display: grid; gap: 9px; }
+        .modal-action {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 4px;
+            font-size: .76rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .modal-action--primary { background: var(--red); color: #fff; }
+        .modal-action--secondary { background: #eeeeec; color: #34363a; }
+
+        @media (max-width: 1120px) {
+            .feedback-stage { padding-inline: 18px; }
+            .visual-wall {
+                inset-inline: 10px;
+                grid-template-columns: minmax(180px,1fr) 520px minmax(180px,1fr);
+            }
+            .video-panel--left { margin-right: -42px; }
+            .video-panel--right { margin-left: -42px; }
+            .form-panel { width: min(100%,520px); }
+        }
+
+        @media (max-width: 820px) {
+            .site-header { height: 62px; }
+            .header-inner { width: min(100% - 28px,760px); }
+            .brand img { width: 112px; }
+            .feedback-stage { min-height: calc(100dvh - 62px); padding: 30px 14px 38px; }
+            .visual-wall {
+                inset: 20px auto 24px 50%;
+                width: 900px;
+                grid-template-columns: 190px 520px 190px;
+                transform: translateX(-50%);
+            }
+            .video-panel { border-radius: 12px; }
+            .video-panel--left { margin-right: -34px; }
+            .video-panel--right { margin-left: -34px; }
+            .form-panel { width: min(100%,520px); }
+        }
+
+        @media (max-width: 640px) {
+            .site-header { position: sticky; top: 0; height: 60px; }
+            .header-inner { width: calc(100% - 24px); }
+            .brand img { width: 105px; }
+            .back-link { min-height: 34px; padding: 7px 10px; }
+            .back-link span { display: none; }
+            .feedback-stage {
+                min-height: auto;
+                display: block;
+                padding: 18px 12px 20px;
+                overflow: visible;
+                background: #f2f2f0;
+            }
+            .visual-wall { display: none; }
+            .form-panel { width: 100%; padding: 24px 18px 20px; border-radius: 7px; box-shadow: 0 14px 36px rgba(24,24,27,.12); }
+            .form-intro { margin-bottom: 18px; }
+            .form-intro h1 { font-size: clamp(1.6rem,8.2vw,2.05rem); }
+            .form-intro p:last-child { max-width: 340px; font-size: .7rem; }
+            .form-grid { grid-template-columns: 1fr; gap: 10px; }
+            .form-label, .section-label { font-size: .68rem; }
+            .form-control { min-height: 43px; font-size: 16px; }
+            textarea.form-control { min-height: 104px; font-size: 16px; }
+            .idea-box textarea.form-control { min-height: 96px; }
+            .btn-submit { min-height: 48px; font-size: .76rem; }
+            .mobile-gallery {
+                margin-top: 16px;
+                display: block;
+            }
+            .mobile-gallery figure {
+                position: relative;
+                margin: 0;
+                overflow: hidden;
+                aspect-ratio: 16/9;
+                border: 1px solid rgba(255,255,255,.5);
+                border-radius: 12px;
+                background: linear-gradient(118deg,#dfe3e0 0%,#f3f2ef 42%,#cbd1cf 100%);
+                box-shadow: 0 16px 36px rgba(18,19,21,.22);
+            }
+            .mobile-gallery figure::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: 2;
+                background:
+                    linear-gradient(112deg,rgba(255,255,255,.2),rgba(255,255,255,.62),rgba(255,255,255,.16)),
+                    linear-gradient(135deg,#dfe3e0,#f5f3ef 52%,#cdd3d0);
+                background-size: 200% 100%;
+                animation: video-sheen 1.6s ease-in-out infinite;
+                transition: opacity .5s ease;
+                pointer-events: none;
+            }
+            .mobile-gallery.is-ready figure::before { opacity: 0; animation: none; }
+            .mobile-gallery video { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+        }
+        @media (max-width: 390px) {
+            .form-panel { padding-inline: 15px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *,*::before,*::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body class="loading-state">
+    <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+        <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></symbol>
+        <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.8 20c.7-4 3.1-6 7.2-6s6.5 2 7.2 6"/></symbol>
+        <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l10-3v19"/><path d="M14 9h6v12"/><path d="M8 8h2M8 12h2M8 16h2M17 13h1M17 17h1"/></symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+        <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v11H3zM14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+        <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H5l-2 2v-7a8 8 0 1 1 18-3Z"/><path d="M8 11h8M8 15h5"/></symbol>
+        <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M8.2 14.2A7 7 0 1 1 15.8 14c-.9.7-1.3 1.4-1.3 2H9.5c0-.6-.4-1.2-1.3-1.8Z"/></symbol>
+        <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+        <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+        <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+        <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></symbol>
+    </svg>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="https://creahormigonera.com/" aria-label="Ir al inicio de Creacom Hormigonera">
+                <img src="../imagenes/creahormigoneralogo.png" alt="Creacom Hormigonera" width="182" height="42">
+            </a>
+            <a class="back-link" href="https://creahormigonera.com/">
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+                <span>Volver al inicio</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="feedback-stage">
+        <div class="visual-wall" aria-label="Video institucional de Creacom Hormigonera">
+            <figure class="video-panel video-panel--left" aria-hidden="true">
+                <video autoplay muted loop playsinline preload="auto" tabindex="-1" data-ambient-video>
+                    <source src="../video/creahormigoneravideo1.mp4" type="video/mp4">
+                </video>
+            </figure>
+            <figure class="video-panel video-panel--right">
+                <video autoplay muted loop controls playsinline preload="auto" data-ambient-video aria-label="Video de la planta de hormigón; usa los controles para activar el sonido">
+                    <source src="Planta-hormigon.mp4" type="video/mp4">
+                </video>
+            </figure>
+        </div>
+
+        <section class="form-panel" aria-labelledby="feedbackTitle">
+            <div class="form-intro">
+                <h1 id="feedbackTitle">Tu opinión nos<br>ayuda a <span>crecer</span></h1>
+                <p>Cuéntanos sobre tu experiencia o déjanos tus sugerencias para seguir mejorando nuestro servicio.</p>
+            </div>
+
+            <form id="feedbackForm" novalidate>
+                <h2 class="section-label">
+                    <svg class="icon" aria-hidden="true"><use href="#i-user"/></svg>
+                    Datos del cliente
+                </h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="nombre">Nombre completo <span class="required-mark" aria-hidden="true">*</span></label>
+                        <div class="input-wrap">
+                            <svg class="icon" aria-hidden="true"><use href="#i-user"/></svg>
+                            <input class="form-control" id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ej: Ing. Carlos Morales" required maxlength="80" aria-describedby="nombreError">
+                        </div>
+                        <p class="field-error" id="nombreError" role="alert"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="empresa">Empresa o constructora</label>
+                        <div class="input-wrap">
+                            <svg class="icon" aria-hidden="true"><use href="#i-building"/></svg>
+                            <input class="form-control" id="empresa" name="empresa" type="text" autocomplete="organization" placeholder="Ej: Obra / Constructora" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="ciudad">Ciudad o sector</label>
+                        <div class="input-wrap">
+                            <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                            <input class="form-control" id="ciudad" name="ciudad" type="text" autocomplete="address-level2" placeholder="Ej: El Empalme, Quevedo" maxlength="80">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="servicio">Servicio solicitado</label>
+                        <div class="input-wrap">
+                            <svg class="icon" aria-hidden="true"><use href="#i-truck"/></svg>
+                            <select class="form-control" id="servicio" name="servicio">
+                                <option value="" selected>Selecciona el servicio recibido</option>
+                                <option value="Hormigón Premezclado">Hormigón premezclado</option>
+                                <option value="Servicio de Bombeo">Servicio de bombeo</option>
+                                <option value="Hormigón + Bombeo">Hormigón + bombeo</option>
+                                <option value="Asesoría Técnica / Laboratorio">Asesoría técnica / laboratorio</option>
+                                <option value="Otro">Otro servicio</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-group">
+                    <label class="section-label" for="opinion">
+                        <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>
+                        Tu experiencia y opinión
+                    </label>
+                    <textarea class="form-control" id="opinion" name="opinion" maxlength="900" placeholder="Escribe aquí lo que más te gustó de la atención, puntualidad o calidad del hormigón..."></textarea>
+                </div>
+
+                <div class="idea-box">
+                    <label class="section-label" for="mejoras">
+                        <svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>
+                        ¿En qué podemos mejorar?
+                    </label>
+                    <textarea class="form-control" id="mejoras" name="mejoras" maxlength="900" placeholder="Cuéntanos cualquier detalle que podamos optimizar para tu próximo pedido..."></textarea>
+                </div>
+
+                <button class="btn-submit" id="btnSubmit" type="submit">
+                    <svg class="icon" aria-hidden="true"><use href="#i-send"/></svg>
+                    <span class="btn-label">Enviar formulario</span>
+                </button>
+                <p class="submit-note">
+                    <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+                    Tus comentarios son recibidos directamente por Creacom Hormigonera.
+                </p>
+            </form>
+        </section>
+
+        <section class="mobile-gallery" aria-label="Video institucional de Creacom Hormigonera">
+            <figure>
+                <video autoplay muted loop controls playsinline preload="auto" data-ambient-video aria-label="Video institucional de Creacom Hormigonera; usa los controles para activar el sonido">
+                    <source src="../video/creahormigoneravideo1.mp4" type="video/mp4">
+                    <track kind="captions" src="../video/captions-es.vtt" srclang="es" label="Español" default>
+                </video>
+            </figure>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        &copy; <span id="currentYear">2026</span> <a href="https://creahormigonera.com/">Creacom Hormigonera</a>. Todos los derechos reservados.
+    </footer>
+
+    <div class="modal-overlay" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle" aria-describedby="successText" aria-hidden="true">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" type="button" aria-label="Cerrar confirmación">
+                <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+            </button>
+            <div class="modal-symbol" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></div>
+            <h2 class="modal-title" id="successTitle">Tu mensaje está listo</h2>
+            <p class="modal-text" id="successText">Abrimos WhatsApp con tus comentarios. Solo falta presionar “Enviar” para compartirlos con nuestro equipo.</p>
+            <div class="modal-actions">
+                <a class="modal-action modal-action--primary" href="https://g.page/r/CQAlbjKnsgRkEBM/review" target="_blank" rel="noopener noreferrer">
+                    <svg class="icon" aria-hidden="true"><use href="#i-star"/></svg>
+                    Dejar opinión en Google
+                </a>
+                <a class="modal-action modal-action--secondary" href="https://creahormigonera.com/">Volver a Creahormigonera.com</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="anime.umd.min.js"></script>
+    <script>
+        const form = document.getElementById('feedbackForm');
+        const nombreInput = document.getElementById('nombre');
+        const nombreError = document.getElementById('nombreError');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const btnLabel = btnSubmit.querySelector('.btn-label');
+        const successModal = document.getElementById('successModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalBox = successModal.querySelector('.modal-box');
+        const modalSymbol = successModal.querySelector('.modal-symbol');
+        const modalContent = Array.from(successModal.querySelectorAll('.modal-title, .modal-text, .modal-action'));
+        const formControls = Array.from(document.querySelectorAll('.form-control'));
+        const sendIcon = btnSubmit.querySelector('.icon');
+        const WHATSAPP_NUMBER = '593997528670';
+        const motionApi = window.anime || null;
+        const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const typingAnimationTimes = new WeakMap();
+        let lastFocusedElement = null;
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        function canAnimate() {
+            return Boolean(motionApi && typeof motionApi.animate === 'function' && !reducedMotionQuery.matches);
+        }
+
+        function animateElement(targets, parameters) {
+            if (!canAnimate()) return null;
+            return motionApi.animate(targets, parameters);
+        }
+
+        function runEntryMotion() {
+            const shouldAnimate = canAnimate();
+            document.documentElement.dataset.motion = shouldAnimate ? 'animejs' : 'reduced';
+            document.body.classList.remove('loading-state');
+            if (!shouldAnimate) return;
+
+            const headerItems = Array.from(document.querySelectorAll('.brand, .back-link'));
+            const leftVideo = document.querySelector('.video-panel--left');
+            const rightVideo = document.querySelector('.video-panel--right');
+            const formPanel = document.querySelector('.form-panel');
+            const introItems = Array.from(document.querySelectorAll('.form-intro > *'));
+            const formFlow = Array.from(document.querySelectorAll(
+                '#feedbackForm > .section-label, .form-grid .form-group, .experience-group, .idea-box, .btn-submit, .submit-note'
+            ));
+            const mobileGallery = document.querySelector('.mobile-gallery');
+
+            animateElement(headerItems, {
+                opacity: { from: 0 },
+                y: { from: -12 },
+                delay: motionApi.stagger(90),
+                duration: 620,
+                ease: 'outExpo'
+            });
+
+            if (leftVideo && leftVideo.offsetParent !== null) {
+                animateElement(leftVideo, {
+                    opacity: { from: 0 },
+                    x: { from: -72 },
+                    scale: { from: 1.035 },
+                    duration: 1050,
+                    ease: 'outExpo'
+                });
+            }
+
+            if (rightVideo && rightVideo.offsetParent !== null) {
+                animateElement(rightVideo, {
+                    opacity: { from: 0 },
+                    x: { from: 72 },
+                    scale: { from: 1.035 },
+                    delay: 90,
+                    duration: 1050,
+                    ease: 'outExpo'
+                });
+            }
+
+            animateElement(formPanel, {
+                opacity: { from: 0 },
+                y: { from: 32 },
+                scale: { from: .975 },
+                delay: 120,
+                duration: 900,
+                ease: 'outExpo'
+            });
+            animateElement(introItems, {
+                opacity: { from: 0 },
+                y: { from: 12 },
+                delay: motionApi.stagger(70, { start: 260 }),
+                duration: 560,
+                ease: 'outExpo'
+            });
+            animateElement(formFlow, {
+                opacity: { from: 0 },
+                y: { from: 14 },
+                delay: motionApi.stagger(55, { start: 390 }),
+                duration: 540,
+                ease: 'outExpo'
+            });
+
+            if (mobileGallery && mobileGallery.offsetParent !== null) {
+                animateElement(mobileGallery, {
+                    opacity: { from: 0 },
+                    y: { from: 24 },
+                    delay: 760,
+                    duration: 700,
+                    ease: 'outExpo'
+                });
+            }
+        }
+
+        function animateInvalidName() {
+            animateElement(nombreInput, {
+                x: [
+                    { to: -7, duration: 65 },
+                    { to: 7, duration: 85 },
+                    { to: -4, duration: 75 },
+                    { to: 4, duration: 75 },
+                    { to: 0, duration: 95 }
+                ],
+                ease: 'inOutQuad'
+            });
+        }
+
+        function animateModalOpen() {
+            if (!canAnimate()) return;
+            animateElement(modalBox, {
+                opacity: { from: 0 },
+                y: { from: 18 },
+                scale: { from: .94 },
+                duration: 520,
+                ease: 'outExpo'
+            });
+            animateElement(modalSymbol, {
+                opacity: { from: 0 },
+                scale: { from: .45 },
+                rotate: { from: -18 },
+                delay: 90,
+                duration: 560,
+                ease: 'outBack'
+            });
+            animateElement(modalContent, {
+                opacity: { from: 0 },
+                y: { from: 10 },
+                delay: motionApi.stagger(70, { start: 150 }),
+                duration: 420,
+                ease: 'outQuad'
+            });
+        }
+
+        const ambientVideos = Array.from(document.querySelectorAll('[data-ambient-video]'));
+        const mobileVideoQuery = window.matchMedia('(max-width: 640px)');
+
+        function startVisibleVideos() {
+            ambientVideos.forEach(function (video) {
+                if (video.offsetParent === null) {
+                    video.pause();
+                    return;
+                }
+
+                video.muted = true;
+                const playAttempt = video.play();
+                if (playAttempt) playAttempt.catch(function () {});
+            });
+        }
+
+        function markVideoReady(video) {
+            const surface = video.closest('.video-panel') || video.closest('.mobile-gallery');
+            if (surface) surface.classList.add('is-ready');
+        }
+
+        function waitForVisibleVideos() {
+            const visibleVideos = ambientVideos.filter(function (video) {
+                return video.offsetParent !== null;
+            });
+
+            return Promise.all(visibleVideos.map(function (video) {
+                if (video.readyState >= 2) {
+                    markVideoReady(video);
+                    return Promise.resolve();
+                }
+
+                return new Promise(function (resolve) {
+                    let resolved = false;
+                    let readyMarked = false;
+                    const markReady = function () {
+                        if (readyMarked) return;
+                        readyMarked = true;
+                        markVideoReady(video);
+                        if (!resolved) {
+                            resolved = true;
+                            resolve();
+                        }
+                    };
+                    video.addEventListener('loadeddata', markReady, { once: true });
+                    video.addEventListener('canplay', markReady, { once: true });
+                    window.setTimeout(function () {
+                        if (resolved) return;
+                        resolved = true;
+                        resolve();
+                    }, 1400);
+                });
+            }));
+        }
+
+        window.addEventListener('load', function () {
+            startVisibleVideos();
+            waitForVisibleVideos().then(runEntryMotion);
+        });
+        mobileVideoQuery.addEventListener('change', startVisibleVideos);
+
+        function setNameError(message) {
+            nombreError.textContent = message;
+            nombreInput.setAttribute('aria-invalid', message ? 'true' : 'false');
+        }
+
+        function openModal() {
+            lastFocusedElement = document.activeElement;
+            successModal.classList.add('show');
+            successModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            animateModalOpen();
+            modalClose.focus();
+        }
+
+        function closeModal() {
+            successModal.classList.remove('show');
+            successModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (lastFocusedElement) lastFocusedElement.focus();
+        }
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const nombre = nombreInput.value.trim();
+            if (!nombre) {
+                setNameError('Ingresa tu nombre para continuar.');
+                nombreInput.focus();
+                animateInvalidName();
+                return;
+            }
+
+            setNameError('');
+            const empresa = document.getElementById('empresa').value.trim();
+            const ciudad = document.getElementById('ciudad').value.trim();
+            const servicio = document.getElementById('servicio').value;
+            const opinion = document.getElementById('opinion').value.trim();
+            const mejoras = document.getElementById('mejoras').value.trim();
+            const lines = [
+                '📋 *FORMULARIO DE OPINIÓN Y MEJORA*',
+                '━━━━━━━━━━━━━━━━━━━━━',
+                '',
+                `👤 *Cliente:* ${nombre}`
+            ];
+
+            if (empresa) lines.push(`🏢 *Empresa / Obra:* ${empresa}`);
+            if (ciudad) lines.push(`📍 *Ciudad / Sector:* ${ciudad}`);
+            if (servicio) lines.push(`🚚 *Servicio:* ${servicio}`);
+            if (opinion) lines.push('', '💬 *Experiencia / Opinión:*', opinion);
+            if (mejoras) lines.push('', '💡 *Sugerencias de mejora:*', mejoras);
+            lines.push('', '━━━━━━━━━━━━━━━━━━━━━', '🌐 Enviado desde: creahormigonera.com/opiniones');
+
+            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
+            const whatsappWindow = window.open(waUrl, '_blank');
+            if (!whatsappWindow) {
+                nombreError.textContent = 'El navegador bloqueó WhatsApp. Permite ventanas emergentes e inténtalo otra vez.';
+                btnSubmit.focus();
+                return;
+            }
+            whatsappWindow.opener = null;
+
+            btnSubmit.disabled = true;
+            btnLabel.textContent = 'Abriendo WhatsApp...';
+            window.setTimeout(function () {
+                btnSubmit.disabled = false;
+                btnLabel.textContent = 'Enviar formulario';
+                openModal();
+            }, 450);
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'feedback_whatsapp_opened', { event_category: 'engagement' });
+            }
+        });
+
+        nombreInput.addEventListener('input', function () {
+            if (nombreInput.value.trim()) setNameError('');
+        });
+
+        formControls.forEach(function (control) {
+            const label = document.querySelector(`label[for="${control.id}"]`);
+
+            control.addEventListener('focus', function () {
+                animateElement(control, { scale: 1.01, duration: 220, ease: 'outQuad' });
+                if (label) animateElement(label, { x: 3, duration: 220, ease: 'outQuad' });
+            });
+
+            control.addEventListener('blur', function () {
+                animateElement(control, { scale: 1, duration: 250, ease: 'outQuad' });
+                if (label) animateElement(label, { x: 0, duration: 250, ease: 'outQuad' });
+            });
+
+            if (control.matches('input, textarea')) {
+                control.addEventListener('input', function () {
+                    const now = performance.now();
+                    const previous = typingAnimationTimes.get(control) || 0;
+                    if (now - previous < 140) return;
+                    typingAnimationTimes.set(control, now);
+                    animateElement(control, {
+                        scale: [
+                            { to: 1.016, duration: 70 },
+                            { to: document.activeElement === control ? 1.01 : 1, duration: 160 }
+                        ],
+                        ease: 'outQuad'
+                    });
+                });
+            }
+        });
+
+        btnSubmit.addEventListener('pointerenter', function () {
+            if (btnSubmit.disabled) return;
+            animateElement(btnSubmit, { y: -2, scale: 1.012, duration: 220, ease: 'outQuad' });
+            animateElement(sendIcon, { x: 3, y: -2, duration: 260, ease: 'outQuad' });
+        });
+        btnSubmit.addEventListener('pointerleave', function () {
+            animateElement(btnSubmit, { y: 0, scale: 1, duration: 260, ease: 'outQuad' });
+            animateElement(sendIcon, { x: 0, y: 0, duration: 260, ease: 'outQuad' });
+        });
+        btnSubmit.addEventListener('pointerdown', function () {
+            if (!btnSubmit.disabled) animateElement(btnSubmit, { scale: .985, duration: 90, ease: 'outQuad' });
+        });
+        btnSubmit.addEventListener('pointerup', function () {
+            if (!btnSubmit.disabled) animateElement(btnSubmit, { scale: 1.012, duration: 160, ease: 'outQuad' });
+        });
+
+        modalClose.addEventListener('click', closeModal);
+        successModal.addEventListener('click', function (event) {
+            if (event.target === successModal) closeModal();
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && successModal.classList.contains('show')) closeModal();
+        });
+    </script>
+</body>
+</html>
