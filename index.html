@@ -671,7 +671,7 @@
         ¡Hola! ¿Necesitas ayuda con tu pedido de hormigón? Escríbeme aquí 🏗️
     </div>
 
-    <button id="chatbot-toggle" class="chatbot-toggle" onclick="toggleChat()">
+    <button id="chatbot-toggle" class="chatbot-toggle" onclick="toggleChat()" aria-controls="chat-window" aria-expanded="false">
         <div class="chatbot-icon avatar-camion">
             <i class="fa-solid fa-helmet-safety"></i>
         </div>
@@ -681,7 +681,7 @@
         </div>
     </button>
 
-    <div id="chat-window" class="chatbot-window" style="display: none; flex-direction: column;">
+    <div id="chat-window" class="chatbot-window" aria-hidden="true" style="display: none; flex-direction: column;">
         <div class="chatbot-header">
             <div class="header-info">
                 <div class="header-icon avatar-camion"><i class="fa-solid fa-helmet-safety"></i></div>
@@ -704,8 +704,8 @@
         </div>
 
         <div class="chatbot-input-area">
-            <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí...">
-            <button id="chatbot-send" class="btn-send-blue" onclick="sendMessage()">
+            <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." aria-label="Consulta para el asistente">
+            <button id="chatbot-send" class="btn-send-blue" onclick="sendMessage()" aria-label="Enviar consulta">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
         </div>

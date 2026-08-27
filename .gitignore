@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.production
+.dev.vars
 
 # Dependencias de Node
 node_modules/

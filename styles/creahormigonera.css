@@ -2026,6 +2026,11 @@ video {
     font-family: sans-serif;
 }
 
+.chatbot-window[aria-hidden="true"] {
+    visibility: hidden;
+    pointer-events: none;
+}
+
 .chatbot-window.hidden {
     display: none;
 }
@@ -2146,6 +2151,10 @@ video {
     align-items: flex-start;
 }
 
+.bot-msg > div {
+    white-space: pre-line;
+}
+
 .user-msg {
     background-color: #ea580c;
     color: #ffffff;
@@ -2227,6 +2236,26 @@ video {
 .btn-send-blue:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-send-blue:disabled {
+    cursor: wait;
+    opacity: 0.55;
+    transform: none;
+}
+
+@media (max-width: 600px) {
+    .chatbot-window {
+        right: 10px;
+        bottom: 82px;
+        width: min(350px, calc(100vw - 20px));
+        height: min(500px, calc(100dvh - 105px));
+    }
+
+    .tooltip-cta {
+        right: 15px;
+        max-width: calc(100vw - 30px);
+    }
 }
 
 @keyframes bounceIn {

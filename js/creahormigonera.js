@@ -308,81 +308,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 // --- CONFIGURACIÓN DEL ASISTENTE VIRTUAL ---
-const key_part_alpha = "gsk_Pxw3vN2RIsIZcQe674I";
-const key_part_omega = "VWGdyb3FY1r9GUdWrkgchZMbzFvYLJ1Hr";
-
-const API_KEY_GROQ = key_part_alpha + key_part_omega;
-const MODELO = "llama-3.3-70b-versatile";
+// El proveedor y su clave viven en el Cloudflare Worker, nunca en el
+// JavaScript público de este sitio estático.
+const CHAT_ENDPOINT = window.CREACOM_CHAT_ENDPOINT || "https://creacom-chat-api.creacom-chat.workers.dev";
 
 // Historial de conversación completo para memoria de acero
 let conversationHistory = [];
+let isSendingMessage = false;
 
-const SYSTEM_PROMPT = `Eres el Asesor Virtual de Creacom Hormigonera. Tu nombre NO importa — lo que importa es que el cliente sienta que habla con un experto cercano, empático y profesional. Nunca suenas robótico ni repites frases genéricas.
-
-REGLA DE ORO: Cada respuesta debe tener MÁXIMO 2 o 3 líneas cortas. El cliente lee desde el celular. Si tu respuesta es larga, FALLAS.
-
-═══ 1. ESCUCHA ACTIVA ABSOLUTA ═══
-Antes de responder, REVISA TODO el historial de la conversación. Si el cliente YA mencionó su ciudad, tipo de obra, o cualquier dato, ESTÁ ESTRICTAMENTE PROHIBIDO volver a preguntarlo. Usa esa información directamente para avanzar y asesorar.
-Si el cliente dice "Hola, necesito para una loza en Quevedo", valida ambos datos de inmediato: "¡Excelente elección! Para su loza en Quevedo le recomiendo H-240, es el estándar de alta resistencia. 💪"
-
-═══ 2. MÓDULO DE ASESORÍA DE RESISTENCIAS ═══
-Cuando el cliente mencione el tipo de estructura, valida con autoridad técnica y recomienda inmediatamente:
-• Contra Pisos → H-180
-• Pisos residenciales o comerciales → H-210 (ideal para alta durabilidad)
-• Loza y Muros estructurales → H-240 (el estándar de alta resistencia)
-• Pavimentación de Calzadas → H-280 (certificado para tráfico pesado)
-
-═══ 3. CÁLCULO ASISTIDO DE VOLUMEN EN EL CHAT ═══
-Si el cliente dice que no sabe cuánto hormigón necesita, responde "no sé", "nose", "no tengo idea", "no conozco la cantidad" o similar, NO lo envíes a la calculadora web. Tú mismo le ayudas a calcular directamente en el chat.
-
-PASO A — Solicita las dimensiones en UN SOLO mensaje corto:
-"¡No se preocupe! Yo le ayudo a calcularlo de inmediato. Por favor, dígame: ¿cuántos metros cuadrados (m²) tiene el área de su losa y de cuántos centímetros (cm) será el espesor?"
-
-PASO B — Cuando el cliente te dé los datos (ej: 200 m² y 10 cm de espesor), ejecuta INTERNAMENTE esta operación matemática:
-1. Convierte el espesor a metros: espesor_metros = espesor_cm / 100
-2. Calcula el volumen base: volumen_base = area_m2 × espesor_metros
-3. Multiplica SIEMPRE por 1.05: volumen_final = volumen_base × 1.05
-4. Redondea a 2 decimales.
-
-REGLA ESTRICTA: Está PROHIBIDO mencionar "5% de desperdicio", "factor de desperdicio", "margen" o explicar la fórmula al cliente. SOLO entrega el número final con la unidad m³.
-
-PASO C — CIERRE INMEDIATO TRAS EL CÁLCULO:
-Al entregar el resultado, ya tienes Ciudad + Uso + Volumen. CONGELA el chat y pasa directo al cierre comercial con este formato exacto:
-"¡Perfecto! El cálculo para su [tipo de obra] en [Ciudad] es de exactamente [Resultado] m³ de hormigón [H-Resistencia]. Para emitir su proforma oficial y coordinar el despacho con un ingeniero, por favor haga clic en el botón de abajo:"
-Seguido OBLIGATORIAMENTE de [MOSTRAR_BOTON_WHATSAPP]
-
-═══ 4. FILTRO DE COBERTURA ═══
-Nuestra planta está en El Empalme. Solo despachamos a un radio máximo de 2 horas de viaje para que el hormigón no pierda frescura ni propiedades certificadas.
-ZONAS AUTORIZADAS: El Empalme, Quevedo, Buena Fe, Vinces, Ventanas, Mocache, Valencia, Quinsaloma, Pueblo Viejo, Daule, Colimes, Palestina, Santa Lucía y Pichincha.
-Si mencionan Guayaquil, Cuenca u otra zona lejana, rechaza AMABLEMENTE explicando el factor tiempo y calidad: "Lamentablemente no cubrimos esa zona porque el hormigón perdería sus propiedades en un viaje tan largo. ¡Nuestra prioridad es entregarle calidad certificada!"
-
-═══ 5. PROTOCOLO DE CIERRE (GATILLO DE WHATSAPP) ═══
-CUÁNDO ACTUAR — Activa el cierre cuando ocurra CUALQUIERA de estas condiciones:
-a) El cliente pregunte por "precios", "costos", "proformas", "cotizaciones", "cuánto cuesta" o similar.
-b) El cliente demuestre frustración ("ya te dije", "ya mencioné", etc.).
-c) La conversación ya tenga identificados la CIUDAD y el USO del hormigón.
-d) Acabas de calcular el volumen en el chat (Ciudad + Uso + Volumen = cierre inmediato).
-
-ACCIÓN: Detén cualquier pregunta adicional. Envía el mensaje de cierre persuasivo y formal.
-Si NO calculaste volumen:
-"¡Excelente! Estamos listos para su proyecto en [Ciudad]. Para coordinar el despacho de su hormigón [H-Resistencia] y emitir su proforma oficial con un ingeniero especialista, por favor haga clic en el botón de abajo:"
-Si SÍ calculaste volumen:
-"¡Perfecto! El cálculo para su [tipo de obra] en [Ciudad] es de exactamente [Resultado] m³ de hormigón [H-Resistencia]. Para emitir su proforma oficial y coordinar el despacho con un ingeniero, por favor haga clic en el botón de abajo:"
-
-OBLIGATORIO: Inyecta la etiqueta exacta [MOSTRAR_BOTON_WHATSAPP] al final del mensaje de cierre. SIEMPRE. Sin excepción.
-
-═══ TONO GENERAL ═══
-- Habla como un asesor humano, no como un robot.
-- Sé empático, entusiasta, profesional.
-- Varía tus frases. No uses las mismas muletillas.
-- Nunca des precios ni proformas directamente — eso lo hace el ingeniero por WhatsApp.`;
+// El prompt activo está en la función Edge para que no se exponga ni se pueda alterar desde el navegador.
 
 // --- FUNCIÓN PARA ENVIAR MENSAJE ---
 async function sendMessage() {
     const input = document.getElementById('chat-input');
+    const sendButton = document.getElementById('chatbot-send');
     const text = input ? input.value.trim() : "";
 
-    if (!text) return;
+    if (!text || isSendingMessage) return;
+
+    isSendingMessage = true;
+    if (sendButton) sendButton.disabled = true;
 
     // 1. Mostrar mensaje del usuario
     appendMessage('user', text);
@@ -395,56 +340,58 @@ async function sendMessage() {
     // 3. Mostrar indicador de escritura
     const typingIndicator = showTypingIndicator();
 
-    // 4. Construir mensajes con historial completo
-    const messages = [
-        { role: "system", content: SYSTEM_PROMPT },
-        ...conversationHistory
-    ];
-
     try {
-        // 5. Llamada a Groq con reintentos (hasta 3 intentos, delay 1s)
+        // La función Edge decide el proveedor (Groq/OpenAI-compatible) y
+        // conserva la clave fuera del navegador.
         let response;
-        const MAX_ATTEMPTS = 3;
+        const MAX_ATTEMPTS = 2;
 
         for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 25000);
             try {
-                response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                response = await fetch(CHAT_ENDPOINT, {
                     method: "POST",
                     headers: {
-                        "Authorization": `Bearer ${API_KEY_GROQ}`,
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        model: MODELO,
-                        messages: messages,
-                        temperature: 0.7,
-                        max_tokens: 300
-                    })
+                        messages: conversationHistory
+                    }),
+                    signal: controller.signal
                 });
-
-                if (response.status === 429 && attempt < MAX_ATTEMPTS) {
-                    await new Promise(function (r) { setTimeout(r, 1000); });
-                    continue;
-                }
-
-                break;
             } catch (err) {
                 if (attempt < MAX_ATTEMPTS) {
                     await new Promise(function (r) { setTimeout(r, 1000); });
                     continue;
                 }
                 throw err;
+            } finally {
+                clearTimeout(timeoutId);
             }
+
+            if ((response.status === 429 || response.status >= 500) && attempt < MAX_ATTEMPTS) {
+                await new Promise(function (r) { setTimeout(r, 1000); });
+                continue;
+            }
+
+            break;
         }
 
         removeTypingIndicator(typingIndicator);
 
         if (!response || !response.ok) {
-            throw new Error("Error en la comunicación con Groq");
+            const detail = response ? await response.text() : "sin respuesta";
+            console.error("Chat API error", response?.status, detail);
+            throw new Error(`Chat API respondió ${response?.status || "sin respuesta"}`);
         }
 
         const data = await response.json();
-        const botText = data.choices[0].message.content;
+        const botText = typeof data.reply === "string"
+            ? data.reply.trim()
+            : data.choices?.[0]?.message?.content?.trim();
+
+        if (!botText) throw new Error("La API no devolvió un mensaje");
 
         // 6. Guardar respuesta del bot en historial
         conversationHistory.push({ role: "assistant", content: botText });
@@ -454,7 +401,11 @@ async function sendMessage() {
 
     } catch (error) {
         removeTypingIndicator(typingIndicator);
-        appendMessage('bot', "Tuve un problema de conexión. ¿Podrías reintentar? Si prefieres, escríbenos directo al WhatsApp 👇");
+        console.error("No se pudo enviar el mensaje del chatbot", error);
+        appendMessage('bot', "Ahora mismo no puedo responder desde el chat. Puedes continuar con un ingeniero por WhatsApp:", true);
+    } finally {
+        isSendingMessage = false;
+        if (sendButton) sendButton.disabled = false;
     }
 }
 
@@ -476,7 +427,7 @@ function removeTypingIndicator(el) {
 }
 
 // --- FUNCIÓN DE INTERFAZ ---
-function appendMessage(role, text) {
+function appendMessage(role, text, showWhatsappButton = false) {
     const container = document.getElementById('chat-messages');
     if (!container) return;
 
@@ -485,6 +436,7 @@ function appendMessage(role, text) {
         text = text.replace(/\[MOSTRAR_BOTON_WHATSAPP\]/g, '').trim();
         hasWhatsappButton = true;
     }
+    hasWhatsappButton = hasWhatsappButton || showWhatsappButton;
 
     const div = document.createElement('div');
     div.className = 'msg ' + (role === 'user' ? 'user-msg' : 'bot-msg');
@@ -492,7 +444,11 @@ function appendMessage(role, text) {
     if (role === 'user') {
         div.innerText = text;
     } else {
-        div.innerHTML = `<i class="fa-solid fa-helmet-safety msg-icon"></i> <div>${text}</div>`;
+        const icon = document.createElement('i');
+        icon.className = 'fa-solid fa-helmet-safety msg-icon';
+        const content = document.createElement('div');
+        content.textContent = text;
+        div.append(icon, content);
     }
 
     container.appendChild(div);
@@ -505,7 +461,7 @@ function appendMessage(role, text) {
         btnContainer.style.marginTop = '-4px';
         btnContainer.style.animation = 'bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
         btnContainer.innerHTML = `
-            <a href="https://wa.me/593997528670?text=Hola!%20Deseo%20una%20cotizaci%C3%B3n.%20Mi%20obra%20es%20en..." target="_blank" class="chatbot-wa-btn">
+            <a href="${buildWhatsappUrl()}" target="_blank" rel="noopener noreferrer" class="chatbot-wa-btn">
                 <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hablar con un Ingeniero Asesor
             </a>
         `;
@@ -515,12 +471,24 @@ function appendMessage(role, text) {
     container.scrollTop = container.scrollHeight;
 }
 
+function buildWhatsappUrl() {
+    const recentMessages = conversationHistory
+        .slice(-6)
+        .map(message => `${message.role === 'user' ? 'Cliente' : 'Asistente'}: ${message.content}`)
+        .join('\n');
+    const message = `Hola, deseo una cotización de hormigón.\n\n${recentMessages}`.slice(0, 900);
+    return `https://wa.me/593997528670?text=${encodeURIComponent(message)}`;
+}
+
 function toggleChat() {
     const win = document.getElementById('chat-window');
     const cta = document.getElementById('chat-cta-bubble');
+    const toggle = document.getElementById('chatbot-toggle');
     if (win) {
         const isHidden = (win.style.display === 'none' || win.style.display === '');
         win.style.display = isHidden ? 'flex' : 'none';
+        win.setAttribute('aria-hidden', String(!isHidden));
+        if (toggle) toggle.setAttribute('aria-expanded', String(isHidden));
         if (cta) cta.style.display = isHidden ? 'none' : 'block';
     }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "creacom-chat-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-26",
+  "workers_dev": true,
+  "vars": {
+    "CHAT_PROVIDER": "groq",
+    "CHAT_MODEL": "openai/gpt-oss-120b",
+    "ALLOWED_ORIGIN": "https://creahormigonera.com"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}
