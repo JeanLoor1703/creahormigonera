@@ -296,7 +296,9 @@ body {
 }
 
 .badge {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 8px 18px;
     background-color: transparent;
     border: 2px solid var(--color-primary);
@@ -305,6 +307,11 @@ body {
     font-size: 13px;
     margin-bottom: 15px;
     font-weight: 600;
+}
+
+.badge i {
+    color: var(--color-primary);
+    font-size: 14px;
 }
 
 .hero-text h1 {
@@ -485,15 +492,20 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
+    align-items: stretch;
 }
 
 .producto-card {
     background-color: var(--color-bg);
-    padding: 40px;
+    padding: 40px 25px;
     border-radius: 20px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
 }
 
 .producto-card:hover {
@@ -511,6 +523,7 @@ body {
     margin: 0 auto 20px;
     font-size: 32px;
     color: white;
+    flex-shrink: 0;
 }
 
 .icon-red {
@@ -522,12 +535,26 @@ body {
     font-weight: 800;
     color: var(--color-dark);
     margin-bottom: 10px;
+    line-height: 1.2;
+    flex-shrink: 0;
 }
 
 .producto-card p {
     color: var(--color-text-light);
     margin-bottom: 25px;
     font-size: 1.1rem;
+    line-height: 1.35;
+    min-height: 2.8em;
+}
+
+.producto-card .btn-glossy {
+    margin-top: auto;
+    width: 100%;
+    max-width: 220px;
+    justify-content: center;
+    font-size: 15px;
+    padding: 14px 20px;
+    white-space: nowrap;
 }
 
 /* PROYECTOS */
@@ -922,6 +949,45 @@ body {
 
 .ciudades-grid li:hover {
     color: var(--color-primary);
+}
+
+.ciudades-complemento {
+    grid-row: span 2;
+    display: flex;
+    align-items: center;
+    white-space: normal !important;
+}
+
+.ciudades-complemento-box {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 11px;
+    background: #FFF5F5;
+    border: 1px dashed rgba(220, 20, 60, 0.38);
+    border-radius: 8px;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.ciudades-complemento-box:hover {
+    border-color: var(--color-primary);
+    background: #FFEBEB;
+}
+
+.ciudades-complemento-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.ciudades-complemento-text {
+    font-size: 0.81rem;
+    font-weight: 600;
+    color: #444;
+    line-height: 1.25;
 }
 
 /* ---- RIGHT: floating map card ---- */
@@ -1542,7 +1608,9 @@ video {
     }
 
     .badge {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         white-space: normal;
         height: auto;
         padding: 8px 15px;
@@ -1602,6 +1670,10 @@ video {
 
     .ciudades-grid li {
         white-space: normal;
+    }
+
+    .ciudades-complemento {
+        grid-row: auto !important;
     }
 
     .mapa-img {
