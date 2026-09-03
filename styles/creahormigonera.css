@@ -864,18 +864,18 @@ body {
 
 /* Two-column layout */
 .cobertura-nueva-inner {
-    max-width: 1160px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 60px;
+    gap: 40px;
 }
 
 /* ---- LEFT: text column ---- */
 .cobertura-nueva-texto {
-    flex: 1;
-    max-width: 48%;
+    flex: 1 1 54%;
+    max-width: 56%;
     min-width: 0;
 }
 
@@ -891,30 +891,33 @@ body {
     font-size: 1rem;
     color: #555;
     line-height: 1.7;
-    margin-bottom: 28px;
-    max-width: 42ch;
+    margin-bottom: 24px;
+    max-width: 48ch;
 }
 
-/* City list — 2-column grid */
+/* City list — 3-column grid */
 .ciudades-grid {
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 13px 24px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-flow: column;
+    grid-template-rows: repeat(11, auto);
+    gap: 11px 16px;
 }
 
 .ciudades-grid li {
-    font-size: 0.93rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--color-text);
     display: flex;
     align-items: center;
     gap: 0;
     /* icon margin is inline */
-    line-height: 1.4;
+    line-height: 1.35;
     transition: color 0.2s;
+    white-space: nowrap;
 }
 
 .ciudades-grid li:hover {
@@ -1592,7 +1595,13 @@ video {
     .ciudades-grid,
     .cobertura-regional ul {
         grid-template-columns: repeat(2, 1fr) !important;
+        grid-auto-flow: row !important;
+        grid-template-rows: unset !important;
         text-align: left;
+    }
+
+    .ciudades-grid li {
+        white-space: normal;
     }
 
     .mapa-img {
