@@ -502,6 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inputField) {
         inputField.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
     }
+
 });
 
 // ==============================================
@@ -512,11 +513,14 @@ function initHeroGallery() {
     if (!slots.length) return;
 
     // Tiempos independientes para cada imagen:
-    // Slot 0 (Arriba grande): cada 6 segundos
+    // Slot 0 (Arriba grande): cada 5 segundos en mobile (requisito móvil), 6s en desktop
     // Slot 1 (Abajo izquierda): cada 7 segundos
     // Slot 2 (Abajo derecha): cada 8 segundos
-    const INTERVALS = [6000, 7000, 8000];
-    const INITIAL_DELAYS = [2500, 5000, 7500];
+    function getIntervals() {
+        const isMobile = window.innerWidth <= 768;
+        return [isMobile ? 5000 : 6000, 7000, 8000];
+    }
+    const INITIAL_DELAYS = [2000, 5000, 7500];
     const timers = [];
     let lastTransitionTime = 0;
     const MIN_GAP_MS = 1400; // Garantiza que jamás coincidan dos imágenes en el mismo instante
@@ -573,9 +577,10 @@ function initHeroGallery() {
 
     function startRotations() {
         clearAllTimers();
+        const intervals = getIntervals();
         slots.forEach((slot, index) => {
-            const interval = INTERVALS[index] || 6000;
-            const initialDelay = INITIAL_DELAYS[index] || (2500 + index * 2000);
+            const interval = intervals[index] || 6000;
+            const initialDelay = INITIAL_DELAYS[index] || (2000 + index * 2000);
 
             // Primer cambio escalonado
             const initialTimer = setTimeout(() => {
@@ -621,4 +626,112 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initHeroGallery);
 } else {
     initHeroGallery();
+}
+
+// ==============================================
+// SLIDER: EMPRESAS CON LAS QUE TRABAJAMOS (5s)
+// ==============================================
+let currentEmpresasGroup = 0;
+let empresasTimer = null;
+const EMPRESAS_INTERVAL = 5000;
+
+function goToEmpresasGroup(targetIndex) {
+    const groups = document.querySelectorAll('.empresas-group');
+    const dots = document.querySelectorAll('.empresa-dot');
+    if (!groups.length) return;
+
+    currentEmpresasGroup = (targetIndex + groups.length) % groups.length;
+
+    groups.forEach((g, idx) => {
+        if (idx === currentEmpresasGroup) {
+            g.classList.add('active');
+        } else {
+            g.classList.remove('active');
+        }
+    });
+
+    dots.forEach((dot, idx) => {
+        if (idx === currentEmpresasGroup) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+
+    resetEmpresasTimer();
+}
+
+function nextEmpresasGroup() {
+    goToEmpresasGroup(currentEmpresasGroup + 1);
+}
+
+function prevEmpresasGroup() {
+    goToEmpresasGroup(currentEmpresasGroup - 1);
+}
+
+function resetEmpresasTimer() {
+    if (empresasTimer) clearInterval(empresasTimer);
+    empresasTimer = setInterval(() => {
+        if (!document.hidden) {
+            nextEmpresasGroup();
+        }
+    }, EMPRESAS_INTERVAL);
+}
+
+function initEmpresasSlider() {
+    const wrapper = document.getElementById('empresasHubWrapper');
+    if (!wrapper) return;
+
+    // Precarga de logos en segundo plano
+    const logos = wrapper.querySelectorAll('.empresa-logo');
+    logos.forEach(img => {
+        if (img.src) {
+            const p = new Image();
+            p.src = img.src;
+        }
+    });
+
+    // Iniciar temporizador automático de 5 segundos
+    resetEmpresasTimer();
+
+    // Soporte para gestos táctiles (Swipe horizontal) en móviles
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    wrapper.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        // Si el desplazamiento horizontal es significativo y mayor al vertical
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX < 0) {
+                nextEmpresasGroup();
+            } else {
+                prevEmpresasGroup();
+            }
+        }
+    }, { passive: true });
+
+    // Pausar rotación si la pestaña está oculta
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (empresasTimer) clearInterval(empresasTimer);
+        } else {
+            resetEmpresasTimer();
+        }
+    });
+}
+
+// Inicializar slider de empresas cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEmpresasSlider);
+} else {
+    initEmpresasSlider();
 }
