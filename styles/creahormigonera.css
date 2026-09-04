@@ -346,11 +346,19 @@ body {
     gap: 15px;
 }
 
+.hero-img-slot {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    background-color: #f1f3f5;
+    isolation: isolate;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
 .hero-img-main {
     grid-column: span 2;
     height: 300px;
     border-radius: 15px;
-    object-fit: cover;
     width: 100%;
     display: block;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -359,10 +367,50 @@ body {
 .hero-img-small {
     height: 160px;
     border-radius: 15px;
-    object-fit: cover;
     width: 100%;
     display: block;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 15px;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: opacity, transform;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+    z-index: 2;
+}
+
+.hero-slide.incoming {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+    z-index: 3;
+}
+
+@media (max-width: 480px) {
+    .hero-img-main {
+        height: 230px;
+    }
+    .hero-img-small {
+        height: 135px;
+    }
 }
 
 /* CALCULADORA */
@@ -1000,42 +1048,41 @@ body {
     justify-content: center;
 }
 
-/* The floating card wrapper */
+/* Floating map (sin fondo / transparent) */
 .mapa-card {
-    border-radius: 18px;
-    box-shadow:
-        0 4px 6px rgba(0, 0, 0, 0.04),
-        0 10px 25px rgba(0, 0, 0, 0.09),
-        0 25px 50px rgba(0, 0, 0, 0.06);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     width: 100%;
     max-width: 520px;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
-    flex-direction: column;
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.35s ease;
 }
 
 .mapa-card:hover {
-    transform: translateY(-6px) scale(1.012);
-    box-shadow:
-        0 6px 10px rgba(0, 0, 0, 0.05),
-        0 18px 40px rgba(0, 0, 0, 0.12),
-        0 35px 65px rgba(0, 0, 0, 0.07);
+    transform: translateY(-5px);
+    box-shadow: none;
 }
 
-/* Map image inside card — fills edge-to-edge, no white gaps */
+/* Map image — floats organically with its natural transparent contour */
 .mapa-img {
     width: 100%;
-    height: 100%;
-    max-height: 460px;
-    object-fit: cover;
+    height: auto;
+    max-height: 480px;
+    object-fit: contain;
     object-position: center;
     display: block;
-    transition: transform 0.55s ease;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.14));
+    transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .mapa-card:hover .mapa-img {
     transform: scale(1.025);
+    filter: drop-shadow(0 20px 38px rgba(0, 0, 0, 0.20));
 }
 
 /* COBERTURA REGIONAL */
@@ -1120,6 +1167,8 @@ body {
 
     .hero-images {
         width: 100%;
+        max-width: 100%;
+        flex: 1 1 100%;
     }
 
     .cobertura-nueva-inner {

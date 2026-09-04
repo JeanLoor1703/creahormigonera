@@ -503,3 +503,122 @@ document.addEventListener('DOMContentLoaded', () => {
         inputField.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
     }
 });
+
+// ==============================================
+// HERO COLLAGE ROTATION - ESCALONADO (6s, 7s, 8s)
+// ==============================================
+function initHeroGallery() {
+    const slots = document.querySelectorAll('.hero-img-slot');
+    if (!slots.length) return;
+
+    // Tiempos independientes para cada imagen:
+    // Slot 0 (Arriba grande): cada 6 segundos
+    // Slot 1 (Abajo izquierda): cada 7 segundos
+    // Slot 2 (Abajo derecha): cada 8 segundos
+    const INTERVALS = [6000, 7000, 8000];
+    const INITIAL_DELAYS = [2500, 5000, 7500];
+    const timers = [];
+    let lastTransitionTime = 0;
+    const MIN_GAP_MS = 1400; // Garantiza que jamás coincidan dos imágenes en el mismo instante
+
+    // Precargar las imágenes secundarias en segundo plano para evitar parpadeos
+    slots.forEach(slot => {
+        const slides = slot.querySelectorAll('.hero-slide');
+        slides.forEach(img => {
+            if (img.src) {
+                const preload = new Image();
+                preload.src = img.src;
+            }
+        });
+    });
+
+    function transitionSlot(slot) {
+        if (document.hidden) return;
+
+        const now = Date.now();
+        const timeSinceLast = now - lastTransitionTime;
+        if (timeSinceLast < MIN_GAP_MS) {
+            // Si otra imagen rotó hace menos de 1.4s, retrasar para mantener el desfase orgánico
+            setTimeout(() => transitionSlot(slot), MIN_GAP_MS - timeSinceLast + 250);
+            return;
+        }
+
+        const slides = slot.querySelectorAll('.hero-slide');
+        if (slides.length < 2) return;
+
+        const currentSlide = slot.querySelector('.hero-slide.active') || slides[0];
+        let nextIndex = 0;
+        slides.forEach((slide, idx) => {
+            if (slide === currentSlide) {
+                nextIndex = (idx + 1) % slides.length;
+            }
+        });
+
+        const nextSlide = slides[nextIndex];
+        if (!nextSlide || nextSlide === currentSlide) return;
+
+        lastTransitionTime = Date.now();
+
+        // Entra la siguiente imagen con escala y crossfade suave
+        nextSlide.classList.remove('active');
+        nextSlide.classList.add('incoming');
+
+        // Tras 1.3s de transición, consolidar clases activas
+        setTimeout(() => {
+            nextSlide.classList.remove('incoming');
+            nextSlide.classList.add('active');
+            currentSlide.classList.remove('active');
+        }, 1350);
+    }
+
+    function startRotations() {
+        clearAllTimers();
+        slots.forEach((slot, index) => {
+            const interval = INTERVALS[index] || 6000;
+            const initialDelay = INITIAL_DELAYS[index] || (2500 + index * 2000);
+
+            // Primer cambio escalonado
+            const initialTimer = setTimeout(() => {
+                transitionSlot(slot);
+                // Intervalo recurrente propio (6s, 7s, 8s)
+                const intervalTimer = setInterval(() => {
+                    transitionSlot(slot);
+                }, interval);
+                timers.push(intervalTimer);
+            }, initialDelay);
+
+            timers.push(initialTimer);
+
+            // Permitir clic para cambiar de inmediato si el usuario lo desea
+            slot.style.cursor = 'pointer';
+            slot.title = 'Haz clic para alternar imagen';
+            slot.onclick = () => transitionSlot(slot);
+        });
+    }
+
+    function clearAllTimers() {
+        while (timers.length > 0) {
+            const t = timers.pop();
+            clearTimeout(t);
+            clearInterval(t);
+        }
+    }
+
+    // Pausar si la pestaña se oculta y reiniciar de forma escalonada al volver
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            clearAllTimers();
+        } else {
+            startRotations();
+        }
+    });
+
+    startRotations();
+}
+
+// Inicializar galería del hero cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroGallery);
+} else {
+    initHeroGallery();
+}
