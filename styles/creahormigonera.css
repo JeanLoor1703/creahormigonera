@@ -916,10 +916,10 @@ body {
     }
 }
 
-/* Invisible state before animation fires */
+/* State before animation fires */
 .cobertura-nueva-texto.reveal-ready,
 .cobertura-nueva-imagen.reveal-ready {
-    opacity: 0;
+    opacity: 1;
 }
 
 /* Animated states */
@@ -2770,8 +2770,8 @@ video {
    SECCIÓN: EMPRESAS CON LAS QUE TRABAJAMOS
    ============================================== */
 .empresas-section {
-    background: linear-gradient(180deg, #fbfcfd 0%, #f4f6f8 100%);
-    padding: 85px 20px;
+    background: radial-gradient(circle at 50% 35%, #ffffff 0%, #f8fafc 55%, #f1f5f9 100%);
+    padding: 60px 20px 50px;
     position: relative;
     overflow: hidden;
     border-top: 1px solid rgba(0, 0, 0, 0.04);
@@ -2780,44 +2780,41 @@ video {
 
 .empresas-header {
     text-align: center;
-    max-width: 780px;
-    margin: 0 auto 55px;
+    max-width: 760px;
+    margin: 0 auto 36px;
 }
 
 .empresas-pretitle {
     display: inline-block;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 800;
     letter-spacing: 2px;
     color: #e60000;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .empresas-title {
-    font-size: clamp(2rem, 3.2vw, 2.6rem);
+    font-size: clamp(1.85rem, 2.8vw, 2.4rem);
     font-weight: 800;
     color: var(--color-dark, #111827);
     line-height: 1.2;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .empresas-subtitle {
-    font-size: 1.05rem;
-    color: #6b7280;
-    line-height: 1.6;
+    font-size: 0.98rem;
+    color: #64748b;
+    line-height: 1.55;
     margin: 0 auto;
 }
 
-/* Contenedor de composición radial */
+/* Contenedor equilibrado y ensanchado de composición radial */
 .empresas-hub-wrapper {
     position: relative;
-    max-width: 1080px;
-    min-height: 560px;
+    max-width: 1040px;
+    height: 520px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Líneas conectoras SVG en escritorio */
@@ -2832,49 +2829,43 @@ video {
 
 .connector-line {
     stroke: #cbd5e1;
-    stroke-width: 2;
-    stroke-dasharray: 6 6;
-    opacity: 0.75;
+    stroke-width: 1.5;
+    stroke-dasharray: 4 4;
+    stroke-linecap: round;
 }
 
 .connector-node {
-    fill: #e60000;
     stroke: #ffffff;
-    stroke-width: 2.5;
+    stroke-width: 2;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
 }
 
-/* Núcleo central Creacom */
+.connector-node.node-dark {
+    fill: #1e293b;
+}
+
+.connector-node.node-accent {
+    fill: #e60000;
+}
+
+/* Núcleo central Creacom sólido, armónico y bien encajado */
 .empresas-center-hub {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 220px;
+    left: 520px;
     transform: translate(-50%, -50%);
     z-index: 6;
-    width: 280px;
-    height: 280px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 350px;
+    height: 350px;
 }
 
-.hub-ring-glow {
+.hub-outer-ring {
     position: absolute;
-    inset: -12px;
+    inset: -5px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(230, 0, 0, 0.08) 0%, rgba(230, 0, 0, 0) 70%);
+    border: 1.5px dashed rgba(203, 213, 225, 0.7);
     pointer-events: none;
-    animation: hub-pulse 3s infinite ease-in-out;
-}
-
-@keyframes hub-pulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 0.6;
-    }
-    50% {
-        transform: scale(1.08);
-        opacity: 1;
-    }
+    z-index: 1;
 }
 
 .hub-inner-card {
@@ -2882,53 +2873,67 @@ video {
     height: 100%;
     border-radius: 50%;
     background: #ffffff;
-    border: 2px solid #e5e7eb;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.09), 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 2.5px solid #e2e8f0;
+    box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.09), 0 4px 12px rgba(15, 23, 42, 0.04);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px 20px;
-    text-align: center;
     position: relative;
     overflow: hidden;
+    z-index: 2;
+}
+
+.hub-brand-area {
+    height: 34%;
+    width: 100%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 20px 2px;
+    position: relative;
+    z-index: 2;
 }
 
 .hub-creacom-logo {
-    max-width: 155px;
+    max-width: 185px;
+    max-height: 54px;
+    width: auto;
     height: auto;
-    margin-bottom: 8px;
     object-fit: contain;
+    display: block;
 }
 
-.hub-mixer-frame {
+.hub-mixer-area {
+    height: 66%;
     width: 100%;
-    height: 110px;
-    border-radius: 12px;
-    overflow: hidden;
     position: relative;
-    margin-bottom: 6px;
+    overflow: hidden;
+    z-index: 1;
+    background: #f1f5f9;
 }
 
 .hub-mixer-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 48% 68%;
+    transform: scale(1.06);
+    transform-origin: center 72%;
     display: block;
+    filter: brightness(0.98) contrast(1.02);
 }
 
-.hub-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #e60000;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.hub-mixer-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
 }
 
-/* Grupos de empresas (5 logos visibles a la vez) */
+/* Grupos de empresas (5 logos visibles a la vez, rotación suave) */
 .empresas-group {
     position: absolute;
     inset: 0;
@@ -2936,9 +2941,9 @@ video {
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.96);
-    transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.98);
+    transition: opacity 0.5s ease-in-out,
+                transform 0.5s ease-in-out;
     pointer-events: none;
     z-index: 4;
 }
@@ -2950,20 +2955,20 @@ video {
     pointer-events: auto;
 }
 
-/* Slots de posicionamiento en escritorio */
+/* Slots de posicionamiento en escritorio - ensanchados hacia los lados */
 .empresa-slot {
     position: absolute;
     z-index: 5;
 }
 
 .slot-top-left {
-    top: 40px;
-    left: 20px;
+    top: 50px;
+    left: 12px;
 }
 
 .slot-bottom-left {
-    bottom: 40px;
-    left: 20px;
+    top: 285px;
+    left: 12px;
 }
 
 .slot-bottom-center {
@@ -2973,58 +2978,57 @@ video {
 }
 
 .slot-top-right {
-    top: 40px;
-    right: 20px;
+    top: 50px;
+    right: 12px;
 }
 
 .slot-bottom-right {
-    bottom: 40px;
-    right: 20px;
+    top: 285px;
+    right: 12px;
 }
 
-/* Tarjetas individuales de empresas */
+/* Tarjetas individuales de empresas - amplias y con logos grandes */
 .empresa-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    padding: 14px 22px;
-    width: 220px;
-    height: 110px;
+    padding: 10px 16px;
+    width: 248px;
+    height: 104px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.3s ease,
-                border-color 0.3s ease;
-    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
 }
 
 .empresa-card:hover {
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(230, 0, 0, 0.2);
-    border-color: rgba(230, 0, 0, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
 }
 
 .empresa-logo {
-    max-height: 52px;
-    max-width: 170px;
+    max-height: 54px;
+    max-width: 185px;
     width: auto;
     height: auto;
     object-fit: contain;
     display: block;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.04));
-    transition: transform 0.3s ease;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.03));
+    transition: transform 0.25s ease;
 }
 
 .empresa-card:hover .empresa-logo {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
 .empresa-name {
     margin-top: 6px;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 700;
     color: #475569;
     text-align: center;
@@ -3032,76 +3036,21 @@ video {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-}
-
-/* Controles del slider */
-.empresas-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 45px;
-    position: relative;
-    z-index: 10;
-}
-
-.empresas-ctrl-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid #e2e8f0;
-    background: #ffffff;
-    color: #1e293b;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    transition: all 0.25s ease;
-}
-
-.empresas-ctrl-btn:hover {
-    background: #e60000;
-    color: #ffffff;
-    border-color: #e60000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(230, 0, 0, 0.35);
-}
-
-.empresas-dots {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.empresa-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #cbd5e1;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.empresa-dot.active {
-    background: #e60000;
-    width: 28px;
-    border-radius: 10px;
+    letter-spacing: 0.15px;
 }
 
 /* Adaptación responsive para tablets y celulares */
-@media (max-width: 920px) {
+@media (max-width: 960px) {
     .empresas-section {
-        padding: 60px 15px;
+        padding: 50px 15px 45px;
     }
 
     .empresas-hub-wrapper {
-        min-height: auto;
+        height: auto;
+        display: flex;
         flex-direction: column;
-        gap: 30px;
+        align-items: center;
+        gap: 25px;
     }
 
     .empresas-connector-lines {
@@ -3113,19 +3062,14 @@ video {
         top: auto;
         left: auto;
         transform: none;
-        width: 240px;
-        height: auto;
+        width: 270px;
+        height: 270px;
         margin: 0 auto;
     }
 
-    .empresas-center-hub .hub-inner-card {
-        border-radius: 20px;
-        height: auto;
-        padding: 20px 16px;
-    }
-
-    .empresas-center-hub .hub-mixer-frame {
-        height: 95px;
+    .hub-creacom-logo {
+        max-width: 145px;
+        max-height: 40px;
     }
 
     .empresas-group {
@@ -3133,15 +3077,15 @@ video {
         inset: auto;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 12px;
         width: 100%;
-        max-width: 500px;
+        max-width: 440px;
         margin: 0 auto;
         opacity: 0;
         visibility: hidden;
         height: 0;
         overflow: hidden;
-        transform: translateY(15px);
+        transform: translateY(10px);
     }
 
     .empresas-group.active {
@@ -3165,28 +3109,42 @@ video {
 
     .empresa-card {
         width: 100%;
-        max-width: 220px;
-        height: 98px;
-        padding: 10px 14px;
+        max-width: 204px;
+        height: 80px;
+        padding: 8px 12px;
     }
 
     .empresa-logo {
-        max-height: 44px;
+        max-height: 36px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 440px) {
+    .empresas-center-hub {
+        width: 240px;
+        height: 240px;
+    }
+
+    .hub-creacom-logo {
+        max-width: 130px;
+        max-height: 36px;
+    }
+
+    .empresas-group {
+        gap: 10px;
+    }
+
     .empresa-card {
-        height: 90px;
-        padding: 8px 10px;
+        height: 76px;
+        padding: 6px 10px;
     }
 
     .empresa-logo {
-        max-height: 38px;
+        max-height: 32px;
     }
 
     .empresa-name {
-        font-size: 0.7rem;
+        font-size: 0.68rem;
     }
 }
 

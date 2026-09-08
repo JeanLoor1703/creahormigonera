@@ -637,7 +637,6 @@ const EMPRESAS_INTERVAL = 5000;
 
 function goToEmpresasGroup(targetIndex) {
     const groups = document.querySelectorAll('.empresas-group');
-    const dots = document.querySelectorAll('.empresa-dot');
     if (!groups.length) return;
 
     currentEmpresasGroup = (targetIndex + groups.length) % groups.length;
@@ -647,14 +646,6 @@ function goToEmpresasGroup(targetIndex) {
             g.classList.add('active');
         } else {
             g.classList.remove('active');
-        }
-    });
-
-    dots.forEach((dot, idx) => {
-        if (idx === currentEmpresasGroup) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
         }
     });
 

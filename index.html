@@ -81,7 +81,7 @@
     <!-- Preload imagen hero (LCP candidate) -->
     <link rel="preload" as="image" href="imagenes/mixer1.jpg">
 
-    <link rel="stylesheet" href="styles/creahormigonera.css?v=2.5">
+    <link rel="stylesheet" href="styles/creahormigonera.css?v=3.0">
 
     <!-- Google Fonts: carga no-bloqueante para no bloquear FCP/LCP -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet"
@@ -218,7 +218,7 @@
 
             <section id="cobertura" class="cobertura-nueva">
                 <div class="cobertura-nueva-inner">
-                    <div class="cobertura-nueva-texto reveal-ready">
+                    <div class="cobertura-nueva-texto">
                         <h2>Zonas donde entregamos hormigón premezclado</h2>
                         <p>Realizamos despacho de hormigón para proyectos de construcción en diferentes ciudades de Guayas, Los Ríos y Manabí.</p>
                         <ul class="ciudades-grid">
@@ -265,11 +265,12 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="cobertura-nueva-imagen reveal-ready">
+                    <div class="cobertura-nueva-imagen">
                         <div class="mapa-card">
-                            <img src="hormigon-imagenes/mapa-hormigonera.png"
+                            <img src="imagenes/mapa-hormigonera.png"
                                 alt="Mapa de cobertura de hormigón premezclado en Guayas, Los Ríos y Manabí"
-                                class="mapa-img" loading="lazy" width="500" height="500">
+                                class="mapa-img" width="500" height="500"
+                                onerror="this.onerror=null; this.src='imagenes/creacom-hormigonera-Losrios-Guayas-Manabi.jpg';">
                         </div>
                     </div>
                 </div>
@@ -285,30 +286,35 @@
                     </div>
 
                     <div class="empresas-hub-wrapper" id="empresasHubWrapper">
-                        <!-- Líneas conectoras para escritorio -->
-                        <svg class="empresas-connector-lines" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
-                            <line x1="500" y1="280" x2="200" y2="105" class="connector-line" />
-                            <line x1="500" y1="280" x2="200" y2="455" class="connector-line" />
-                            <line x1="500" y1="280" x2="500" y2="500" class="connector-line" />
-                            <line x1="500" y1="280" x2="800" y2="105" class="connector-line" />
-                            <line x1="500" y1="280" x2="800" y2="455" class="connector-line" />
+                        <!-- Líneas conectoras compactas y limpias -->
+                        <svg class="empresas-connector-lines" viewBox="0 0 1040 520" preserveAspectRatio="none" aria-hidden="true">
+                            <!-- Conectores desde los nodos del círculo a las tarjetas -->
+                            <line x1="356" y1="145" x2="260" y2="102" class="connector-line" />
+                            <line x1="356" y1="294" x2="260" y2="337" class="connector-line" />
+                            <line x1="684" y1="145" x2="780" y2="102" class="connector-line" />
+                            <line x1="684" y1="294" x2="780" y2="337" class="connector-line" />
+                            <line x1="520" y1="400" x2="520" y2="416" class="connector-line" />
 
-                            <circle cx="365" cy="210" r="5" class="connector-node" />
-                            <circle cx="365" cy="350" r="5" class="connector-node" />
-                            <circle cx="500" cy="415" r="5" class="connector-node" />
-                            <circle cx="635" cy="210" r="5" class="connector-node" />
-                            <circle cx="635" cy="350" r="5" class="connector-node" />
+                            <!-- Nodos perimetrales del círculo central -->
+                            <circle cx="520" cy="40" r="5" class="connector-node node-accent" />
+                            <circle cx="356" cy="145" r="4.5" class="connector-node node-dark" />
+                            <circle cx="356" cy="294" r="4.5" class="connector-node node-dark" />
+                            <circle cx="520" cy="400" r="5" class="connector-node node-accent" />
+                            <circle cx="684" cy="294" r="4.5" class="connector-node node-dark" />
+                            <circle cx="684" cy="145" r="4.5" class="connector-node node-dark" />
                         </svg>
 
-                        <!-- Núcleo Central: Creacom y Mixer -->
+                        <!-- Núcleo Central: Creacom y Mixer Sólido Integrado -->
                         <div class="empresas-center-hub">
-                            <div class="hub-ring-glow"></div>
+                            <div class="hub-outer-ring"></div>
                             <div class="hub-inner-card">
-                                <img src="imagenes/creahormigoneralogo.png" alt="Logo Creacom Hormigonera" class="hub-creacom-logo" width="165" height="45">
-                                <div class="hub-mixer-frame">
-                                    <img src="hormigon-imagenes/Hormigonera.jpg" alt="Camión mixer de Creacom Hormigonera" class="hub-mixer-img" width="240" height="135">
+                                <div class="hub-brand-area">
+                                    <img src="imagenes/creahormigoneralogo.png" alt="Logo Creacom Hormigonera" class="hub-creacom-logo" width="185" height="55">
                                 </div>
-                                <span class="hub-badge"><i class="fa-solid fa-certificate"></i> Calidad Certificada</span>
+                                <div class="hub-mixer-area">
+                                    <img src="imagenes/Hormigonera.jpg" alt="Camión mixer de Creacom Hormigonera" class="hub-mixer-img" onerror="this.onerror=null; this.src='hormigon-imagenes/Hormigonera.jpg';">
+                                    <div class="hub-mixer-fade"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -316,31 +322,31 @@
                         <div class="empresas-group active" data-group="0">
                             <div class="empresa-slot slot-top-left" data-slot="0">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/DIPAC_logo.png" alt="Logo DIPAC Productos de Acero" class="empresa-logo" loading="lazy" width="160" height="74">
+                                    <img src="imagenes/DIPAC_logo.png" alt="Logo DIPAC Productos de Acero" class="empresa-logo" loading="lazy" width="170" height="50" onerror="this.onerror=null; this.src='hormigon-imagenes/DIPAC_logo.png';">
                                     <span class="empresa-name">DIPAC</span>
                                 </div>
                             </div>
                             <div class="empresa-slot slot-bottom-left" data-slot="1">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/CELEP_EP_logo.png" alt="Logo CELEC EP Corporación Eléctrica del Ecuador" class="empresa-logo" loading="lazy" width="150" height="70">
+                                    <img src="imagenes/CELEP_EP_logo.png" alt="Logo CELEC EP Corporación Eléctrica del Ecuador" class="empresa-logo" loading="lazy" width="160" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/CELEP_EP_logo.png';">
                                     <span class="empresa-name">CELEC EP</span>
                                 </div>
                             </div>
                             <div class="empresa-slot slot-bottom-center" data-slot="2">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/Prefectura_del_Guayas_logo.png" alt="Logo Prefectura del Guayas" class="empresa-logo" loading="lazy" width="150" height="70">
+                                    <img src="imagenes/Prefectura_del_Guayas_logo.png" alt="Logo Prefectura del Guayas" class="empresa-logo" loading="lazy" width="160" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/Prefectura_del_Guayas_logo.png';">
                                     <span class="empresa-name">Prefectura del Guayas</span>
                                 </div>
                             </div>
                             <div class="empresa-slot slot-top-right" data-slot="3">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/ALL-IN_CONSTRUCCIONS_logo.png" alt="Logo ALL-IN Construcciones" class="empresa-logo" loading="lazy" width="150" height="70">
-                                    <span class="empresa-name">ALL-IN Construcciones</span>
+                                    <img src="imagenes/ALL-IN_CONSTRUCCIONS_logo.png" alt="Logo ALL-IN Constructions" class="empresa-logo" loading="lazy" width="160" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/ALL-IN_CONSTRUCCIONS_logo.png';">
+                                    <span class="empresa-name">ALL-IN Constructions</span>
                                 </div>
                             </div>
                             <div class="empresa-slot slot-bottom-right" data-slot="4">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/Construction_company_logo_.png" alt="Logo Construction Company Abrilpro" class="empresa-logo" loading="lazy" width="160" height="70">
+                                    <img src="imagenes/Construction_company_logo_.png" alt="Logo Construction Company Abrilpro" class="empresa-logo" loading="lazy" width="165" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/Construction_company_logo_.png';">
                                     <span class="empresa-name">Construction Company</span>
                                 </div>
                             </div>
@@ -350,49 +356,35 @@
                         <div class="empresas-group" data-group="1">
                             <div class="empresa-slot slot-top-left" data-slot="0">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/BI_Cacao_logo.png" alt="Logo BI Cacao de Ecuador S.A." class="empresa-logo" loading="lazy" width="150" height="70">
+                                    <img src="imagenes/BI_Cacao_logo.png" alt="Logo BI Cacao de Ecuador S.A." class="empresa-logo" loading="lazy" width="160" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/BI_Cacao_logo.png';">
                                     <span class="empresa-name">BI Cacao</span>
                                 </div>
                             </div>
                             <div class="empresa-slot slot-bottom-left" data-slot="1">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/procacao_logo.png" alt="Logo Procacao" class="empresa-logo" loading="lazy" width="140" height="70">
+                                    <img src="imagenes/procacao_logo.png" alt="Logo Procacao" class="empresa-logo" loading="lazy" width="150" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/procacao_logo.png';">
                                     <span class="empresa-name">Procacao</span>
                                 </div>
                             </div>
                             <div class="empresa-slot slot-bottom-center" data-slot="2">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/AB_Murillo_logo.png" alt="Logo Ab. Gary Murillo" class="empresa-logo" loading="lazy" width="140" height="70">
+                                    <img src="imagenes/AB_Murillo_logo.png" alt="Logo Ab. Gary Murillo" class="empresa-logo" loading="lazy" width="150" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/AB_Murillo_logo.png';">
                                     <span class="empresa-name">Ab. Gary Murillo</span>
                                 </div>
                             </div>
                             <div class="empresa-slot slot-top-right" data-slot="3">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/ING_Kleber_logo.png" alt="Logo Ing. Kleber Montiel" class="empresa-logo" loading="lazy" width="140" height="70">
+                                    <img src="imagenes/ING_Kleber_logo.png" alt="Logo Ing. Kleber Montiel" class="empresa-logo" loading="lazy" width="150" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/ING_Kleber_logo.png';">
                                     <span class="empresa-name">Ing. Kleber Montiel</span>
                                 </div>
                             </div>
                             <div class="empresa-slot slot-bottom-right" data-slot="4">
                                 <div class="empresa-card">
-                                    <img src="hormigon-imagenes/kauri_logo.png" alt="Logo Kauri Arquitectura" class="empresa-logo" loading="lazy" width="140" height="70">
+                                    <img src="imagenes/kauri_logo.png" alt="Logo Kauri Arquitectura" class="empresa-logo" loading="lazy" width="150" height="48" onerror="this.onerror=null; this.src='hormigon-imagenes/kauri_logo.png';">
                                     <span class="empresa-name">Kauri Arquitectura</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Controles del slider: ‹  ● ○  › -->
-                    <div class="empresas-controls">
-                        <button class="empresas-ctrl-btn btn-prev" aria-label="Grupo anterior de empresas" onclick="prevEmpresasGroup()">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                        <div class="empresas-dots">
-                            <button class="empresa-dot active" aria-label="Ver grupo 1 de empresas" onclick="goToEmpresasGroup(0)"></button>
-                            <button class="empresa-dot" aria-label="Ver grupo 2 de empresas" onclick="goToEmpresasGroup(1)"></button>
-                        </div>
-                        <button class="empresas-ctrl-btn btn-next" aria-label="Siguiente grupo de empresas" onclick="nextEmpresasGroup()">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
                     </div>
                 </div>
             </section>
