@@ -605,54 +605,289 @@ body {
     white-space: nowrap;
 }
 
-/* PROYECTOS */
+/* ==================================================
+   PROYECTOS EJECUTADOS - CASCADA 3D INTERACTIVA
+   ================================================== */
 .proyectos {
-    padding: 80px 0;
+    position: relative;
     background-color: var(--color-bg-light);
+    overflow: clip;
 }
 
-/* PROYECTOS - Grid de 4 columnas */
-.proyectos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 30px;
-}
-
-.proyecto-card {
-    background-color: var(--color-bg);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.proyecto-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-.proyecto-image {
+/* Track contenedor para la experiencia sticky en desktop */
+.proyectos-sticky-track {
+    position: relative;
     width: 100%;
-    height: 250px;
+}
+
+@media (min-width: 992px) {
+    .proyectos-sticky-track {
+        height: 280vh; /* Riel de scroll continuo para las 4 tarjetas */
+    }
+
+    .proyectos-pinned {
+        position: sticky;
+        top: 75px;
+        min-height: calc(100vh - 75px);
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+        padding: 24px 0 32px;
+        box-sizing: border-box;
+    }
+}
+
+.proyectos-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.proyectos-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.proyectos-header h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+}
+
+.proyectos-header .section-subtitle {
+    color: var(--color-text-light);
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+/* Layout invertido: Izquierda Tarjetas 3D, Derecha Editorial */
+.proyectos-cascade-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 45px;
+    width: 100%;
+}
+
+/* LADO IZQUIERDO: Escenario 3D */
+.proyectos-stage-column {
+    flex: 1 1 54%;
+    max-width: 580px;
+    position: relative;
+    padding-top: 10px;
+}
+
+.proyectos-3d-stage {
+    position: relative;
+    width: 100%;
+    height: 410px;
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+    outline: none;
+}
+
+.proyectos-3d-stage:active {
+    cursor: grabbing;
+}
+
+.proyectos-cards-deck {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+/* Tarjeta individual dentro de la baraja 3D */
+.p-card {
+    position: absolute;
+    left: 54%;
+    top: 53%;
+    width: min(365px, 90%);
+    height: 345px;
+    transform: translate(-50%, -50%);
+    transform-style: preserve-3d;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.25, 1), opacity 0.45s ease, box-shadow 0.45s ease;
+    will-change: transform, opacity;
+}
+
+.p-card.is-dragging {
+    transition: none !important;
+}
+
+.p-card.is-exiting {
+    transform: translate3d(calc(-50% + 140px), calc(-50% + 20px), 30px) scale(0.96) rotate(6deg) !important;
+    opacity: 0 !important;
+    z-index: 45 !important;
+    pointer-events: none !important;
+}
+
+.p-card.active-card {
+    opacity: 1 !important;
+    z-index: 40 !important;
+    filter: none !important;
+    box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.p-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
     overflow: hidden;
 }
 
-.proyecto-image img {
+.p-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s;
+    display: block;
+    border-radius: 24px;
+    transition: transform 0.4s ease;
 }
 
-.proyecto-card:hover .proyecto-image img {
-    transform: scale(1.1);
+.p-card:hover .p-card-img {
+    transform: scale(1.02);
 }
 
-.proyecto-content {
-    padding: 25px;
+/* Degradado muy suave únicamente en los últimos 25-30% de la imagen */
+.p-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 22%, transparent 35%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 22px;
+    color: #ffffff;
+    pointer-events: none;
+    border-radius: 24px;
 }
 
-/* Badge rojo dentro de las tarjetas de proyecto */
+.p-card-badge {
+    align-self: flex-start;
+    margin-bottom: 0;
+    box-shadow: 0 4px 14px rgba(220, 20, 60, 0.45);
+    font-size: 0.88rem;
+    padding: 7px 18px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.p-card-mini-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+/* Controles debajo de la baraja */
+.proyectos-deck-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 14px;
+    padding: 0;
+    width: 100%;
+}
+
+.proyectos-deck-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.proyectos-dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.p-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.p-dot.active {
+    background: var(--color-primary);
+    width: 28px;
+    border-radius: 10px;
+}
+
+.p-dot:hover:not(.active) {
+    background: rgba(220, 20, 60, 0.45);
+}
+
+.p-nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--color-bg);
+    color: var(--color-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 0.9rem;
+}
+
+.p-nav-btn:hover {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
+}
+
+/* LADO DERECHO: Panel Editorial */
+.proyectos-editorial-column {
+    flex: 1 1 46%;
+    max-width: 500px;
+}
+
+.proyectos-editorial-card {
+    background: var(--color-bg);
+    border-radius: 24px;
+    padding: 32px 36px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 330px;
+    position: relative;
+}
+
+.proyectos-editorial-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Badge rojo corporativo */
 .proyecto-badge {
     display: inline-block;
     background: linear-gradient(135deg, #FF1744, #DC143C);
@@ -661,20 +896,240 @@ body {
     font-size: 0.85rem;
     padding: 6px 16px;
     border-radius: 20px;
-    margin-bottom: 12px;
     box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
     letter-spacing: 0.5px;
 }
 
-.proyecto-content h3 {
-    font-size: 1.5rem;
+.proyectos-counter {
+    font-family: var(--font-main);
     font-weight: 800;
-    color: var(--color-dark);
-    margin-bottom: 10px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
 }
 
-.proyecto-content p {
+.counter-curr {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.counter-sep {
+    color: #d1d5db;
+    font-size: 1.1rem;
+}
+
+.counter-total {
     color: var(--color-text-light);
+    font-size: 1.05rem;
+}
+
+.proyectos-editorial-body {
+    margin-bottom: 24px;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.proyectos-editorial-body.text-changing {
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+.proyectos-editorial-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    margin-bottom: 12px;
+    line-height: 1.25;
+}
+
+.proyectos-editorial-desc {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    line-height: 1.65;
+}
+
+.proyectos-editorial-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.proyectos-progress-wrapper {
+    width: 100%;
+}
+
+.proyectos-progress-bar {
+    width: 100%;
+    height: 5px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.proyectos-progress-indicator {
+    height: 100%;
+    width: 25%;
+    background: linear-gradient(90deg, #FF1744, #DC143C);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+/* ==================================================
+   RESPONSIVE: TABLET & MOBILE
+   ================================================== */
+@media (max-width: 991px) {
+    .proyectos-sticky-track {
+        height: auto;
+    }
+
+    .proyectos-pinned {
+        position: static;
+        height: auto;
+        padding: 50px 0;
+    }
+
+    .proyectos-cascade-layout {
+        gap: 30px;
+    }
+
+    .proyectos-3d-stage {
+        height: 380px;
+    }
+
+    .p-card {
+        width: 350px;
+        height: 320px;
+    }
+
+    .proyectos-editorial-card {
+        padding: 28px;
+        min-height: auto;
+    }
+
+    .proyectos-editorial-title {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .proyectos {
+        padding: 45px 0 60px;
+    }
+
+    .proyectos-pinned {
+        padding: 0;
+    }
+
+    .proyectos-header {
+        margin-bottom: 22px;
+    }
+
+    .proyectos-header h2 {
+        font-size: 1.85rem;
+    }
+
+    .proyectos-header .section-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .proyectos-cascade-layout {
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .proyectos-stage-column {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .proyectos-3d-stage {
+        height: 330px;
+        perspective: 900px;
+    }
+
+    .p-card {
+        width: min(320px, 84vw);
+        height: 280px;
+        left: 56%;
+        top: 56%;
+    }
+
+    .p-card-mini-title {
+        font-size: 1.15rem;
+    }
+
+    .proyectos-deck-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding-left: 0;
+        margin-top: 15px;
+    }
+
+    .proyectos-deck-nav {
+        justify-content: center;
+    }
+
+    .p-deck-hint {
+        font-size: 0.76rem;
+        white-space: normal;
+        text-align: center;
+        justify-content: center;
+        opacity: 0.8;
+    }
+
+    .proyectos-editorial-column {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .proyectos-editorial-card {
+        padding: 22px 20px;
+        border-radius: 18px;
+        min-height: auto;
+    }
+
+    .proyectos-editorial-title {
+        font-size: 1.35rem;
+        margin-bottom: 10px;
+    }
+
+    .proyectos-editorial-desc {
+        font-size: 0.92rem;
+    }
+
+    .proyectos-editorial-body {
+        min-height: 110px;
+        margin-bottom: 18px;
+    }
+}
+
+/* ACCESIBILIDAD: PREFERS-REDUCED-MOTION */
+@media (prefers-reduced-motion: reduce) {
+    .p-card {
+        transition: opacity 0.3s ease !important;
+        transform: translate(-50%, -50%) !important;
+    }
+
+    .p-card:not(.active-card) {
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .p-card.active-card {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    .proyectos-editorial-body {
+        transition: none !important;
+    }
 }
 
 /* CONTACTO */

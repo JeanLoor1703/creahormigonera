@@ -726,3 +726,427 @@ if (document.readyState === 'loading') {
 } else {
     initEmpresasSlider();
 }
+
+/* ==================================================
+   PROYECTOS EJECUTADOS - CASCADA DE TARJETAS 3D
+   ================================================== */
+function initProyectosCascada() {
+    const stage = document.getElementById('proyectosStage');
+    const deck = document.getElementById('proyectosDeck');
+    const track = document.getElementById('proyectosTrack');
+    const section = document.getElementById('proyectos');
+    if (!stage || !deck) return;
+
+    const cards = Array.from(deck.querySelectorAll('.p-card'));
+    if (!cards.length) return;
+
+    const badgeEl = document.getElementById('editorialBadge');
+    const titleEl = document.getElementById('editorialTitle');
+    const descEl = document.getElementById('editorialDesc');
+    const bodyEl = document.getElementById('editorialBody');
+    const counterCurEl = document.getElementById('counterCurrent');
+    const progressIndicator = document.getElementById('editorialProgressIndicator');
+    const dots = Array.from(document.querySelectorAll('#editorialDots .p-dot'));
+    const prevBtn = document.getElementById('proyectosPrevBtn');
+    const nextBtn = document.getElementById('proyectosNextBtn');
+
+    // Estructura de datos centralizada de los proyectos existentes
+    const proyectosData = [
+        {
+            code: "H-180",
+            title: "Contra Pisos",
+            description: "Mezcla diseñada específicamente para contrapisos y superficies de nivelación. Es la base perfecta y económica antes de colocar acabados finales.",
+            image: "imagenes/mixerdespachandoBalzarH-180Creacom.jpg",
+            alt: "Construcción de aceras y bordillos con hormigón H-180 en Guayas"
+        },
+        {
+            code: "H-210",
+            title: "Pisos",
+            description: "La resistencia estándar ideal para todo tipo de pisos de vivienda, patios y aceras. Garantiza una superficie sólida para el tránsito peatonal.",
+            image: "imagenes/HormigoneraQuevedoH-210.jpg",
+            alt: "Fundición de losa de techo con concreto H-210 resistente"
+        },
+        {
+            code: "H-240",
+            title: "Losa o Muros",
+            description: "Mayor concentración de cemento para soportar carga estructural. Indispensable para la fundición segura de losas de techo, entrepisos y muros.",
+            image: "imagenes/hormigonenbalzarH-240.jpg",
+            alt: "Estructuras sismo-resistentes, vigas y columnas con hormigón H-240"
+        },
+        {
+            code: "H-280",
+            title: "Pavimentación de Calzadas",
+            description: "Hormigón de alto desempeño diseñado para resistir el paso vehicular constante. Ideal para pavimentación de calles, vías públicas y accesos industriales.",
+            image: "imagenes/Creacomhormigonera-vias.jpg",
+            alt: "Pavimento rígido y puentes de alta resistencia H-280 en Ecuador"
+        }
+    ];
+
+    // Precargar las 4 imágenes para evitar parpadeos
+    proyectosData.forEach(p => {
+        const img = new Image();
+        img.src = p.image;
+    });
+
+    const total = proyectosData.length;
+    let currentIndex = 0;
+    let autoplayTimer = null;
+    let resumeAutoplayTimer = null;
+    let isUserInteracting = false;
+    let isTransitioning = false;
+
+    // Asignar índice fijo a cada tarjeta
+    cards.forEach((card, idx) => {
+        card.dataset.indexInt = idx;
+    });
+
+    // Configuración exacta de los 4 slots de la baraja (Arriba, Izquierda y Profundidad Z)
+    function getSlotConfig(slot) {
+        const isMobile = window.innerWidth < 768;
+        if (slot === 0) {
+            // TARJETA ACTIVA (Primer plano protagonista)
+            return {
+                x: 0,
+                y: 0,
+                z: 0,
+                scale: 1,
+                rotateZ: 0,
+                opacity: 1,
+                zIndex: 40
+            };
+        } else if (slot === 1) {
+            // SEGUNDA TARJETA (Detrás, asomando hacia arriba e izquierda)
+            return {
+                x: isMobile ? -20 : -36,
+                y: isMobile ? -24 : -42,
+                z: -70,
+                scale: isMobile ? 0.95 : 0.94,
+                rotateZ: -1.5,
+                opacity: 0.88,
+                zIndex: 30
+            };
+        } else if (slot === 2) {
+            // TERCERA TARJETA (Más atrás, asomando hacia arriba e izquierda)
+            return {
+                x: isMobile ? -40 : -70,
+                y: isMobile ? -48 : -84,
+                z: -140,
+                scale: isMobile ? 0.90 : 0.88,
+                rotateZ: -3,
+                opacity: 0.68,
+                zIndex: 20
+            };
+        } else {
+            // CUARTA TARJETA (Fondo del stack)
+            return {
+                x: isMobile ? -58 : -100,
+                y: isMobile ? -70 : -118,
+                z: -200,
+                scale: isMobile ? 0.85 : 0.82,
+                rotateZ: -4.5,
+                opacity: 0.42,
+                zIndex: 10
+            };
+        }
+    }
+
+    // Aplicar slot visual a una tarjeta
+    function applyCardSlot(card, slot, animated = true) {
+        const s = getSlotConfig(slot);
+
+        if (!animated) {
+            card.style.transition = 'none';
+        } else {
+            card.style.transition = 'transform 0.45s cubic-bezier(0.2, 0.8, 0.25, 1), opacity 0.45s ease, box-shadow 0.45s ease';
+        }
+
+        card.style.transform = `translate3d(calc(-50% + ${s.x}px), calc(-50% + ${s.y}px), ${s.z}px) scale(${s.scale}) rotateZ(${s.rotateZ}deg)`;
+        card.style.opacity = s.opacity;
+        card.style.zIndex = s.zIndex;
+        card.style.filter = 'none';
+        card.style.pointerEvents = 'auto';
+
+        if (slot === 0) {
+            card.classList.add('active-card');
+            card.classList.remove('is-exiting');
+        } else {
+            card.classList.remove('active-card');
+            card.classList.remove('is-exiting');
+        }
+    }
+
+    // Sincronizar contenido editorial del lado derecho
+    function updateEditorial(newIndex) {
+        if (!bodyEl) return;
+        bodyEl.classList.add('text-changing');
+
+        setTimeout(() => {
+            const data = proyectosData[newIndex];
+            if (badgeEl) badgeEl.textContent = data.code;
+            if (titleEl) titleEl.textContent = data.title;
+            if (descEl) descEl.textContent = data.description;
+            if (counterCurEl) counterCurEl.textContent = String(newIndex + 1).padStart(2, '0');
+            if (progressIndicator) progressIndicator.style.width = `${((newIndex + 1) / total) * 100}%`;
+
+            dots.forEach((dot, idx) => {
+                const isActive = idx === newIndex;
+                dot.classList.toggle('active', isActive);
+                dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+
+            bodyEl.classList.remove('text-changing');
+        }, 150);
+    }
+
+    // Transición suave hacia el SIGUIENTE proyecto (La activa sale por la derecha sin tapar)
+    function goToNext() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        const oldCard = cards[currentIndex];
+        const nextIndex = (currentIndex + 1) % total;
+
+        // 1. La tarjeta activa sale hacia la derecha y adelante desvaneciéndose
+        oldCard.classList.remove('active-card');
+        oldCard.classList.add('is-exiting');
+
+        // 2. Las demás tarjetas avanzan hacia el frente
+        cards.forEach((card, j) => {
+            if (j === currentIndex) return;
+            const newSlot = (j - nextIndex + total) % total;
+            applyCardSlot(card, newSlot, true);
+        });
+
+        // 3. Actualizar textos editoriales sincronizados
+        updateEditorial(nextIndex);
+        currentIndex = nextIndex;
+
+        // 4. Tras completar la salida, reubicar la tarjeta en el fondo (Slot 3) sin salto visible
+        setTimeout(() => {
+            oldCard.classList.remove('is-exiting');
+            const targetSlot = (parseInt(oldCard.dataset.indexInt, 10) - currentIndex + total) % total;
+            applyCardSlot(oldCard, targetSlot, false);
+            void oldCard.offsetWidth;
+            oldCard.style.transition = 'transform 0.45s cubic-bezier(0.2, 0.8, 0.25, 1), opacity 0.45s ease, box-shadow 0.45s ease';
+            isTransitioning = false;
+        }, 420);
+    }
+
+    // Transición hacia el proyecto ANTERIOR
+    function goToPrev() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        const prevIndex = (currentIndex - 1 + total) % total;
+        const incomingCard = cards[prevIndex];
+
+        // Preparar la tarjeta entrante fuera de pantalla a la derecha
+        incomingCard.style.transition = 'none';
+        incomingCard.style.transform = 'translate3d(calc(-50% + 140px), calc(-50% + 20px), 30px) scale(0.96) rotate(6deg)';
+        incomingCard.style.opacity = '0';
+        incomingCard.style.zIndex = '45';
+        void incomingCard.offsetWidth;
+
+        // Animar todas las tarjetas hacia atrás
+        currentIndex = prevIndex;
+        cards.forEach((card, j) => {
+            const slot = (j - currentIndex + total) % total;
+            applyCardSlot(card, slot, true);
+        });
+
+        updateEditorial(currentIndex);
+
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 420);
+    }
+
+    // Ir a un proyecto específico
+    function goToProject(targetIndex) {
+        targetIndex = (targetIndex + total) % total;
+        if (targetIndex === currentIndex) return;
+
+        if (targetIndex === (currentIndex + 1) % total) {
+            goToNext();
+        } else if (targetIndex === (currentIndex - 1 + total) % total) {
+            goToPrev();
+        } else {
+            currentIndex = targetIndex;
+            cards.forEach((card, j) => {
+                const slot = (j - currentIndex + total) % total;
+                applyCardSlot(card, slot, true);
+            });
+            updateEditorial(currentIndex);
+        }
+    }
+
+    // --- AUTOPLAY (Cada 3 segundos) ---
+    function startAutoplay() {
+        if (autoplayTimer) clearInterval(autoplayTimer);
+        autoplayTimer = setInterval(() => {
+            if (!isUserInteracting && !isTransitioning) {
+                goToNext();
+            }
+        }, 3000);
+    }
+
+    function pauseAutoplay() {
+        if (autoplayTimer) {
+            clearInterval(autoplayTimer);
+            autoplayTimer = null;
+        }
+        if (resumeAutoplayTimer) {
+            clearTimeout(resumeAutoplayTimer);
+            resumeAutoplayTimer = null;
+        }
+    }
+
+    function scheduleResumeAutoplay(delay = 4000) {
+        pauseAutoplay();
+        resumeAutoplayTimer = setTimeout(() => {
+            isUserInteracting = false;
+            startAutoplay();
+        }, delay);
+    }
+
+    // --- GESTOS: TOUCH SWIPE Y MOUSE DRAG ---
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+    let dragDeltaX = 0;
+
+    function onPointerDown(e) {
+        if (isTransitioning) return;
+        isDragging = true;
+        isUserInteracting = true;
+        pauseAutoplay();
+        startX = e.clientX || (e.touches && e.touches[0].clientX);
+        startY = e.clientY || (e.touches && e.touches[0].clientY);
+        dragDeltaX = 0;
+
+        cards[currentIndex].classList.add('is-dragging');
+    }
+
+    function onPointerMove(e) {
+        if (!isDragging || isTransitioning) return;
+
+        const curX = e.clientX || (e.touches && e.touches[0].clientX);
+        const curY = e.clientY || (e.touches && e.touches[0].clientY);
+        if (curX === undefined || curY === undefined) return;
+
+        dragDeltaX = curX - startX;
+        const dragDeltaY = curY - startY;
+
+        // La tarjeta activa sigue el arrastre suavemente con ligera rotación
+        const activeCard = cards[currentIndex];
+        activeCard.style.transform = `translate3d(calc(-50% + ${dragDeltaX}px), calc(-50% + ${dragDeltaY * 0.15}px), 0) scale(1) rotate(${dragDeltaX * 0.03}deg)`;
+    }
+
+    function onPointerUp() {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const activeCard = cards[currentIndex];
+        activeCard.classList.remove('is-dragging');
+
+        if (dragDeltaX < -40) {
+            goToNext();
+        } else if (dragDeltaX > 40) {
+            goToPrev();
+        } else {
+            // Regresar a la posición inicial
+            applyCardSlot(activeCard, 0, true);
+        }
+
+        scheduleResumeAutoplay(4000);
+    }
+
+    stage.addEventListener('mousedown', onPointerDown);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
+
+    stage.addEventListener('touchstart', onPointerDown, { passive: true });
+    window.addEventListener('touchmove', onPointerMove, { passive: true });
+    window.addEventListener('touchend', onPointerUp, { passive: true });
+
+    // Pausar autoplay al interactuar con la sección
+    if (section) {
+        section.addEventListener('mouseenter', () => {
+            isUserInteracting = true;
+            pauseAutoplay();
+        });
+        section.addEventListener('mouseleave', () => {
+            isUserInteracting = false;
+            scheduleResumeAutoplay(2500);
+        });
+    }
+
+    // Clic directo en cualquiera de las tarjetas de la baraja
+    cards.forEach((card, index) => {
+        card.addEventListener('click', () => {
+            if (isDragging || isTransitioning) return;
+            isUserInteracting = true;
+            goToProject(index);
+            scheduleResumeAutoplay(5000);
+        });
+    });
+
+    // Clic en botones de navegación
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isUserInteracting = true;
+            goToPrev();
+            scheduleResumeAutoplay(5000);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isUserInteracting = true;
+            goToNext();
+            scheduleResumeAutoplay(5000);
+        });
+    }
+
+    // Clic en los puntos de paginación
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isUserInteracting = true;
+            goToProject(index);
+            scheduleResumeAutoplay(5000);
+        });
+    });
+
+    // Navegación por teclado
+    stage.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            isUserInteracting = true;
+            goToNext();
+            scheduleResumeAutoplay(5000);
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            isUserInteracting = true;
+            goToPrev();
+            scheduleResumeAutoplay(5000);
+        }
+    });
+
+    // Renderizar estado inicial de la baraja y arrancar autoplay
+    cards.forEach((card, j) => {
+        const slot = (j - currentIndex + total) % total;
+        applyCardSlot(card, slot, false);
+    });
+    updateEditorial(0);
+    startAutoplay();
+}
+
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProyectosCascada);
+} else {
+    initProyectosCascada();
+}

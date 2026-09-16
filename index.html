@@ -81,7 +81,7 @@
     <!-- Preload imagen hero (LCP candidate) -->
     <link rel="preload" as="image" href="imagenes/mixer1.jpg">
 
-    <link rel="stylesheet" href="styles/creahormigonera.css?v=3.0">
+    <link rel="stylesheet" href="styles/creahormigonera.css?v=3.3">
 
     <!-- Google Fonts: carga no-bloqueante para no bloquear FCP/LCP -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet"
@@ -501,64 +501,122 @@
                 </div>
             </section>
 
-            <section class="proyectos" id="proyectos">
-                <div class="container">
-                    <h2>Proyectos Ejecutados</h2>
-                    <p class="section-subtitle">Experiencia comprobada en obras de todo tipo</p>
-                    <div class="proyectos-grid">
-                        <div class="proyecto-card">
-                            <div class="proyecto-image">
-                                <img src="imagenes/mixerdespachandoBalzarH-180Creacom.jpg"
-                                    alt="Construcción de aceras y bordillos con hormigón H-180 en Guayas"
-                                    loading="lazy">
+            <section class="proyectos" id="proyectos" aria-label="Proyectos Ejecutados">
+                <div class="proyectos-sticky-track" id="proyectosTrack">
+                    <div class="proyectos-pinned" id="proyectosPinned">
+                        <div class="container proyectos-container">
+                            <div class="proyectos-header">
+                                <h2>Proyectos Ejecutados</h2>
+                                <p class="section-subtitle">Experiencia comprobada en obras de todo tipo</p>
                             </div>
-                            <div class="proyecto-content">
-                                <span class="proyecto-badge">H-180</span>
-                                <h3>Contra Pisos</h3>
-                                <p>Mezcla diseñada específicamente para contrapisos y superficies de nivelación. Es la
-                                    base
-                                    perfecta y económica antes de colocar acabados finales.</p>
-                            </div>
-                        </div>
-                        <div class="proyecto-card">
-                            <div class="proyecto-image">
-                                <img src="imagenes/HormigoneraQuevedoH-210.jpg"
-                                    alt="Fundición de losa de techo con concreto H-210 resistente" loading="lazy">
-                            </div>
-                            <div class="proyecto-content">
-                                <span class="proyecto-badge">H-210</span>
-                                <h3>Pisos</h3>
-                                <p>La resistencia estándar ideal para todo tipo de pisos de vivienda, patios y aceras.
-                                    Garantiza
-                                    una superficie sólida para el tránsito peatonal.</p>
-                            </div>
-                        </div>
-                        <div class="proyecto-card">
-                            <div class="proyecto-image">
-                                <img src="imagenes/hormigonenbalzarH-240.jpg"
-                                    alt="Estructuras sismo-resistentes, vigas y columnas con hormigón H-240"
-                                    loading="lazy">
-                            </div>
-                            <div class="proyecto-content">
-                                <span class="proyecto-badge">H-240</span>
-                                <h3>Losa o Muros</h3>
-                                <p>: Mayor concentración de cemento para soportar carga estructural. Indispensable para
-                                    la
-                                    fundición segura de losas de techo, entrepisos y muros.</p>
-                            </div>
-                        </div>
-                        <div class="proyecto-card">
-                            <div class="proyecto-image">
-                                <img src="imagenes/Creacomhormigonera-vias.jpg"
-                                    alt="Pavimento rígido y puentes de alta resistencia H-280 en Ecuador"
-                                    loading="lazy">
-                            </div>
-                            <div class="proyecto-content">
-                                <span class="proyecto-badge">H-280</span>
-                                <h3>Pavimentación de Calzadas</h3>
-                                <p>Hormigón de alto desempeño diseñado para resistir el paso vehicular constante. Ideal
-                                    para
-                                    pavimentación de calles, vías públicas y accesos industriales.</p>
+
+                            <div class="proyectos-cascade-layout">
+                                <!-- LADO IZQUIERDO: Cascada de tarjetas 3D con fotografías -->
+                                <div class="proyectos-stage-column">
+                                    <div class="proyectos-3d-stage" id="proyectosStage" tabindex="0" aria-roledescription="carrusel" aria-label="Cascada interactiva 3D de proyectos">
+                                        <div class="proyectos-cards-deck" id="proyectosDeck">
+                                            <!-- Card 0: H-180 -->
+                                            <article class="p-card" data-index="0" aria-label="Proyecto 1: Contra Pisos H-180">
+                                                <div class="p-card-inner">
+                                                    <img src="imagenes/mixerdespachandoBalzarH-180Creacom.jpg"
+                                                        alt="Construcción de aceras y bordillos con hormigón H-180 en Guayas"
+                                                        loading="lazy" class="p-card-img">
+                                                    <div class="p-card-overlay">
+                                                        <span class="proyecto-badge p-card-badge">H-180</span>
+                                                        <h4 class="p-card-mini-title">Contra Pisos</h4>
+                                                    </div>
+                                                </div>
+                                            </article>
+
+                                            <!-- Card 1: H-210 -->
+                                            <article class="p-card" data-index="1" aria-label="Proyecto 2: Pisos H-210">
+                                                <div class="p-card-inner">
+                                                    <img src="imagenes/HormigoneraQuevedoH-210.jpg"
+                                                        alt="Fundición de losa de techo con concreto H-210 resistente"
+                                                        loading="lazy" class="p-card-img">
+                                                    <div class="p-card-overlay">
+                                                        <span class="proyecto-badge p-card-badge">H-210</span>
+                                                        <h4 class="p-card-mini-title">Pisos</h4>
+                                                    </div>
+                                                </div>
+                                            </article>
+
+                                            <!-- Card 2: H-240 -->
+                                            <article class="p-card" data-index="2" aria-label="Proyecto 3: Losa o Muros H-240">
+                                                <div class="p-card-inner">
+                                                    <img src="imagenes/hormigonenbalzarH-240.jpg"
+                                                        alt="Estructuras sismo-resistentes, vigas y columnas con hormigón H-240"
+                                                        loading="lazy" class="p-card-img">
+                                                    <div class="p-card-overlay">
+                                                        <span class="proyecto-badge p-card-badge">H-240</span>
+                                                        <h4 class="p-card-mini-title">Losa o Muros</h4>
+                                                    </div>
+                                                </div>
+                                            </article>
+
+                                            <!-- Card 3: H-280 -->
+                                            <article class="p-card" data-index="3" aria-label="Proyecto 4: Pavimentación de Calzadas H-280">
+                                                <div class="p-card-inner">
+                                                    <img src="imagenes/Creacomhormigonera-vias.jpg"
+                                                        alt="Pavimento rígido y puentes de alta resistencia H-280 en Ecuador"
+                                                        loading="lazy" class="p-card-img">
+                                                    <div class="p-card-overlay">
+                                                        <span class="proyecto-badge p-card-badge">H-280</span>
+                                                        <h4 class="p-card-mini-title">Pavimentación de Calzadas</h4>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                    </div>
+
+                                    <!-- Controles debajo de la baraja (flechas y puntos) -->
+                                    <div class="proyectos-deck-controls">
+                                        <div class="proyectos-deck-nav">
+                                            <button type="button" class="p-nav-btn prev" id="proyectosPrevBtn" aria-label="Proyecto anterior">
+                                                <i class="fa-solid fa-chevron-left"></i>
+                                            </button>
+                                            <div class="proyectos-dots" id="editorialDots" role="tablist" aria-label="Seleccionar proyecto">
+                                                <button type="button" class="p-dot active" data-index="0" role="tab" aria-selected="true" aria-label="Ver proyecto 1: Contra Pisos"></button>
+                                                <button type="button" class="p-dot" data-index="1" role="tab" aria-selected="false" aria-label="Ver proyecto 2: Pisos"></button>
+                                                <button type="button" class="p-dot" data-index="2" role="tab" aria-selected="false" aria-label="Ver proyecto 3: Losa o Muros"></button>
+                                                <button type="button" class="p-dot" data-index="3" role="tab" aria-selected="false" aria-label="Ver proyecto 4: Pavimentación de Calzadas"></button>
+                                            </div>
+                                            <button type="button" class="p-nav-btn next" id="proyectosNextBtn" aria-label="Proyecto siguiente">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- LADO DERECHO: Contenido Editorial Sincronizado -->
+                                <div class="proyectos-editorial-column">
+                                    <div class="proyectos-editorial-card">
+                                        <div class="proyectos-editorial-top">
+                                            <span class="proyecto-badge" id="editorialBadge">H-180</span>
+                                            <div class="proyectos-counter" id="editorialCounter" aria-live="polite">
+                                                <span class="counter-curr" id="counterCurrent">01</span>
+                                                <span class="counter-sep">/</span>
+                                                <span class="counter-total">04</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="proyectos-editorial-body" id="editorialBody">
+                                            <h3 class="proyectos-editorial-title" id="editorialTitle">Contra Pisos</h3>
+                                            <p class="proyectos-editorial-desc" id="editorialDesc">
+                                                Mezcla diseñada específicamente para contrapisos y superficies de nivelación. Es la base perfecta y económica antes de colocar acabados finales.
+                                            </p>
+                                        </div>
+
+                                        <!-- Progreso -->
+                                        <div class="proyectos-editorial-footer">
+                                            <div class="proyectos-progress-wrapper" aria-label="Progreso de proyectos">
+                                                <div class="proyectos-progress-bar">
+                                                    <div class="proyectos-progress-indicator" id="editorialProgressIndicator"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -840,7 +898,7 @@
     </div>
 
 
-    <script src="js/creahormigonera.js?v=2.5"></script>
+    <script src="js/creahormigonera.js?v=2.8"></script>
 </body>
 
 </html>
