@@ -50,13 +50,13 @@
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "name": "Crea Hormigonera",
-      "image": "https://creahormigonera.com/imagenes/CREA%20.png",
-      "description": "Mixer de hormigón premezclado y servicios de bombeo en El Empalme,Blazar,Pichincha,Quevedo,Los Rios,Guyas y Manabi .",
-      "telephone": "+593968188499",
+      "name": "Creacom Hormigonera",
+      "image": "https://creahormigonera.com/imagenes/creahormigoneralogo.png",
+      "description": "Suministro de hormigón premezclado desde El Empalme para proyectos en Guayas, Los Ríos y Manabí.",
+      "telephone": "+593997528670",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "",
+        "streetAddress": "Av. Manabí, Rct. María Ester, km 5.5",
         "addressLocality": "El Empalme",
         "addressRegion": "Guayas",
         "addressCountry": "EC"
@@ -74,21 +74,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Preload crítico: fuente Montserrat WOFF2 para evitar FOIT y reducir CLS -->
-    <link rel="preload" as="font" type="font/woff2"
-        href="https://fonts.gstatic.com/s/montserrat/v29/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2" crossorigin="anonymous">
-
     <!-- Preload imagen hero (LCP candidate) -->
-    <link rel="preload" as="image" href="imagenes/mixer1.jpg">
+    <link rel="preload" as="image" href="imagenes/hero/Planta-CREACOM-portada.webp">
 
-    <link rel="stylesheet" href="styles/creahormigonera.css?v=3.3">
-
-    <!-- Google Fonts: carga no-bloqueante para no bloquear FCP/LCP -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet"
-        media="print" onload="this.media='all'">
-    <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-    </noscript>
+    <link rel="stylesheet" href="styles/creahormigonera.css?v=3.4">
+    <link rel="stylesheet" href="styles/review-home.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome: carga con preload para que los íconos del header sean inmediatos -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
@@ -104,11 +95,16 @@
                         alt="Logo Crea Hormigonera - Planta de hormigon en El Empalme y Guayas" width="182" height="50"
                         loading="eager">
                 </div>
-                <nav class="nav">
+                <nav class="nav" id="main-navigation" aria-label="Navegación principal">
                     <a href="#inicio">Inicio</a>
                     <a href="#productos">Productos</a>
                     <a href="#proyectos">Proyectos</a>
                     <a href="#contacto">Contacto</a>
+
+                    <a href="./cotizar/" class="mobile-quote-action">
+                        <img src="imagenes/formulario.png" alt="" width="39" height="39">
+                        <span>¡Cotiza ahora!</span>
+                    </a>
 
                     <div class="mobile-menu-socials">
                         <hr class="mobile-socials-divider">
@@ -129,7 +125,7 @@
                         </div>
                     </div>
                 </nav>
-                <button class="menu-toggle" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+                <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-navigation"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
                 <div class="header-contact-group">
                     <div class="header-social-buttons">
                         <a href="https://www.facebook.com/profile.php?id=61587575957183&locale=es_LA"
@@ -180,41 +176,45 @@
                         <p class="pedido-minimo">Pedido mínimo: 5 metros cúbicos</p>
                     </div>
                     <div class="hero-images">
-                        <!-- Hero principal: sin lazy para que el LCP se cargue inmediatamente -->
+                        <!-- Dos imágenes por cuadro; la foto principal conserva el encuadre panorámico. -->
                         <div class="hero-img-slot hero-img-main" data-slot="0">
-                            <img class="hero-slide active" src="imagenes/mixer1.jpg"
-                                alt="Camión mixer descargando hormigón premezclado en obra de construcción en El Empalme"
-                                width="868" height="525" fetchpriority="high">
-                            <img class="hero-slide" src="hormigon-imagenes/Hormigonera.jpg"
-                                alt="Hormigonera en operación de despacho y vertido de concreto premezclado"
-                                width="2400" height="1792" loading="lazy">
-                            <img class="hero-slide" src="hormigon-imagenes/hormigonera-2.jpg"
-                                alt="Camión hormigonera en obra de infraestructura"
-                                width="2048" height="2048" loading="lazy">
-                            <img class="hero-slide" src="hormigon-imagenes/hormigonera-3.jpg"
-                                alt="Despacho de hormigón premezclado en camión mixer para construcción"
-                                width="2048" height="2048" loading="lazy">
+                            <img class="hero-slide active" src="imagenes/hero/Planta-CREACOM-portada.webp"
+                                alt="Mixer de Creacom frente a la planta al atardecer"
+                                width="1672" height="941" fetchpriority="high">
+                            <img class="hero-slide" src="imagenes/hero/planta-hormigon.webp"
+                                alt="Vista aérea de un mixer de Creacom en la planta"
+                                width="1672" height="941" loading="lazy">
                         </div>
                         <div class="hero-img-slot hero-img-small" data-slot="1">
-                            <img class="hero-slide active" src="imagenes/mixer2.jpg"
-                                alt="Flota de mixers listos para despacho de concreto en Quevedo y Manabí" width="498"
-                                height="280" loading="lazy">
-                            <img class="hero-slide" src="hormigon-imagenes/hormigonera-2.jpg"
-                                alt="Camión hormigonera en obra de infraestructura" width="2048" height="2048"
+                            <img class="hero-slide active" src="imagenes/hero/HormigoneraQuevedoH-210.jpg"
+                                alt="Mixer de Creacom descargando hormigón mientras el equipo trabaja en obra" width="2752"
+                                height="1536">
+                            <img class="hero-slide" src="imagenes/hero/Hormigonera.jpg"
+                                alt="Mixer de Creacom junto a los silos de la planta" width="2400" height="1792"
                                 loading="lazy">
                         </div>
                         <div class="hero-img-slot hero-img-small" data-slot="2">
-                            <img class="hero-slide active" src="imagenes/mixer3.jpg"
-                                alt="Camión mixer transportando hormigón premezclado en Guayas" width="498" height="280"
-                                loading="lazy">
-                            <img class="hero-slide" src="hormigon-imagenes/hormigonera-3.jpg"
-                                alt="Despacho de hormigón premezclado en camión mixer para construcción" width="2048"
+                            <img class="hero-slide active" src="imagenes/hero/hormigonera-2.jpg"
+                                alt="Mixer de Creacom junto a una calle en construcción" width="2048" height="2048">
+                            <img class="hero-slide" src="imagenes/hero/hormigonera-3.jpg"
+                                alt="Mixer de Creacom en un frente de obra con personal de construcción" width="2048"
                                 height="2048" loading="lazy">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <nav class="review-explore" aria-label="Conoce más de Creacom Hormigonera">
+            <div class="container review-explore__inner">
+                <span>Conoce Creacom</span>
+                <a href="/empresa/">Empresa y planta</a>
+                <a href="/hormigon-premezclado/">Hormigón</a>
+                <a href="/proyectos/">Trabajos</a>
+                <a href="/cobertura/">Cobertura</a>
+                <a href="/guias/">Guías</a>
+            </div>
+        </nav>
 
             <section id="cobertura" class="cobertura-nueva">
                 <div class="cobertura-nueva-inner">
@@ -434,7 +434,7 @@
                             </div>
                             <h3>H-280</h3>
                             <p>Pavimentación de Calzadas </p>
-                            <a href="https://wa.me/593968188499?text=Hola, necesito información sobre H-280"
+                            <a href="https://wa.me/593997528670?text=Hola, necesito información sobre H-280"
                                 class="btn-glossy btn-red" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-whatsapp"></i> Consultar Precio
                             </a>
@@ -450,7 +450,7 @@
                         <p>Conoce la planta de Creacom Hormigonera en acción</p>
                     </div>
                     <div class="video-container">
-                        <video id="miVideoSmart" width="100%" height="auto" muted loop playsinline preload="none">
+                        <video id="miVideoSmart" width="100%" height="auto" muted loop playsinline preload="none" poster="imagenes/Hormigonera.jpg">
                             <source src="video/creahormigoneravideo1.mp4" type="video/mp4">
                             Tu navegador no soporta videos HTML5.
                             <!-- Subtítulos requeridos para accesibilidad (WCAG 1.2.2) -->
@@ -585,6 +585,7 @@
                                                 <i class="fa-solid fa-chevron-right"></i>
                                             </button>
                                         </div>
+                                        <span class="proyectos-playback-status" id="proyectosPlaybackStatus">Cambio automático cada 3 segundos</span>
                                     </div>
                                 </div>
 
@@ -695,18 +696,18 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "¿Cuál es el precio del hormigón?",
+          "name": "¿Cuál es el precio del hormigón por metro cúbico?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "El precio del hormigón depende de la resistencia requerida, el volumen solicitado y la distancia de transporte. Nuestro equipo puede ayudarte a cotizar el hormigón ideal para tu obra."
+            "text": "El precio exacto varía dependiendo de tres factores: la resistencia que requiera tu obra (f'c), el volumen total de tu pedido y la distancia de envío. ¡Escríbenos y te armamos una cotización a medida y sin compromiso en minutos!"
           }
         },
         {
           "@type": "Question",
-          "name": "¿Cuánto hormigón necesito para mi obra?",
+          "name": "¿Cuál es la cantidad mínima de hormigón que puedo pedir?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Podemos asesorarte para calcular el volumen exacto de hormigón según el tipo de obra, estructura y dimensiones del proyecto."
+            "text": "El pedido mínimo de hormigón premezclado es de 5 metros cúbicos. Comparte la ubicación y los datos de tu obra para confirmar disponibilidad y condiciones de despacho."
           }
         }
       ]
@@ -745,10 +746,8 @@
                     <details class="faq-item">
                         <summary>¿Cuál es la cantidad mínima de hormigón que puedo pedir?</summary>
                         <div class="faq-respuesta">
-                            <p>Atendemos todo tipo de proyectos, desde pequeñas remodelaciones en casa hasta grandes
-                                construcciones civiles. Contáctanos para confirmarte el volumen mínimo de despacho según
-                                la
-                                zona en la que te encuentres.</p>
+                            <p>El pedido mínimo de hormigón premezclado es de 5 metros cúbicos. Comparte la ubicación
+                                y los datos de tu obra para confirmar disponibilidad y condiciones de despacho.</p>
                             <a href="https://wa.me/593997528670" class="btn-wa-micro" target="_blank"><i
                                     class="fa-brands fa-whatsapp"></i> Chat</a>
                         </div>
@@ -817,6 +816,10 @@
                     <a href="#productos">Productos</a>
                     <a href="#proyectos">Proyectos</a>
                     <a href="#contacto">Contacto</a>
+                    <a href="/empresa/">Empresa y planta</a>
+                    <a href="/hormigon-premezclado/">Hormigón premezclado</a>
+                    <a href="/cobertura/">Cobertura</a>
+                    <a href="/guias/">Guías para tu obra</a>
                 </div>
                 <div class="footer-social">
                     <h3>Síguenos</h3>
@@ -838,7 +841,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2025 Creacom Hormigonera. Todos los derechos reservados.</p>
+                <p>© 2026 Creacom Hormigonera. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
@@ -898,7 +901,8 @@
     </div>
 
 
-    <script src="js/creahormigonera.js?v=2.8"></script>
+    <script src="js/site-motion.js"></script>
+    <script src="js/creahormigonera.js?v=3.0"></script>
 </body>
 
 </html>

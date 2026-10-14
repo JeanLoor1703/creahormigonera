@@ -3,7 +3,7 @@
    Rediseño: fondo técnico, header negro, chips, sidebar ticket, monospace
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+/* Fuentes de marca cargadas en index.html: League Spartan e Inter. */
 
 :root {
   /* Paleta técnica */
@@ -66,7 +66,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   line-height: 1.5;
   color: var(--text);
@@ -76,7 +76,7 @@ body {
 
 /* ─── PAGE SHELL ────────────────────────────────────────────────────────────── */
 .page-shell {
-  width: min(1600px, 98%);
+  width: min(1180px, calc(100% - clamp(40px, 8vw, 120px)));
   margin: 0 auto;
   padding: 0 0 32px;
 }
@@ -145,7 +145,7 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
   color: #1a1d23;
@@ -206,7 +206,7 @@ body {
 }
 
 .stat-value {
-  font-family: 'Sora', sans-serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: 1.35rem;
   font-weight: 800;
   color: var(--brand);
@@ -267,7 +267,7 @@ body {
 }
 
 .section-heading h2 {
-  font-family: 'Sora', sans-serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: 1rem;
   font-weight: 700;
   color: var(--text);

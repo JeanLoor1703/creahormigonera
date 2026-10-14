@@ -357,7 +357,8 @@ body {
 
 .hero-img-main {
     grid-column: span 2;
-    height: 300px;
+    height: auto;
+    aspect-ratio: 16 / 9;
     border-radius: 15px;
     width: 100%;
     display: block;
@@ -382,13 +383,13 @@ body {
     object-position: center;
     border-radius: 15px;
     opacity: 0;
-    transform: scale(1.05);
-    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: opacity, transform;
+    transform: scale(1.025);
+    transition: opacity .7s ease, transform .9s ease;
     pointer-events: none;
     z-index: 1;
 }
+
+.hero-img-small[data-slot="2"] .hero-slide { object-position: 40% center; }
 
 .hero-slide.active {
     opacity: 1;
@@ -612,31 +613,22 @@ body {
     position: relative;
     background-color: var(--color-bg-light);
     overflow: clip;
+    padding: 76px 0 90px;
 }
 
-/* Track contenedor para la experiencia sticky en desktop */
 .proyectos-sticky-track {
     position: relative;
     width: 100%;
+    height: auto;
 }
 
-@media (min-width: 992px) {
-    .proyectos-sticky-track {
-        height: 280vh; /* Riel de scroll continuo para las 4 tarjetas */
-    }
-
-    .proyectos-pinned {
-        position: sticky;
-        top: 75px;
-        min-height: calc(100vh - 75px);
-        height: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: visible;
-        padding: 24px 0 32px;
-        box-sizing: border-box;
-    }
+.proyectos-pinned {
+    position: static;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .proyectos-container {
@@ -798,11 +790,19 @@ body {
 /* Controles debajo de la baraja */
 .proyectos-deck-controls {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 7px;
     margin-top: 14px;
     padding: 0;
     width: 100%;
+}
+
+.proyectos-playback-status {
+    color: #6b6e72;
+    font-size: .76rem;
+    letter-spacing: .02em;
 }
 
 .proyectos-deck-nav {
@@ -991,7 +991,7 @@ body {
     .proyectos-pinned {
         position: static;
         height: auto;
-        padding: 50px 0;
+        padding: 0;
     }
 
     .proyectos-cascade-layout {
@@ -1113,7 +1113,7 @@ body {
 /* ACCESIBILIDAD: PREFERS-REDUCED-MOTION */
 @media (prefers-reduced-motion: reduce) {
     .p-card {
-        transition: opacity 0.3s ease !important;
+        transition: none !important;
         transform: translate(-50%, -50%) !important;
     }
 
@@ -2023,17 +2023,8 @@ video {
 .equipo-imagen img {
     width: 100%;
     height: auto;
-    border-radius: 15px;
-    /* Bordes redondeados modernos */
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-    /* Sombra elegante */
+    border-radius: 10px;
     display: block;
-    transition: transform 0.3s ease;
-}
-
-.equipo-imagen img:hover {
-    transform: translateY(-5px);
-    /* Pequeño efecto al pasar el mouse */
 }
 
 /* Ajustes para celulares (Responsive) */

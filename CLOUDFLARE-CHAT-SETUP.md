@@ -24,12 +24,13 @@ Después de publicar, Wrangler mostrará una URL parecida a:
 
 `https://creacom-chat-api.<tu-subdominio>.workers.dev`
 
-## 3. Conectar el sitio
+## 3. Conectar el sitio y usar el preview
 
-El frontend está preparado para usar `https://chat.creahormigonera.com`. Hay dos opciones:
+El frontend llama a `https://creacom-chat-api.creacom-chat.workers.dev`. En producción, el Worker permite `https://creahormigonera.com` y `https://www.creahormigonera.com`.
 
-- En Cloudflare, agregar `creahormigonera.com` como sitio y configurar `chat.creahormigonera.com` como dominio personalizado del Worker.
-- Usar temporalmente la URL `workers.dev` que entrega Wrangler y reemplazar `CHAT_ENDPOINT` en `js/creahormigonera.js`.
+Para revisar el chat localmente, inicia la tarea de VS Code **Creacom: iniciar vista previa** o ejecuta `node tools/preview-server.mjs` desde la raíz del repositorio. Abre `http://127.0.0.1:8787/`; ese origen ya está autorizado en el Worker publicado.
+
+El código del Worker también permite los puertos locales 5500 y 5501, pero ese cambio requiere publicar de nuevo el Worker. Si Wrangler indica que la sesión expiró, vuelve a iniciar sesión en Cloudflare y después ejecuta `npx wrangler deploy` desde `cloudflare/chat-worker`.
 
 ## 4. Cambiar de Groq a OpenAI
 

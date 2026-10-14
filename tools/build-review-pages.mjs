@@ -1,0 +1,236 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { projectPortfolio } from './project-portfolio.mjs';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const wa = 'https://wa.me/593997528670';
+const guideDocsWhatsApp = (documentName) => `${wa}?text=${encodeURIComponent(`Hola, quisiera solicitar información sobre ${documentName} de Creacom.`)}`;
+const coverageWhatsApp = `${wa}?text=${encodeURIComponent('Hola, quiero consultar cobertura para mi obra. Mi ciudad y sector son:')}`;
+const nav = [['Inicio','/'],['Empresa','/empresa/'],['Hormigón','/hormigon-premezclado/'],['Proyectos','/proyectos/'],['Cobertura','/cobertura/'],['Guías','/guias/']];
+const mobileSocials = `<div class="mobile-menu__socials" aria-label="Síguenos en redes sociales"><a href="https://www.facebook.com/profile.php?id=61587575957183&amp;locale=es_LA" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.6 1.6-1.6h1.7V3.6c-.3 0-1.4-.1-2.6-.1-2.6 0-4.3 1.6-4.3 4.5v1.9H7v3.1h2.8v8h3.6z"/></svg></a><a href="https://www.instagram.com/creacomhormigonera/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="mobile-menu__social-dot" cx="17.6" cy="6.7" r="1"/></svg></a><a href="https://www.tiktok.com/@creacom.hormigonera" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 3h3c.2 1.8 1.2 3.2 3.1 3.8v3.1a8.8 8.8 0 0 1-3.1-1v6.7a6.2 6.2 0 1 1-6.2-6.2c.4 0 .8 0 1.1.1v3.2a3.2 3.2 0 1 0 2.1 3V3z"/></svg></a></div>`;
+const img = (file, alt, priority = false, width = 0, height = 0) => `<img src="/imagenes/${file}" alt="${alt}"${width && height ? ` width="${width}" height="${height}"` : ''} loading="${priority ? 'eager' : 'lazy'}"${priority ? ' fetchpriority="high"' : ''}>`;
+const button = (label, url, outline = false) => `<a class="button${outline ? ' button--outline' : ''}" href="${url}">${label}</a>`;
+const heading = (label, title, intro = '', id = '') => `<div class="section-head"${id ? ` id="${id}"` : ''}><div><span class="eyebrow">${label}</span><h2>${title}</h2></div>${intro ? `<p>${intro}</p>` : ''}</div>`;
+const hero = (label, title, intro, file, alt, action = '', modifier = '') => `<section class="page-hero${modifier ? ` ${modifier}` : ''}"><div class="wrap page-hero__inner"><div class="page-hero__copy"><span class="kicker">${label}</span><h1>${title}</h1><p>${intro}</p>${action}</div><div class="page-hero__image">${img(file, alt, true)}</div></div></section>`;
+const companyIcon = (file) => fs.readFileSync(path.join(root, 'imagenes', 'iconos-empresa', file), 'utf8')
+  .replace('<svg ', '<svg aria-hidden="true" focusable="false" ');
+const coverageIcon = (name) => `<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${{
+  shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6h4"/>',
+  helmet: '<path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5m0-4a6 6 0 0 1 6 6v3M4 15v-3a6 6 0 0 1 6-6"/><rect width="20" height="4" x="2" y="15" rx="1"/>',
+  pin: '<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>'
+}[name]}</svg>`;
+const coverageHero = () => `<section class="coverage-hero" aria-labelledby="coverage-title"><div class="coverage-hero__layout">
+  <div class="coverage-hero__copy"><span class="kicker">Cobertura / Desde El Empalme</span><h1 id="coverage-title">Cobertura en <span>Guayas, Los Ríos y Manabí</span></h1><p>Llevamos hormigón a obras de estas tres provincias. Al cotizar, coordinamos la ruta y la hora estimada de llegada.</p><a class="button coverage-hero__cta" href="${coverageWhatsApp}" target="_blank" rel="noopener noreferrer">Consultar cobertura <span aria-hidden="true">→</span></a></div>
+  <div class="coverage-hero__visual">${img('imagenes-cobertura/cobertura-mixer.webp','Mixer de Creacom junto al mapa de cobertura en Guayas, Los Ríos y Manabí',true,1448,1086)}</div>
+  <div class="coverage-hero__places" aria-label="Localidades de referencia para consultar cobertura">${[
+    ['Manabí',['Pichincha','Represa','Pedro Vélez','Manga del Cura','La 14','Y sectores cercanos']],
+    ['Los Ríos',['Quevedo','Buena Fe','Valencia','Mocache','Ventanas','Vinces','Babahoyo','San Camilo','San Carlos','La Esperanza','Patricia Pilar','Fumisa','Zapotal','Los Ángeles']],
+    ['Guayas',['El Empalme','Balzar','Colimes','Palestina','Santa Lucía']]
+  ].map(([province,places])=>`<article class="coverage-place"><h2>${coverageIcon('pin')}${province}</h2><ul>${places.map(place=>`<li>${coverageIcon('pin')}<div>${place}${place==='El Empalme'?'<ul class="coverage-place__sectors"><li>Velasco Ibarra</li><li>Parroquia Guayas</li><li>Parroquia El Rosario</li><li>San Luis de Potosí</li></ul>':''}</div></li>`).join('')}</ul></article>`).join('')}</div>
+  <ul class="coverage-hero__facts">${[['shield','Cobertura regional','Guayas, Los Ríos y Manabí'],['clock','Ruta y horario','Acordamos la llegada al cotizar'],['helmet','Entrega en obra','Coordinamos el acceso y la descarga']].map(([icon,title,copy])=>`<li>${coverageIcon(icon)}<div><strong>${title}</strong><span>${copy}</span></div></li>`).join('')}</ul>
+</div></section>`;
+const coverageJourney = () => `<section class="coverage-reach" aria-labelledby="coverage-reach-title">
+  <div class="wrap coverage-reach__layout">
+    <div class="coverage-reach__copy">
+      <span class="eyebrow">Desde nuestra planta</span>
+      <h2 id="coverage-reach-title">Una planta, tres provincias</h2>
+      <p>Desde El Empalme, coordinamos entregas de hormigón para obras en Guayas, Los Ríos y Manabí. Revisamos la ruta y organizamos cada salida para llegar a la hora acordada con tu obra.</p>
+      <div class="coverage-reach__route"><span>${coverageIcon('pin')} El Empalme</span><span class="coverage-reach__arrow" aria-hidden="true">→</span><strong>${coverageIcon('helmet')} Tu obra</strong></div>
+      <a class="button coverage-reach__cta" href="${coverageWhatsApp}" target="_blank" rel="noopener noreferrer">Consultar cobertura <span aria-hidden="true">→</span></a>
+      <ul class="coverage-reach__provinces" aria-label="Provincias de cobertura">${['Guayas','Los Ríos','Manabí'].map(province => `<li>${coverageIcon('pin')}<span>${province}</span></li>`).join('')}</ul>
+    </div>
+    <figure class="coverage-reach__photo">${img('imagenes-cobertura/imagenes-mixer.png','Mixer de Creacom frente a la planta con un mapa de cobertura de Guayas, Los Ríos y Manabí',false,1672,941)}</figure>
+  </div>
+</section>
+<section class="coverage-planning" aria-labelledby="coverage-planning-title"><div class="wrap"><div class="coverage-planning__head"><div><span class="eyebrow">Antes de programar</span><h2 id="coverage-planning-title">Lo que necesitamos saber</h2></div><p>Con estos datos revisamos el recorrido y acordamos una hora estimada de llegada.</p></div><ol class="coverage-planning__list"><li><span>01</span><strong>Ubicación</strong><p>Ciudad, sector y referencia para llegar.</p></li><li><span>02</span><strong>Fecha</strong><p>El día previsto para el vaciado.</p></li><li><span>03</span><strong>Volumen y mezcla</strong><p>Metros cúbicos y resistencia indicada por tu obra.</p></li><li><span>04</span><strong>Acceso</strong><p>Ingreso del mixer y punto de descarga.</p></li></ol><div class="coverage-planning__action"><p>Pedido mínimo: <strong>5 m³</strong>. Ruta, precio y disponibilidad se confirman al cotizar.</p><a class="button" href="${coverageWhatsApp}" target="_blank" rel="noopener noreferrer">Preparar cotización</a></div></div></section>`;
+const companyHero = () => `<section class="company-hero" aria-labelledby="company-title">
+  <div class="company-hero__media">${img('imagenes-empresa/Planta-CREACOM-portada.webp','Planta de Creacom Hormigonera con un mixer en El Empalme',true)}</div>
+  <div class="company-hero__shade" aria-hidden="true"></div>
+  <div class="company-hero__slash" aria-hidden="true"></div>
+  <div class="company-hero__blueprint" aria-hidden="true"></div>
+  <div class="wrap company-hero__inner"><div class="company-hero__copy">
+    <span class="kicker company-hero__kicker">Conoce Creacom Hormigonera</span>
+    <h1 id="company-title">Conoce Creacom <br><span>Nuestra planta y <br>nuestro equipo</span></h1>
+    <p class="company-hero__intro">Somos parte de CREACOM S.A.</p>
+    <nav class="company-hero__quicklinks" aria-label="Explora nuestra empresa">
+      <a href="#planta">${companyIcon('usina-blanco.svg')}<span>Nuestra<br>planta</span></a>
+      <a href="#equipo">${companyIcon('tecnico-blanco.svg')}<span>Nuestro<br>equipo</span></a>
+    </nav>
+    <ul class="company-hero__proof" aria-label="Nuestra operación">
+      <li>${companyIcon('industrial-premium.svg')}<span>Industrial<br>premium</span></li>
+      <li>${companyIcon('tecnica.svg')}<span>Técnica</span></li>
+      <li>${companyIcon('fraguado-mixer.svg')}<span>Fraguado<br>seguro</span></li>
+      <li>${companyIcon('alta-calidad.svg')}<span>Alta calidad</span></li>
+    </ul>
+    <a class="button company-hero__cta" href="#proceso">Conoce el proceso ${companyIcon('flecha-blanco.svg')}</a>
+  </div></div>
+</section>`;
+const companyBook = () => `<div class="brand-panel brand-book" aria-label="Conoce a Creacom en cinco páginas">
+  <div class="brand-book__viewport">
+    <article class="brand-book__page brand-book__page--cover" data-book-page aria-label="Portada">
+      ${img('creahormigoneralogo.png','Creacom Hormigonera')}
+      <p>Construye con confianza</p>
+    </article>
+    <article class="brand-book__page brand-book__page--work" data-book-page aria-label="Obras construidas con calidad" hidden>
+      <div class="brand-book__photos brand-book__photos--supply">
+        ${img('mixerdespachandoBalzarH-180Creacom.jpg','Mixer de Creacom descargando hormigón en una obra')}
+        ${img('Creacommixer1-optimized.webp','Personal trabajando sobre el hormigón recién colocado')}
+        ${img('HormigoneraQuevedoH-210.jpg','Mixer de Creacom durante otro despacho en obra')}
+      </div>
+      <div class="brand-book__caption"><span>Trabajo en obra</span><h3>Obras construidas con calidad</h3><p>Hormigón premezclado para cada etapa de tu proyecto.</p></div>
+    </article>
+    <article class="brand-book__page brand-book__page--clients" data-book-page aria-label="Empresas que confían" hidden>
+      <span class="brand-book__eyebrow">Confianza en obra</span>
+      <h3>Empresas que confían</h3>
+      <div class="brand-book__logos">
+        ${img('ALL-IN_CONSTRUCCIONS_logo.png','All In Construction')}
+        ${img('DIPAC_logo.png','DIPAC')}
+        ${img('CELEP_EP_logo.png','CELEP EP')}
+        ${img('Prefectura_del_Guayas_logo.png','Prefectura del Guayas')}
+        ${img('BI_Cacao_logo.png','BI Cacao')}
+      </div>
+    </article>
+    <article class="brand-book__page brand-book__page--gallery" data-book-page aria-label="Nuestro trabajo en obra" hidden>
+      <div class="brand-book__photos brand-book__photos--sites">
+        ${img('imagenes-hormigon/obra-san-luis.webp','Mixers de Creacom en el acceso de una obra')}
+        ${img('hormigonenbalzarH-240.jpg','Mixer junto al equipo de bombeo en una obra')}
+        ${img('mixer3.jpg','Mixer de Creacom en una obra vial')}
+      </div>
+      <div class="brand-book__caption"><span>Creacom en acción</span><h3>Nuestro trabajo en obra</h3></div>
+    </article>
+    <article class="brand-book__page brand-book__page--closing" data-book-page aria-label="Cuéntanos sobre tu proyecto" hidden>
+      ${img('creahormigoneralogo.png','Creacom Hormigonera')}
+      ${img('Hormigonera.jpg','Mixer de Creacom Hormigonera junto a la planta')}
+      <h3>Nos emociona conocer tu proyecto</h3>
+      <p>Cuéntanos qué necesitas construir.</p>
+      <a href="${wa}?text=Hola%2C%20quiero%20contarles%20sobre%20mi%20proyecto%20y%20cotizar%20hormig%C3%B3n." target="_blank" rel="noopener noreferrer">Hablemos por WhatsApp</a>
+    </article>
+  </div>
+  <div class="brand-book__controls" aria-label="Controles del libro">
+    <button class="brand-book__arrow" type="button" data-book-previous aria-label="Página anterior" disabled><span aria-hidden="true">←</span></button>
+    <span class="brand-book__count" data-book-count aria-live="polite">1 de 5</span>
+    <button class="brand-book__arrow" type="button" data-book-next aria-label="Página siguiente"><span aria-hidden="true">→</span></button>
+  </div>
+</div>`;
+const productHero = () => `<section class="product-hero" aria-labelledby="product-title">
+  <div class="wrap product-hero__inner"><div class="product-hero__copy">
+    <span class="kicker product-hero__kicker">Producto <span aria-hidden="true">/</span> <span>Hormigón premezclado</span></span>
+    <h1 id="product-title">La mezcla que <br><span>impulsa tu obra</span></h1>
+    <p>Hormigón premezclado, mixers propios y bombeo para obras en Guayas, Los Ríos y Manabí.</p>
+    <a class="button product-hero__cta" href="#resistencias">Ver resistencias ${companyIcon('flecha-blanco.svg')}</a>
+    <p class="product-hero__minimum">Pedido mínimo: 5 m³</p>
+    <ul class="product-hero__facts" aria-label="Servicio de Creacom Hormigonera">
+      <li>${companyIcon('mixer-rojo.svg')}<span>Camión<br>mixer</span></li>
+      <li>${companyIcon('monitoreo-rojo.svg')}<span>Monitoreo<br>del mixer</span></li>
+      <li>${companyIcon('bombeo-rojo.svg')}<span>Bombeo<br>incluido</span></li>
+    </ul>
+  </div><div class="product-hero__visual">
+    <div class="product-hero__media"><img src="/imagenes/imagenes-hormigon/Hero_Creacom_Hormigonera.webp" alt="Mixer de Creacom junto a la planta y personal trabajando en obra" width="1672" height="941" loading="eager" fetchpriority="high"></div>
+    <ul class="product-hero__proof" aria-label="Datos de nuestro servicio">
+      <li>${companyIcon('ubicacion-rojo.svg')}<span>Planta en<br>El Empalme</span></li>
+      <li>${companyIcon('cobertura-rojo.svg')}<span>Atención en<br>tres provincias</span></li>
+      <li>${companyIcon('tecnica.svg')}<span>Equipo técnico<br>para tu proyecto</span></li>
+    </ul>
+  </div></div>
+</section>`;
+const plantPhoto = (file, alt, title, copy, modifier = '') => `<figure class="plant-photo${modifier ? ` ${modifier}` : ''}">${img(`imagenes-empresa/${file}`,alt)}<figcaption><span class="eyebrow">Planta Creacom</span><h3>${title}</h3><p>${copy}</p></figcaption></figure>`;
+const crumb = (label, guide = false) => `<div class="wrap crumb"><a href="/">Inicio</a>${guide ? ' / <a href="/guias/">Guías</a>' : ''} / ${label}</div>`;
+const wrap = (klass, content) => `<section class="section ${klass}"><div class="wrap">${content}</div></section>`;
+
+function shell({url, title, description, body, active}) {
+  const navItems = nav.map(([label, href]) => `<a href="${href}"${href === active ? ' aria-current="page"' : ''}>${label}</a>`).join('');
+  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title}</title><meta name="description" content="${description}"><link rel="canonical" href="https://creahormigonera.com${url}"><link rel="icon" href="/favicon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles/editorial.css">${url === '/cobertura/' ? '<link rel="stylesheet" href="/styles/cobertura.css">' : ''}</head><body>
+<a class="skip" href="#contenido">Saltar al contenido</a><header class="site-header"><div class="wrap site-header__inner"><a class="site-logo" href="/" aria-label="Creacom Hormigonera, Inicio">${img('creahormigoneralogo.png','Creacom Hormigonera',true)}</a><nav class="site-nav" aria-label="Navegación principal">${navItems}</nav><a class="site-action" href="${url === '/cobertura/' ? coverageWhatsApp : '/cotizar/'}"${url === '/cobertura/' ? ' target="_blank" rel="noopener noreferrer"' : ''}>${url === '/cobertura/' ? 'Consultar cobertura' : 'Cotizar'}</a><details class="mobile-menu"><summary><span>Menú</span><span class="mobile-menu__icon" aria-hidden="true"><i></i><i></i><i></i></span></summary><nav id="mobile-navigation" aria-label="Navegación móvil">${navItems}<a class="mobile-menu__action" href="${url === '/cobertura/' ? coverageWhatsApp : '/cotizar/'}"${url === '/cobertura/' ? ' target="_blank" rel="noopener noreferrer"' : ''}>${url === '/cobertura/' ? 'Consultar cobertura' : 'Cotizar'}</a>${mobileSocials}</nav></details></div></header>
+<main id="contenido">${body}</main><section class="cta-band"><div class="wrap"><div><h2>${url === '/cobertura/' ? '¿En qué ciudad está tu obra?' : url === '/guias/' ? '¿Qué necesitas construir?' : 'Hablemos de tu obra'}</h2><p>${url === '/cobertura/' ? 'Cuéntanos la ubicación y la fecha. Revisamos la ruta, el acceso y la hora estimada de llegada.' : url === '/guias/' ? 'Comparte ubicación, fecha, volumen, resistencia indicada y condiciones de acceso para revisar tu solicitud.' : 'Indícanos ubicación, fecha, volumen y resistencia requerida para preparar una cotización.'}</p></div>${button(url === '/cobertura/' ? 'Consultar cobertura' : url === '/guias/' ? 'Consultar mi obra' : 'Solicitar cotización','/cotizar/')}</div></section>
+<footer class="site-footer"><div class="wrap"><div class="site-footer__grid"><div>${img('creahormigoneralogo.png','Creacom Hormigonera')}<p>Hormigón premezclado desde El Empalme para proyectos en Guayas, Los Ríos y Manabí. Pedido mínimo: 5 m³.</p></div><div><h2>Explorar</h2><a href="/empresa/">Empresa y planta</a><a href="/hormigon-premezclado/">Hormigón premezclado</a><a href="/proyectos/">Proyectos</a><a href="/cobertura/">Cobertura</a><a href="/guias/">Guías para tu obra</a></div><div><h2>Contacto</h2><a href="/cotizar/">Formulario de cotización</a><a href="${wa}">WhatsApp: 099 752 8670</a><a href="mailto:hormigonera.admin@creacomsa.com">hormigonera.admin@creacomsa.com</a><p>El Empalme, Guayas, Ecuador</p></div></div><div class="site-footer__bottom"><span>© 2026 Creacom Hormigonera</span><a href="/">Volver a Inicio</a></div></div></footer>${url === '/empresa/' ? '<script defer src="/js/empresa.js"></script>' : url === '/hormigon-premezclado/' ? '<script defer src="/js/bombeo-gallery.js"></script><script defer src="/js/video-visible.js"></script>' : ''}</body></html>\n`;
+}
+
+const pages = [
+  {
+    url:'/empresa/', active:'/empresa/', title:'Empresa, planta y equipo en El Empalme | Creacom Hormigonera',
+    description:'Conoce a Creacom Hormigonera, parte de CREACOM S.A. y su planta en El Empalme. Coordinamos hormigón premezclado y equipos propios para obras en Guayas, Los Ríos y Manabí.',
+    body:companyHero() + crumb('Empresa') +
+      wrap('',`<div class="split" id="quienes-somos"><div class="company-intro"><span class="eyebrow">Empresa</span><h2>Quiénes somos</h2><p>En CREACOM Hormigonera somos una empresa dedicada a la producción y distribución de hormigón premezclado, comprometida con la calidad, la puntualidad y el respaldo técnico en cada obra.</p><p>Trabajamos junto a constructores, ingenieros, arquitectos, residentes de obra, instituciones y empresas privadas que buscan un proveedor confiable para el desarrollo de sus proyectos.</p><p>Nuestro objetivo es entregar un hormigón seguro, resistente y preparado bajo procesos controlados, aportando eficiencia y confianza desde la planta hasta la obra.</p>${button('Ver hormigón premezclado','/hormigon-premezclado/',true)}</div>${companyBook()}</div>`) +
+      wrap('section--mist purpose-section',`<div class="purpose-section__heading"><span class="eyebrow">Lo que guía nuestro trabajo</span>${img('creahormigoneralogo.png','Creacom Hormigonera',false,1380,380)}</div><div class="purpose-grid"><article class="purpose-card purpose-card--mission"><span class="purpose-card__icon" aria-hidden="true"><svg viewBox="0 0 80 80" fill="none"><circle cx="37" cy="43" r="27" stroke="currentColor" stroke-width="4"/><circle cx="37" cy="43" r="17" stroke="currentColor" stroke-width="4"/><circle cx="37" cy="43" r="6" fill="currentColor"/><path d="M38 42 64 16m-1 0 8-8m-8 8V7m0 9h10" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h2>Misión</h2><p>Proveer hormigón premezclado de calidad, cumpliendo con los requerimientos técnicos de cada proyecto y garantizando <strong>puntualidad, compromiso y soporte en obra.</strong></p></article><article class="purpose-card purpose-card--vision"><span class="purpose-card__icon" aria-hidden="true"><svg viewBox="0 0 80 80" fill="none"><path d="m8 61 18-24 12 14 11-17 23 27H8Z" fill="currentColor"/><path d="M43 35V10m0 1c6-5 11 4 19 0v13c-8 4-13-5-19 0" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h2>Visión</h2><p>Ser una empresa referente en el sector del hormigón premezclado, reconocida por su <strong>innovación, eficiencia operativa, responsabilidad y excelencia</strong> en el servicio.</p></article></div>`) +
+      wrap('section--mist plant-section',`${heading('Creacom Hormigonera','Nuestra planta','','planta')}<div class="plant-gallery" data-reveal><figure class="plant-video"><video controls muted loop playsinline preload="none" poster="/imagenes/imagenes-empresa/planta-hormigon.webp" aria-label="Video de la planta de Creacom Hormigonera"><source src="/imagenes/imagenes-empresa/video-planta.mp4" type="video/mp4">Tu navegador no puede reproducir este video.</video><figcaption><span class="eyebrow">Video</span><h3>Así es nuestra planta</h3></figcaption></figure>${plantPhoto('planta-hormigon-premezclado.webp','Vista superior de la planta de Creacom y un mixer','Instalaciones y mixer','Una vista de las instalaciones y los equipos de Creacom.')}${plantPhoto('planta-hormigon.webp','Vista aérea de un mixer dentro de la planta de Creacom','Trabajo en planta','Vista de un mixer en las instalaciones de la hormigonera.')}${plantPhoto('puerta-entrada-planta.webp','Entrada de la planta de Creacom Hormigonera en El Empalme','Ingreso a la planta','Acceso a las instalaciones de Creacom en El Empalme.','plant-photo--last')}</div><div class="advice-band"><div><span class="eyebrow">Orientación para tu pedido</span><h3>Coordinemos lo que necesita tu obra</h3><p>Comparte ubicación, volumen, resistencia indicada en el diseño y forma prevista de descarga. Creacom cuenta con mixers y equipo de bombeo propios; su disponibilidad y las condiciones de acceso se revisan al cotizar.</p></div>${button('Solicitar cotización','/cotizar/')}</div>`) +
+      wrap('',`${heading('De la solicitud a la obra','Cómo coordinamos cada entrega','Resistencia requerida, volumen, ubicación y fecha de vaciado ayudan a preparar la solicitud. La disponibilidad se confirma al cotizar.','proceso')}<div class="process"><article><span>01</span><h3>Solicitud</h3><p>Recibimos los datos del proyecto y la mezcla requerida.</p></article><article><span>02</span><h3>Revisión</h3><p>Revisamos volumen, ubicación y condiciones de acceso.</p></article><article><span>03</span><h3>Programación</h3><p>Coordinamos fecha y condiciones del despacho.</p></article><article><span>04</span><h3>Entrega</h3><p>El mixer transporta el hormigón hasta la obra acordada.</p></article></div>`) +
+      wrap('',`<div class="split split--team" id="equipo">${img('Equipo-creacomHormigonera.jpeg','Grupo de Creacom Hormigonera junto a los equipos de la empresa')}<div><span class="eyebrow">Nuestro equipo</span><h2>Personas detrás de cada entrega</h2><p>En la planta, el transporte y la atención de cada solicitud participan personas que coordinan el suministro para la obra. Compartimos al equipo en conjunto: cada función ayuda a preparar y atender el pedido.</p>${button('Ver imágenes de la operación','/proyectos/',true)}</div></div>`) +
+      wrap('section--mist',`${heading('Calidad y respaldo','Coordinamos con los datos de tu obra','Antes de confirmar un pedido, revisamos lo que especifica el proyecto y las condiciones de entrega.')}<div class="grid-3"><div class="fact"><h3>Mezcla especificada</h3><p>La resistencia la define el profesional responsable de la obra y se confirma al cotizar.</p></div><div class="fact"><h3>Acceso y programación</h3><p>Volumen, ubicación, acceso y fecha forman parte de la coordinación.</p></div><div class="fact"><h3>Información técnica</h3><p>Consulta al equipo la documentación disponible para la mezcla requerida.</p></div></div>`)
+  },
+  {
+    url:'/hormigon-premezclado/', active:'/hormigon-premezclado/', title:'Hormigón premezclado H-180, H-210, H-240 y H-280 | Creacom',
+    description:'Hormigón premezclado H-180, H-210, H-240 y H-280 desde El Empalme. Pedido mínimo de 5 m³ y equipos propios para obras en Guayas, Los Ríos y Manabí.',
+    body:productHero() + crumb('Hormigón premezclado') +
+      wrap('product-options',`${heading('Resistencias','Cuatro opciones presentes en nuestra oferta','Aplicaciones orientativas para conversar sobre tu proyecto.','resistencias')}<div class="product-grid">${[
+        ['H-180','Contrapisos','mixerdespachandoBalzarH-180Creacom.jpg','Para contrapisos y superficies de nivelación.'],
+        ['H-210','Pisos','HormigoneraQuevedoH-210.jpg','Para pisos, según las especificaciones de la obra.'],
+        ['H-240','Losas y muros','hormigonenbalzarH-240.jpg','Para losas y muros, según el proyecto.'],
+        ['H-280','Pavimentación de calzadas','mixer3.jpg','Para pavimentación de calzadas.']
+      ].map(([grade,title,file,copy])=>`<article class="tile product-tile">${img(file,'Equipo de Creacom Hormigonera durante un despacho')}<div class="tile__body"><span class="eyebrow-red">${grade}</span><h3>${title}</h3><p>${copy}</p><a href="/cotizar/">Consultar ${grade}</a></div></article>`).join('')}</div><div class="note product-note"><p>La resistencia y las demás especificaciones deben seguir el diseño del profesional responsable de la obra.</p><p class="product-photo-note">Las fotografías muestran la operación; no acreditan la resistencia de cada mezcla.</p></div>`) +
+      wrap('section--dark product-delivery',`<div class="product-delivery__heading"><span class="eyebrow">Entrega y colocación</span><h2>Mixers y bombeo para tu obra</h2><p>Conoce los equipos que participan en el transporte y la colocación del hormigón.</p></div>
+        <div class="operation-pane operation-pane--mixers" id="mixers"><div class="operation-pane__copy" data-operation-reveal><span class="operation-pane__label">Transporte</span><h3>Nuestros mixers llevan el hormigón hasta tu obra</h3><p>Contamos con mixers propios. Al cotizar revisamos el camino, el ingreso del vehículo y el punto de descarga para coordinar la entrega.</p>${button('Cotizar la entrega','/cotizar/')}</div>
+          <div class="mixer-gallery" aria-label="Mixers de Creacom en planta y obra"><figure class="mixer-gallery__wide" data-operation-reveal>${img('imagenes-hormigon/obra-san-luis.webp','Vista aérea de mixers de Creacom en el acceso y punto de descarga de una obra',false,778,1390)}<figcaption>Mixers en obra</figcaption></figure><figure data-operation-reveal>${img('mixerdespachandoBalzarH-180Creacom.jpg','Mixer de Creacom descargando hormigón junto al personal',false,1376,768)}<figcaption>Descarga del hormigón</figcaption></figure><figure data-operation-reveal>${img('hormigonera-2.jpg','Mixer de Creacom junto al acceso de una obra',false,2048,2048)}<figcaption>Acceso a la obra</figcaption></figure><figure class="mixer-gallery__video" data-operation-reveal><video data-visible-video controls muted loop playsinline preload="none" width="480" height="848" poster="/imagenes/hormigon/mixer-en-obra.webp" aria-label="Video aéreo de un mixer de Creacom en obra"><source src="/imagenes/hormigon/mixer-en-obra.mp4" type="video/mp4">Tu navegador no puede reproducir este video.</video><figcaption>Mixer en obra · video</figcaption></figure></div></div>
+        <div class="operation-pane operation-pane--bombeo" id="bombeo"><div class="operation-pane__copy" data-operation-reveal><span class="operation-pane__label">Colocación</span><h3>Bombeo para tu obra</h3><p>Contamos con equipo de bombeo propio. Cuéntanos dónde se colocará el hormigón para revisar si necesitas bombeo y las condiciones de acceso.</p><p class="product-delivery__access">Para obras en zonas rurales, revisamos las condiciones del camino, el ingreso del mixer y el punto de descarga al cotizar.</p><a class="product-delivery__link" href="/empresa/#proceso">Conocer la operación →</a></div><figure class="bombeo-photo" data-operation-reveal><img class="is-active" data-bombeo-slide src="/imagenes/imagenes-hormigon/bomba1.webp" alt="" width="1448" height="1086" loading="lazy"><img data-bombeo-slide src="/imagenes/imagenes-hormigon/bomba3.webp" alt="" width="1498" height="1000" loading="lazy"><button class="bombeo-photo__toggle" type="button" data-bombeo-toggle aria-label="Pausar cambio de imágenes" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 5v14M16 5v14"/></svg></button><figcaption>Equipo de bombeo de Creacom</figcaption></figure><figure class="delivery-video" data-operation-reveal><video data-visible-video controls muted loop playsinline preload="none" width="480" height="848" poster="/imagenes/hormigon/entrega-en-obra.webp" aria-label="Video de mixer, bombeo y colocación de hormigón en obra"><source src="/imagenes/hormigon/entrega-en-obra.mp4" type="video/mp4">Tu navegador no puede reproducir este video.</video><figcaption>Bombeo y colocación · video</figcaption></figure></div>`) +
+      wrap('section--mist product-prep',`<div class="split"><div><span class="eyebrow">Antes de pedir</span><h2>Ten listos los datos de tu obra</h2><p>Ubicación, fecha prevista, volumen estimado, resistencia especificada y condiciones de acceso ayudan a preparar la cotización.</p>${button('Ver qué datos necesito','/guias/datos-para-cotizar-hormigon/')}</div>${img('imagenes-empresa/planta-hormigon-premezclado.webp','Vista aérea de un mixer de Creacom junto a la planta')}</div>`)
+  },
+  {
+    url:'/proyectos/', active:'/proyectos/', title:'Trabajos y despachos de hormigón | Creacom Hormigonera',
+    description:'Galería de fotografías de la planta, equipos, personal y despachos de Creacom Hormigonera.',
+    body:projectPortfolio()
+  },
+  {
+    url:'/cobertura/', active:'/cobertura/', title:'Cobertura de hormigón en Guayas, Los Ríos y Manabí | Creacom',
+    description:'Creacom Hormigonera coordina entregas desde El Empalme para proyectos en Guayas, Los Ríos y Manabí. Consulta disponibilidad según ubicación y fecha.',
+    body:coverageHero() + crumb('Cobertura') + coverageJourney()
+  },
+  {
+    url:'/guias/', active:'/guias/', title:'Guías para planificar tu obra | Creacom Hormigonera',
+    description:'Guías prácticas para cotizar hormigón premezclado, estimar su volumen y preparar el acceso de un camión mixer a la obra.',
+    body:`<section class="guides-hero"><div class="wrap guides-hero__layout"><div class="guides-hero__copy"><span class="kicker">Recursos / Construcción</span><h1>Guías para preparar tu obra</h1><p>Guías breves para cotizar, estimar el volumen y preparar la llegada del mixer.</p><div class="guides-hero__actions"><a class="button" href="#guias">Preparar mi pedido <span aria-hidden="true">↓</span></a><a class="guides-hero__text-link" href="#respaldo">Conocer los respaldos <span aria-hidden="true">→</span></a></div><p class="guides-hero__note">Orientación general; no reemplaza planos ni el criterio profesional.</p></div><figure class="guides-hero__photo">${img('Creacommixer1-optimized.webp','Personal trabajando con hormigón en una obra',true,1400,781)}<figcaption>Orientación para organizar el suministro desde El Empalme</figcaption></figure></div></section>` + crumb('Guías') +
+      wrap('guides-overview',`${heading('Antes de cotizar','Datos clave para tu pedido','Con estos datos podemos revisar cobertura, disponibilidad y condiciones de entrega.')}
+        <div class="guides-facts"><article><span aria-hidden="true"></span><h3>Ubicación y fecha</h3><p>Indica ciudad, sector, referencia y día estimado del vaciado.</p></article><article><span aria-hidden="true"></span><h3>Volumen y resistencia</h3><p>Comparte los m³ estimados y la resistencia que especifica el profesional responsable.</p></article><article><span aria-hidden="true"></span><h3>Acceso y descarga</h3><p>Cuéntanos cómo llega el mixer y dónde se recibirá el hormigón.</p></article><article><span aria-hidden="true"></span><h3>Pedido mínimo</h3><p>El pedido mínimo de Creacom es 5 m³. Precio y disponibilidad se confirman al cotizar.</p></article></div>`)+
+      wrap('guides-library section--mist',`${heading('Guías prácticas','Prepara tu siguiente paso','Lee la guía que te ayude a preparar la conversación con tu equipo de obra.')}<div class="grid-3 guides-cards" id="guias"><article class="guide-card"><span class="eyebrow-red">Cotización</span><h3>¿Qué datos necesito?</h3><p>Ubicación, fecha, volumen, resistencia indicada y condiciones de acceso.</p><a href="/guias/datos-para-cotizar-hormigon/">Leer guía <span aria-hidden="true">→</span></a></article><article class="guide-card"><span class="eyebrow-red">Volumen</span><h3>¿Cómo hago una estimación?</h3><p>Una operación sencilla para estimar m³ y validar el pedido con el responsable de obra.</p><a href="/guias/como-estimar-volumen-hormigon/">Leer guía <span aria-hidden="true">→</span></a></article><article class="guide-card"><span class="eyebrow-red">Acceso</span><h3>¿Puede entrar el mixer?</h3><p>Revisa ruta, espacio de maniobra y punto de descarga antes de programar.</p><a href="/guias/preparar-acceso-mixer/">Leer guía <span aria-hidden="true">→</span></a></article></div>`)+
+      wrap('guides-proof',`${heading('Transparencia','Respaldo de Creacom','Puedes solicitar información sobre los documentos disponibles. Compartimos copias por contacto para cuidar los datos personales que contienen.','respaldo')}
+        <div class="guides-proof__grid"><article class="proof-card"><span class="proof-card__type">GESTIÓN AMBIENTAL</span><h3>Registro ambiental de la planta</h3><p>Resolución ambiental vinculada a la operación de la planta y a su plan de manejo. No es una certificación de calidad del hormigón.</p><span class="proof-card__meta">Prefectura del Guayas · 16 abr 2026</span><a href="${guideDocsWhatsApp('el registro ambiental de la planta')}" target="_blank" rel="noopener noreferrer">Solicitar información <span aria-hidden="true">↗</span></a></article><article class="proof-card"><span class="proof-card__type">DOCUMENTO MUNICIPAL</span><h3>Uso de suelo</h3><p>Certificado municipal relacionado con la ubicación de la planta. Su vigencia se confirma al atender la solicitud.</p><span class="proof-card__meta">El Empalme · 21 nov 2025</span><a href="${guideDocsWhatsApp('el certificado de uso de suelo')}" target="_blank" rel="noopener noreferrer">Solicitar información <span aria-hidden="true">↗</span></a></article><article class="proof-card"><span class="proof-card__type">REFERENCIA COMERCIAL</span><h3>Experiencia de servicio</h3><p>Creacom conserva una carta de referencia comercial firmada. Compartimos sus detalles sin identificar al emisor.</p><span class="proof-card__meta">Carta recibida · 14 may 2026</span><a href="${guideDocsWhatsApp('la referencia comercial anónima')}" target="_blank" rel="noopener noreferrer">Solicitar información <span aria-hidden="true">↗</span></a></article></div>`)+
+      ''
+  },
+  {
+    url:'/guias/datos-para-cotizar-hormigon/', active:'/guias/', title:'Qué datos necesito para cotizar hormigón | Guía Creacom',
+    description:'Datos para solicitar una cotización de hormigón premezclado: ubicación, volumen, resistencia, fecha y acceso.',
+    body:hero('Guía / Cotización','Qué datos necesito para cotizar hormigón','Una solicitud clara ayuda a evaluar el suministro para tu obra y preparar una respuesta acorde con sus condiciones.','mixer1.jpg','Camión mixer de Creacom en obra',button('Ir al formulario','/cotizar/'),'page-hero--guide-article') + crumb('Datos para cotizar',true) +
+      wrap('',`<article class="article"><p>Antes de pedir precio, reúne la información que ya tienen el proyectista y el responsable de obra. Si falta algún dato, indícalo en tu consulta.</p><h2>Los datos básicos</h2><ol><li><strong>Ubicación exacta:</strong> ciudad, sector y referencia de acceso.</li><li><strong>Fecha prevista:</strong> día o rango deseado.</li><li><strong>Volumen estimado:</strong> cantidad en m³. El pedido mínimo de Creacom es 5 m³.</li><li><strong>Resistencia especificada:</strong> la indicada en planos o por el profesional responsable.</li><li><strong>Elemento y colocación:</strong> qué se vaciará y cómo llegará el material al punto de uso.</li><li><strong>Contacto de obra:</strong> persona que pueda aclarar las condiciones del sitio.</li></ol><h2>Qué se confirma después</h2><p>El equipo revisa ubicación, fecha, volumen y mezcla para comunicar precio y disponibilidad. Una aplicación orientativa no sustituye la especificación de ingeniería.</p><div class="note"><p>Creacom comunica entregas desde El Empalme a proyectos en Guayas, Los Ríos y Manabí. La ubicación concreta se confirma al cotizar.</p></div>${button('Preparar mi solicitud','/cotizar/')}</article>`)
+  },
+  {
+    url:'/guias/como-estimar-volumen-hormigon/', active:'/guias/', title:'Cómo estimar el volumen de hormigón en m³ | Guía Creacom',
+    description:'Fórmula básica para estimar metros cúbicos de hormigón en una forma rectangular y datos a confirmar con el profesional de obra.',
+    body:hero('Guía / Volumen','Cómo estimar metros cúbicos de hormigón','Una estimación inicial ayuda a conversar sobre el pedido. Dimensiones y volumen final deben revisarse con la persona responsable de la obra.','mixer2.jpg','Mixer de Creacom en un proyecto',button('Cotizar con mis datos','/cotizar/'),'page-hero--guide-article') + crumb('Estimar volumen',true) +
+      wrap('',`<article class="article"><p>Para una pieza rectangular simple, convierte todas las medidas a metros y multiplica largo, ancho y espesor. El resultado se expresa en m³.</p><span class="formula">Largo (m) × ancho (m) × espesor (m) = volumen (m³)</span><h2>Ejemplo matemático</h2><p>Una superficie hipotética de 10 m de largo, 4 m de ancho y 0,125 m de espesor da <strong>5 m³</strong>. Este espesor solo ilustra la operación; no es una recomendación constructiva.</p><h2>Antes de convertirlo en pedido</h2><ul><li>Confirma dimensiones y espesor con el profesional de la obra.</li><li>Considera varios elementos, vacíos o formas irregulares.</li><li>Consulta el volumen final y cualquier margen previsto en el proyecto.</li><li>Ten presente que el pedido mínimo de Creacom es 5 m³.</li></ul><div class="note"><p>La estimación no reemplaza planos, cálculos ni revisión técnica.</p></div>${button('Enviar datos de mi obra','/cotizar/')}</article>`)
+  },
+  {
+    url:'/guias/preparar-acceso-mixer/', active:'/guias/', title:'Cómo preparar el acceso del mixer a una obra | Guía Creacom',
+    description:'Aspectos del acceso, terreno, maniobra y recepción del hormigón que conviene revisar antes de programar un camión mixer.',
+    body:hero('Guía / Entrega','Prepara el acceso del mixer','Antes de programar una entrega, revisa el recorrido hasta la obra y el espacio donde se recibirá el hormigón.','mixer3.jpg','Camión mixer de Creacom en circulación',button('Consultar disponibilidad','/cotizar/'),'page-hero--guide-article') + crumb('Acceso del mixer',true) +
+      wrap('',`<article class="article"><p>El acceso influye en cómo se coordina la entrega. Compartir fotos y una referencia de ubicación puede ayudar al equipo a entender el sitio.</p><h2>Lista de revisión</h2><ul><li><strong>Ruta:</strong> portones, curvas, pendientes y tramos estrechos.</li><li><strong>Terreno:</strong> confirma con el responsable de obra que el suelo y el espacio de maniobra sean adecuados.</li><li><strong>Obstáculos:</strong> cables, ramas, estructuras o materiales que impidan el paso.</li><li><strong>Punto de descarga:</strong> dónde se detendrá el mixer y cómo llegará el hormigón al elemento.</li><li><strong>Personal y horario:</strong> prepara a quienes recibirán el material.</li></ul><h2>Si el acceso es complejo</h2><p>Explica esas condiciones antes de cerrar la programación. El equipo confirmará qué modalidad de entrega está disponible para el pedido.</p><div class="note"><p>Esta guía es general. Las dimensiones y maniobras admisibles deben confirmarse con el equipo de despacho y el responsable de seguridad de la obra.</p></div>${button('Contar cómo es mi acceso','/cotizar/')}</article>`)
+  }
+];
+
+for (const page of pages) {
+  if (process.argv[2] && page.url !== process.argv[2]) continue;
+  const file = path.join(root, page.url.slice(1), 'index.html');
+  fs.mkdirSync(path.dirname(file), {recursive:true});
+  const contact = `href="${coverageWhatsApp}" target="_blank" rel="noopener noreferrer"`;
+  const pageHtml = shell(page);
+  const coverageHtml = page.url === '/cobertura/'
+    ? pageHtml.replace(/href="\/cotizar\/"/g, contact).replaceAll('>Cotizar</a>', '>Consultar cobertura</a>').replace('>Formulario de cotización</a>', '>Consultar por WhatsApp</a>')
+    : pageHtml;
+  const specificHtml = page.url === '/proyectos/'
+    ? coverageHtml.replace('</head>', '<link rel="stylesheet" href="/styles/proyectos.css"></head>')
+      .replace('</body>', '<script defer src="/js/proyectos.js"></script></body>')
+    : coverageHtml;
+  const html = specificHtml
+    .replace('</body>', '<script defer src="/js/site-motion.js"></script></body>');
+  fs.writeFileSync(file, html, 'utf8');
+  console.log(page.url);
+}

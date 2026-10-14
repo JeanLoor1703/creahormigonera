@@ -1,0 +1,146 @@
+{
+  "source": "index.html original con cambios locales previos",
+  "title": "Hormigón Premezclado en Guayas, Los Ríos y Manabí | Creacom Hormigonera",
+  "description": "Venta de hormigón premezclado para construcción en Guayas, Los Ríos y Manabí. Cotiza hormigón con Creacom Hormigonera y recibe despacho rápido desde El Empalme.",
+  "canonical": "https://creahormigonera.com/",
+  "headings": [
+    {
+      "level": "h1",
+      "text": "Hormigón Premezclado en Guayas, Los Ríos y Manabí | Venta y Cotización"
+    },
+    {
+      "level": "h2",
+      "text": "Zonas donde entregamos hormigón premezclado"
+    },
+    {
+      "level": "h2",
+      "text": "Empresas con las que trabajamos"
+    },
+    {
+      "level": "h2",
+      "text": "Resistencias para cada necesidad"
+    },
+    {
+      "level": "h3",
+      "text": "H-180"
+    },
+    {
+      "level": "h3",
+      "text": "H-210"
+    },
+    {
+      "level": "h3",
+      "text": "H-240"
+    },
+    {
+      "level": "h3",
+      "text": "H-280"
+    },
+    {
+      "level": "h2",
+      "text": "Tecnología y Solidez en Cada Mezcla"
+    },
+    {
+      "level": "h2",
+      "text": "Conoce al equipo detrás de tu obra"
+    },
+    {
+      "level": "h2",
+      "text": "Proyectos Ejecutados"
+    },
+    {
+      "level": "h4",
+      "text": "Contra Pisos"
+    },
+    {
+      "level": "h4",
+      "text": "Pisos"
+    },
+    {
+      "level": "h4",
+      "text": "Losa o Muros"
+    },
+    {
+      "level": "h4",
+      "text": "Pavimentación de Calzadas"
+    },
+    {
+      "level": "h3",
+      "text": "Contra Pisos"
+    },
+    {
+      "level": "h2",
+      "text": "Contáctanos"
+    },
+    {
+      "level": "h3",
+      "text": "Dirección Principal"
+    },
+    {
+      "level": "h3",
+      "text": "Correo Electrónico"
+    },
+    {
+      "level": "h3",
+      "text": "WhatsApp / Teléfono"
+    },
+    {
+      "level": "h3",
+      "text": "Síguenos en Redes Sociales"
+    },
+    {
+      "level": "h2",
+      "text": "Preguntas frecuentes sobre el hormigón premezclado"
+    },
+    {
+      "level": "h3",
+      "text": "Enlaces Rápidos"
+    },
+    {
+      "level": "h3",
+      "text": "Síguenos"
+    }
+  ],
+  "anchors": [
+    "inicio",
+    "cobertura",
+    "empresas",
+    "empresasHubWrapper",
+    "productos",
+    "miVideoSmart",
+    "overlaySonido",
+    "equipo",
+    "proyectos",
+    "proyectosTrack",
+    "proyectosPinned",
+    "proyectosStage",
+    "proyectosDeck",
+    "proyectosPrevBtn",
+    "editorialDots",
+    "proyectosNextBtn",
+    "editorialBadge",
+    "editorialCounter",
+    "counterCurrent",
+    "editorialBody",
+    "editorialTitle",
+    "editorialDesc",
+    "editorialProgressIndicator",
+    "contacto",
+    "faq",
+    "waFloatBtn",
+    "chat-cta-bubble",
+    "chatbot-toggle",
+    "chat-window",
+    "chatbot-close",
+    "chat-messages",
+    "chat-input",
+    "chatbot-send"
+  ],
+  "heroSha256": "4129f37eb3ed565e639a088b9e0d3cafa46b0d7a7b06aca7069cd03d3a971339",
+  "regionalTerms": [
+    "Guayas",
+    "Los Ríos",
+    "Manabí",
+    "El Empalme"
+  ]
+}

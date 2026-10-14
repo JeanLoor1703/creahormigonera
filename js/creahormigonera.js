@@ -157,8 +157,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMenu = document.querySelector('.nav');
 
     if (menuToggle && navMenu) {
+        const menuIcon = menuToggle.querySelector('i');
+        const closeMenu = () => {
+            navMenu.classList.remove('nav-active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Abrir menú');
+            menuIcon?.classList.remove('fa-xmark');
+            menuIcon?.classList.add('fa-bars');
+        };
+
         menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('nav-active');
+            const isOpen = navMenu.classList.toggle('nav-active');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+            menuIcon?.classList.toggle('fa-bars', !isOpen);
+            menuIcon?.classList.toggle('fa-xmark', isOpen);
+        });
+
+        navMenu.addEventListener('click', event => {
+            if (event.target.closest('a')) closeMenu();
+        });
+
+        document.addEventListener('click', event => {
+            if (!navMenu.classList.contains('nav-active')) return;
+            if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) closeMenu();
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && navMenu.classList.contains('nav-active')) {
+                closeMenu();
+                menuToggle.focus();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1050) closeMenu();
         });
     }
 });
@@ -506,119 +539,59 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==============================================
-// HERO COLLAGE ROTATION - ESCALONADO (6s, 7s, 8s)
+// HERO COLLAGE: dos fotografías por cuadro, cambio conjunto cada 3 segundos.
 // ==============================================
 function initHeroGallery() {
-    const slots = document.querySelectorAll('.hero-img-slot');
+    const hero = document.querySelector('.hero');
+    const slots = Array.from(document.querySelectorAll('.hero-img-slot'));
     if (!slots.length) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let intervalId = null;
+    let inView = true;
 
-    // Tiempos independientes para cada imagen:
-    // Slot 0 (Arriba grande): cada 5 segundos en mobile (requisito móvil), 6s en desktop
-    // Slot 1 (Abajo izquierda): cada 7 segundos
-    // Slot 2 (Abajo derecha): cada 8 segundos
-    function getIntervals() {
-        const isMobile = window.innerWidth <= 768;
-        return [isMobile ? 5000 : 6000, 7000, 8000];
-    }
-    const INITIAL_DELAYS = [2000, 5000, 7500];
-    const timers = [];
-    let lastTransitionTime = 0;
-    const MIN_GAP_MS = 1400; // Garantiza que jamás coincidan dos imágenes en el mismo instante
-
-    // Precargar las imágenes secundarias en segundo plano para evitar parpadeos
+    // El segundo juego pesa poco y queda listo antes del primer cambio.
     slots.forEach(slot => {
-        const slides = slot.querySelectorAll('.hero-slide');
-        slides.forEach(img => {
-            if (img.src) {
-                const preload = new Image();
-                preload.src = img.src;
-            }
-        });
+        const nextImage = slot.querySelector('.hero-slide:not(.active)');
+        if (nextImage) new Image().src = nextImage.src;
     });
 
     function transitionSlot(slot) {
-        if (document.hidden) return;
-
-        const now = Date.now();
-        const timeSinceLast = now - lastTransitionTime;
-        if (timeSinceLast < MIN_GAP_MS) {
-            // Si otra imagen rotó hace menos de 1.4s, retrasar para mantener el desfase orgánico
-            setTimeout(() => transitionSlot(slot), MIN_GAP_MS - timeSinceLast + 250);
-            return;
-        }
-
-        const slides = slot.querySelectorAll('.hero-slide');
+        if (slot.dataset.changing === 'true') return;
+        const slides = Array.from(slot.querySelectorAll('.hero-slide'));
         if (slides.length < 2) return;
-
-        const currentSlide = slot.querySelector('.hero-slide.active') || slides[0];
-        let nextIndex = 0;
-        slides.forEach((slide, idx) => {
-            if (slide === currentSlide) {
-                nextIndex = (idx + 1) % slides.length;
-            }
-        });
-
-        const nextSlide = slides[nextIndex];
-        if (!nextSlide || nextSlide === currentSlide) return;
-
-        lastTransitionTime = Date.now();
-
-        // Entra la siguiente imagen con escala y crossfade suave
-        nextSlide.classList.remove('active');
-        nextSlide.classList.add('incoming');
-
-        // Tras 1.3s de transición, consolidar clases activas
+        const current = slot.querySelector('.hero-slide.active') || slides[0];
+        const next = slides[(slides.indexOf(current) + 1) % slides.length];
+        if (!next.complete || !next.naturalWidth) return;
+        slot.dataset.changing = 'true';
+        next.classList.add('incoming');
         setTimeout(() => {
-            nextSlide.classList.remove('incoming');
-            nextSlide.classList.add('active');
-            currentSlide.classList.remove('active');
-        }, 1350);
+            current.classList.remove('active');
+            next.classList.remove('incoming');
+            next.classList.add('active');
+            delete slot.dataset.changing;
+        }, reducedMotion.matches ? 0 : 750);
     }
 
-    function startRotations() {
-        clearAllTimers();
-        const intervals = getIntervals();
-        slots.forEach((slot, index) => {
-            const interval = intervals[index] || 6000;
-            const initialDelay = INITIAL_DELAYS[index] || (2000 + index * 2000);
-
-            // Primer cambio escalonado
-            const initialTimer = setTimeout(() => {
-                transitionSlot(slot);
-                // Intervalo recurrente propio (6s, 7s, 8s)
-                const intervalTimer = setInterval(() => {
-                    transitionSlot(slot);
-                }, interval);
-                timers.push(intervalTimer);
-            }, initialDelay);
-
-            timers.push(initialTimer);
-
-            // Permitir clic para cambiar de inmediato si el usuario lo desea
-            slot.style.cursor = 'pointer';
-            slot.title = 'Haz clic para alternar imagen';
-            slot.onclick = () => transitionSlot(slot);
-        });
+    function stopRotations() {
+        if (intervalId !== null) clearInterval(intervalId);
+        intervalId = null;
     }
 
-    function clearAllTimers() {
-        while (timers.length > 0) {
-            const t = timers.pop();
-            clearTimeout(t);
-            clearInterval(t);
-        }
+    function syncRotations() {
+        stopRotations();
+        if (document.hidden || !inView || reducedMotion.matches) return;
+        intervalId = setInterval(() => slots.forEach(transitionSlot), 3000);
     }
 
-    // Pausar si la pestaña se oculta y reiniciar de forma escalonada al volver
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            clearAllTimers();
-        } else {
-            startRotations();
-        }
-    });
-
-    startRotations();
+    if ('IntersectionObserver' in window && hero) {
+        new IntersectionObserver(([entry]) => {
+            inView = entry.isIntersecting;
+            syncRotations();
+        }, { threshold: 0.1 }).observe(hero);
+    }
+    document.addEventListener('visibilitychange', syncRotations);
+    reducedMotion.addEventListener('change', syncRotations);
+    syncRotations();
 }
 
 // Inicializar galería del hero cuando el DOM esté listo
@@ -733,7 +706,6 @@ if (document.readyState === 'loading') {
 function initProyectosCascada() {
     const stage = document.getElementById('proyectosStage');
     const deck = document.getElementById('proyectosDeck');
-    const track = document.getElementById('proyectosTrack');
     const section = document.getElementById('proyectos');
     if (!stage || !deck) return;
 
@@ -749,6 +721,8 @@ function initProyectosCascada() {
     const dots = Array.from(document.querySelectorAll('#editorialDots .p-dot'));
     const prevBtn = document.getElementById('proyectosPrevBtn');
     const nextBtn = document.getElementById('proyectosNextBtn');
+    const playbackStatus = document.getElementById('proyectosPlaybackStatus');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     // Estructura de datos centralizada de los proyectos existentes
     const proyectosData = [
@@ -791,9 +765,9 @@ function initProyectosCascada() {
     const total = proyectosData.length;
     let currentIndex = 0;
     let autoplayTimer = null;
-    let resumeAutoplayTimer = null;
-    let isUserInteracting = false;
     let isTransitioning = false;
+    let userPaused = false;
+    let inView = !('IntersectionObserver' in window);
 
     // Asignar índice fijo a cada tarjeta
     cards.forEach((card, idx) => {
@@ -963,6 +937,7 @@ function initProyectosCascada() {
 
     // Ir a un proyecto específico
     function goToProject(targetIndex) {
+        if (isTransitioning) return;
         targetIndex = (targetIndex + total) % total;
         if (targetIndex === currentIndex) return;
 
@@ -971,42 +946,44 @@ function initProyectosCascada() {
         } else if (targetIndex === (currentIndex - 1 + total) % total) {
             goToPrev();
         } else {
+            isTransitioning = true;
             currentIndex = targetIndex;
             cards.forEach((card, j) => {
                 const slot = (j - currentIndex + total) % total;
                 applyCardSlot(card, slot, true);
             });
             updateEditorial(currentIndex);
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 420);
         }
     }
 
-    // --- AUTOPLAY (Cada 3 segundos) ---
-    function startAutoplay() {
-        if (autoplayTimer) clearInterval(autoplayTimer);
-        autoplayTimer = setInterval(() => {
-            if (!isUserInteracting && !isTransitioning) {
-                goToNext();
-            }
-        }, 3000);
-    }
-
-    function pauseAutoplay() {
-        if (autoplayTimer) {
+    // La reproducción empieza al entrar en pantalla y termina al usar un control.
+    function stopAutoplay() {
+        if (autoplayTimer !== null) {
             clearInterval(autoplayTimer);
             autoplayTimer = null;
         }
-        if (resumeAutoplayTimer) {
-            clearTimeout(resumeAutoplayTimer);
-            resumeAutoplayTimer = null;
-        }
     }
 
-    function scheduleResumeAutoplay(delay = 4000) {
-        pauseAutoplay();
-        resumeAutoplayTimer = setTimeout(() => {
-            isUserInteracting = false;
-            startAutoplay();
-        }, delay);
+    function syncAutoplay() {
+        stopAutoplay();
+        if (playbackStatus && !userPaused) {
+            playbackStatus.textContent = reducedMotion.matches
+                ? 'Control manual (movimiento reducido)'
+                : 'Cambio automático cada 3 segundos';
+        }
+        if (userPaused || document.hidden || !inView || reducedMotion.matches) return;
+        autoplayTimer = setInterval(() => {
+            if (!isDragging && !isTransitioning) goToNext();
+        }, 3000);
+    }
+
+    function pauseForManualControl() {
+        userPaused = true;
+        stopAutoplay();
+        if (playbackStatus) playbackStatus.textContent = 'Control manual';
     }
 
     // --- GESTOS: TOUCH SWIPE Y MOUSE DRAG ---
@@ -1018,8 +995,7 @@ function initProyectosCascada() {
     function onPointerDown(e) {
         if (isTransitioning) return;
         isDragging = true;
-        isUserInteracting = true;
-        pauseAutoplay();
+        stopAutoplay();
         startX = e.clientX || (e.touches && e.touches[0].clientX);
         startY = e.clientY || (e.touches && e.touches[0].clientY);
         dragDeltaX = 0;
@@ -1050,15 +1026,16 @@ function initProyectosCascada() {
         activeCard.classList.remove('is-dragging');
 
         if (dragDeltaX < -40) {
+            pauseForManualControl();
             goToNext();
         } else if (dragDeltaX > 40) {
+            pauseForManualControl();
             goToPrev();
         } else {
             // Regresar a la posición inicial
             applyCardSlot(activeCard, 0, true);
+            syncAutoplay();
         }
-
-        scheduleResumeAutoplay(4000);
     }
 
     stage.addEventListener('mousedown', onPointerDown);
@@ -1069,25 +1046,13 @@ function initProyectosCascada() {
     window.addEventListener('touchmove', onPointerMove, { passive: true });
     window.addEventListener('touchend', onPointerUp, { passive: true });
 
-    // Pausar autoplay al interactuar con la sección
-    if (section) {
-        section.addEventListener('mouseenter', () => {
-            isUserInteracting = true;
-            pauseAutoplay();
-        });
-        section.addEventListener('mouseleave', () => {
-            isUserInteracting = false;
-            scheduleResumeAutoplay(2500);
-        });
-    }
-
     // Clic directo en cualquiera de las tarjetas de la baraja
     cards.forEach((card, index) => {
         card.addEventListener('click', () => {
-            if (isDragging || isTransitioning) return;
-            isUserInteracting = true;
+            if (isDragging) return;
+            pauseForManualControl();
+            if (isTransitioning) return;
             goToProject(index);
-            scheduleResumeAutoplay(5000);
         });
     });
 
@@ -1095,18 +1060,16 @@ function initProyectosCascada() {
     if (prevBtn) {
         prevBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            isUserInteracting = true;
+            pauseForManualControl();
             goToPrev();
-            scheduleResumeAutoplay(5000);
         });
     }
 
     if (nextBtn) {
         nextBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            isUserInteracting = true;
+            pauseForManualControl();
             goToNext();
-            scheduleResumeAutoplay(5000);
         });
     }
 
@@ -1114,9 +1077,8 @@ function initProyectosCascada() {
     dots.forEach((dot, index) => {
         dot.addEventListener('click', (e) => {
             e.stopPropagation();
-            isUserInteracting = true;
+            pauseForManualControl();
             goToProject(index);
-            scheduleResumeAutoplay(5000);
         });
     });
 
@@ -1124,24 +1086,33 @@ function initProyectosCascada() {
     stage.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
             e.preventDefault();
-            isUserInteracting = true;
+            pauseForManualControl();
             goToNext();
-            scheduleResumeAutoplay(5000);
         } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
             e.preventDefault();
-            isUserInteracting = true;
+            pauseForManualControl();
             goToPrev();
-            scheduleResumeAutoplay(5000);
         }
     });
 
-    // Renderizar estado inicial de la baraja y arrancar autoplay
+    document.addEventListener('visibilitychange', syncAutoplay);
+    reducedMotion.addEventListener('change', syncAutoplay);
+    if ('IntersectionObserver' in window && section) {
+        new IntersectionObserver(([entry]) => {
+            inView = entry.isIntersecting;
+            syncAutoplay();
+        }, { threshold: 0.25 }).observe(section);
+    }
+
+    // Renderizar estado inicial; el observador activará el ciclo al entrar en pantalla.
     cards.forEach((card, j) => {
         const slot = (j - currentIndex + total) % total;
         applyCardSlot(card, slot, false);
     });
+    void deck.offsetWidth;
+    cards.forEach(card => { card.style.transition = ''; });
     updateEditorial(0);
-    startAutoplay();
+    syncAutoplay();
 }
 
 // Inicializar cuando el DOM esté listo

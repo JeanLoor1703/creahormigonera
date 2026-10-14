@@ -193,6 +193,7 @@ function buildSummary() {
     `Cantidad ingresada: ${quantity || "0"} ${unit || ""}`.trim(),
     `Espesor: ${thickness ? `${thickness} cm` : "-"}`,
     `Volumen estimado: ${formatVolume(volume)} (Incluye 5% de desperdicio sugerido)`,
+    "Pedido minimo de Creacom: 5 m3",
     `Resistencia requerida: ${strength || "-"}`,
     `Tipo de vaciado: ${placementType || "-"}`,
     `Comentarios: ${notes || "-"}`,
