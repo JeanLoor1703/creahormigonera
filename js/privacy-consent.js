@@ -138,23 +138,8 @@
       if (event.target.closest('[data-privacy-settings]')) { event.preventDefault(); openSettings(); }
     });
 
-    if (current) return;
-    document.body.insertAdjacentHTML('beforeend', `
-      <aside class="privacy-banner" aria-label="Preferencias de privacidad">
-        <div class="privacy-banner__copy"><span class="privacy-banner__icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" stroke="currentColor" stroke-width="2.2"/><circle cx="15" cy="14" r="2" fill="currentColor"/><circle cx="25" cy="18" r="2.2" fill="currentColor"/><circle cx="18" cy="26" r="2.4" fill="currentColor"/><circle cx="28" cy="28" r="1.4" fill="currentColor"/></svg></span><div><span class="privacy-eyebrow">Tu privacidad</span><p>¿Podemos usar cookies para mejorar la web y medir anuncios? Tú decides. <a href="/privacidad/">Ver detalles</a></p></div></div>
-        <div class="privacy-banner__actions"><button type="button" data-privacy-reject>Rechazar opcionales</button><button type="button" data-privacy-config>Configurar</button><button type="button" class="privacy-primary" data-privacy-accept>Aceptar</button></div>
-      </aside>`);
-    const banner = document.querySelector('.privacy-banner');
-    const homeSlot = document.querySelector('.hero-text .pedido-minimo');
-    if (homeSlot) {
-      banner.classList.add('privacy-banner--home');
-      banner.querySelector('.privacy-banner__copy p').innerHTML = '¿Cookies para mejorar la web y medir anuncios? <a href="/privacidad/">Info</a>';
-      banner.querySelector('[data-privacy-reject]').textContent = 'Rechazar';
-      homeSlot.insertAdjacentElement('afterend', banner);
-    }
-    banner.querySelector('[data-privacy-reject]').addEventListener('click', () => saveChoice({ analytics: false, marketing: false }));
-    banner.querySelector('[data-privacy-config]').addEventListener('click', openSettings);
-    banner.querySelector('[data-privacy-accept]').addEventListener('click', () => saveChoice({ analytics: true, marketing: true }));
+    // El sitio mantiene el acceso a preferencias y la política en el pie. El
+    // aviso de consentimiento queda desactivado por ahora, a petición de Creacom.
   };
 
   current = readChoice();
