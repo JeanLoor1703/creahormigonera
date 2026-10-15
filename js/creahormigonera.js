@@ -423,9 +423,12 @@ async function sendMessage() {
         }
 
         const data = await response.json();
-        const botText = typeof data.reply === "string"
+        const responseText = typeof data.reply === "string"
             ? data.reply.trim()
             : data.choices?.[0]?.message?.content?.trim();
+        const botText = typeof responseText === "string"
+            ? responseText.replace(/\[MOSTRAR_BOTON_WHATSAPP\]/gi, '').trim()
+            : '';
 
         if (!botText) throw new Error("La API no devolvió un mensaje");
 

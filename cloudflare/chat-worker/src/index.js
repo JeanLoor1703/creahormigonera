@@ -51,6 +51,7 @@ function cleanLead(input) {
 }
 
 function safeReply(reply, latestUser, lead) {
+  reply = reply.replace(/\[MOSTRAR_BOTON_WHATSAPP\]/gi, "").trim();
   const asksPrice = /\b(precio|precios|valor|a c[oó]mo|cu[aá]nto (?:cuesta|vale|sale)|cost[oa]s?|tarifa|proforma|presupuesto|cotizaci[oó]n|cotizar)\b/i.test(latestUser);
   const containsPrice = /(?:\$\s*\d|\b\d[\d.,]*\s*(?:usd|d[oó]lares|por\s*(?:m(?:³|3)|metro\s*c[uú]bico))(?=\s|$|[.,;])|\b(?:precio|cuesta|vale|tarifa)\b[^.!?]{0,35}\d)/i.test(reply);
   const assignsStrength = /\b(?:te recomiendo|necesitas|debes usar|te corresponde|la ideal es|usa)\s+(?:un\s+)?H[-\s]?(?:180|210|240|280|300|350)\b/i.test(reply) && !lead.strength;

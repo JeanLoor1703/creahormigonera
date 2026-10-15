@@ -2880,7 +2880,7 @@ video {
 }
 
 .user-msg {
-    background-color: #e92932;
+    background-color: #1769aa;
     color: #ffffff;
     align-self: flex-end;
     border-radius: 15px 15px 0 15px;
@@ -2950,7 +2950,7 @@ video {
     min-height: 43px;
     padding: 8px 12px;
     border-radius: 11px;
-    background: #128c4a;
+    background: #07813f;
     color: #fff !important;
     text-align: center;
     text-decoration: none;
@@ -2961,7 +2961,16 @@ video {
 
 .chatbot-advisor:hover,
 .chatbot-advisor:focus-visible {
-    background: #08783c;
+    background: #066c35;
+}
+
+.chatbot-advisor,
+.chatbot-wa-btn {
+    box-shadow: 0 4px 12px rgba(7, 129, 63, .28);
+}
+
+.chatbot-wa-btn {
+    background-color: #07813f;
 }
 
 /* Input y botón enviar */
