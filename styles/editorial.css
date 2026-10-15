@@ -16,6 +16,21 @@ a { color: inherit; }
 button, input, select, textarea { font: inherit; }
 :focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
 .wrap { width: min(var(--content), calc(100% - clamp(40px, 8vw, 120px))); margin-inline: auto; }
+.privacy-page-hero { padding: clamp(54px, 8vw, 95px) 0; background: #171b20; color: #fff; }
+.privacy-page-hero h1 { margin: 0; font: 800 clamp(3rem, 7vw, 5.5rem)/.96 'League Spartan', sans-serif; letter-spacing: -.04em; }
+.privacy-page-hero p { max-width: 660px; margin: 20px 0 0; color: #d6d9dc; font-size: clamp(1rem, 1.6vw, 1.2rem); }
+.privacy-page__layout { display: grid; grid-template-columns: 245px minmax(0, 1fr); gap: clamp(35px, 6vw, 90px); }
+.privacy-page__index { position: sticky; top: 100px; align-self: start; display: grid; gap: 10px; padding: 20px; border: 1px solid #e5e8eb; border-top: 3px solid var(--red); border-radius: 10px; }
+.privacy-page__index strong { margin-bottom: 6px; font-family: 'League Spartan', sans-serif; font-size: 1.18rem; }
+.privacy-page__index a { font-size: .85rem; text-decoration: none; }
+.privacy-page__index a:hover, .privacy-page__content a:hover { color: var(--red); }
+.privacy-page__content { max-width: 760px; }
+.privacy-page__content section { padding: 0 0 26px; margin: 0 0 32px; border-bottom: 1px solid #e4e6e8; scroll-margin-top: 100px; }
+.privacy-page__content h2 { margin: 0 0 14px; font: 700 clamp(1.6rem, 3vw, 2rem)/1.1 'League Spartan', sans-serif; }
+.privacy-page__content p { margin: 0 0 14px; color: #424951; }
+.privacy-page__content a { color: #bd1626; text-underline-offset: 3px; }
+.privacy-page__updated { font-size: .8rem; }
+@media (max-width: 760px) { .privacy-page__layout { display: block; } .privacy-page__index { position: static; margin-bottom: 38px; } }
 .skip { position: absolute; left: -9999px; top: 12px; z-index: 100; padding: 8px 12px; background: var(--white); }
 .skip:focus { left: 12px; }
 .site-header { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.97); border-bottom: 1px solid var(--line); backdrop-filter: blur(12px); }

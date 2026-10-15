@@ -1,0 +1,51 @@
+.privacy-banner, .privacy-dialog { font-family: Inter, Arial, sans-serif; color: #17202a; box-sizing: border-box; }
+.privacy-banner *, .privacy-dialog * { box-sizing: border-box; }
+.privacy-eyebrow { color: #df2731; font-size: .68rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.privacy-banner { position: fixed; z-index: 9999; left: 18px; bottom: 18px; width: min(420px, calc(100% - 36px)); padding: 14px 16px; background: #fff; border: 1px solid #e5e8eb; border-left: 3px solid #ed3237; border-radius: 12px; box-shadow: 0 10px 30px rgba(14, 24, 34, .16); }
+.hero-text { position: relative; }
+.privacy-banner--home { position: absolute; z-index: 2; top: calc(100% + 3px); left: 0; bottom: auto; display: flex; align-items: center; gap: 10px; width: max-content; max-width: 100%; margin: 0; padding: 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.privacy-banner--home .privacy-banner__copy { display: block; }
+.privacy-banner--home .privacy-banner__icon, .privacy-banner--home .privacy-eyebrow { display: none; }
+.hero .privacy-banner--home p { margin: 0; color: #66717c; font-size: .68rem; line-height: 1.2; white-space: nowrap; }
+.privacy-banner--home .privacy-banner__actions { flex-wrap: nowrap; gap: 6px; margin: 0; padding: 0; }
+.privacy-banner--home button { min-height: 26px; padding: 3px 7px; border-radius: 4px; font-size: .67rem; white-space: nowrap; }
+.privacy-banner__copy { display: flex; align-items: flex-start; gap: 10px; }
+.privacy-banner__icon { flex: 0 0 32px; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; background: #fff0f1; color: #ed3237; }
+.privacy-banner__icon svg { width: 23px; height: 23px; }
+.privacy-banner p, .hero .privacy-banner p { margin: 3px 0 0; color: #34404a; font-size: .78rem; line-height: 1.4; }
+.privacy-banner a, .privacy-dialog a { color: #ba1523; text-underline-offset: 3px; }
+.privacy-banner__actions, .privacy-dialog__actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.privacy-banner__actions { margin-top: 11px; padding-left: 42px; }
+.privacy-banner button, .privacy-dialog button { min-height: 42px; padding: 9px 12px; background: #fff; border: 1px solid #cbd0d5; border-radius: 7px; color: #17202a; cursor: pointer; font-size: .78rem; font-weight: 700; line-height: 1.2; }
+.privacy-banner .privacy-primary, .privacy-dialog .privacy-primary { background: #ed3237; border-color: #ed3237; color: #fff; }
+.privacy-banner button:hover, .privacy-dialog button:hover { border-color: #bd1b2a; }
+.privacy-banner button:focus-visible, .privacy-dialog button:focus-visible, .privacy-dialog input:focus-visible { outline: 3px solid #ed3237; outline-offset: 3px; }
+.privacy-dialog { width: min(94vw, 510px); max-height: min(90vh, 700px); overflow: auto; padding: 0; border: 1px solid #dfe2e5; border-radius: 16px; box-shadow: 0 25px 80px rgba(0,0,0,.3); }
+.privacy-dialog::backdrop { background: rgba(12,18,24,.56); }
+.privacy-dialog__inner { padding: 27px; }
+.privacy-dialog__head { display: flex; justify-content: space-between; align-items: center; }
+.privacy-dialog .privacy-dialog__close { min-width: 40px; padding: 4px; font-size: 1.5rem; }
+.privacy-dialog h2 { margin: 10px 0 7px; font: 700 1.65rem/1.1 'League Spartan', Inter, Arial, sans-serif; }
+.privacy-dialog p { font-size: .87rem; line-height: 1.5; }
+.privacy-option { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 0; border-top: 1px solid #e5e8eb; }
+.privacy-option div { display: grid; gap: 2px; }
+.privacy-option strong { font-size: .9rem; }
+.privacy-option small, .privacy-option span { color: #5b6570; font-size: .76rem; line-height: 1.4; }
+.privacy-option span { white-space: nowrap; }
+.privacy-option input { flex: 0 0 auto; width: 20px; height: 20px; accent-color: #ed3237; cursor: pointer; }
+.privacy-dialog__link { margin: 8px 0 18px; }
+.privacy-dialog__actions { justify-content: flex-end; }
+@media (max-width: 1200px) and (min-width: 769px) { .hero .privacy-banner--home p { font-size: .62rem; } .privacy-banner--home { gap: 7px; } .privacy-banner--home .privacy-banner__actions { gap: 4px; } .privacy-banner--home button { font-size: .62rem; padding-inline: 5px; } }
+@media (max-width: 768px) { .hero .privacy-banner--home { position: static; order: 7 !important; justify-content: center; flex-wrap: wrap; width: calc(100% - 20px); margin: 8px auto 0; text-align: center; } .hero .privacy-banner--home p { white-space: normal; } }
+@media (max-width: 720px) { .privacy-banner:not(.privacy-banner--home) { left: 10px; bottom: 10px; width: min(420px, calc(100% - 20px)); } }
+@media (max-width: 390px) { .privacy-banner__actions { padding-left: 0; } .privacy-banner__actions button { flex: 1 1 calc(50% - 8px); } .privacy-banner__actions .privacy-primary { flex-basis: 100%; } .privacy-dialog__inner { padding: 20px; } }
+.map-consent { display: grid; place-content: center; justify-items: center; gap: 10px; min-height: 300px; padding: 24px; text-align: center; background: #e9edef; color: #17202a; }
+.map-consent strong { font: 700 1.4rem/1.1 'League Spartan', Inter, sans-serif; }
+.map-consent p { margin: 0; font-size: .9rem; }
+.map-consent button { min-height: 42px; padding: 9px 18px; border: 0; border-radius: 6px; background: #ed3237; color: #fff; font: 700 .9rem Inter, sans-serif; cursor: pointer; }
+.contacto-mapa iframe[data-src] { display: none; }
+.quote-privacy-note { margin: 0 0 20px; padding: 13px 16px; border-left: 3px solid #ed3237; background: #f5f6f7; color: #3d4650; font-size: .84rem; line-height: 1.5; }
+.quote-privacy-note a, .quote-privacy-footer a { color: #bd1626; text-underline-offset: 3px; }
+.quote-privacy-footer { padding: 20px; text-align: center; font: .8rem Inter, Arial, sans-serif; }
+.privacy-standalone-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; padding: 18px; background: #171b20; font: .8rem Inter, Arial, sans-serif; }
+.privacy-standalone-links a { color: #fff; text-underline-offset: 3px; }

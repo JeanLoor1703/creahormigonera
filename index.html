@@ -2,28 +2,7 @@
 <html lang="es">
 
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17780502582"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'AW-17780502582');
-    </script>
-
-    <script>
-        function gtag_report_conversion(url) {
-            var callback = function () {
-                if (typeof (url) != 'undefined') {
-                    window.location = url;
-                }
-            };
-            gtag('event', 'conversion', {
-                'send_to': 'AW-17780502582/Z5sSCOOlp-0bELbgs55C',
-                'event_callback': callback
-            });
-            return false;
-        }
-    </script>
+    <script defer src="/js/privacy-consent.js"></script>
 
     <meta name="google-site-verification" content="AbOwF9I2u8Bi80OY-snfwDGby9HwaYz6FlLEzVG71P0" />
     <meta charset="UTF-8">
@@ -77,7 +56,7 @@
     <!-- Preload imagen hero (LCP candidate) -->
     <link rel="preload" as="image" href="imagenes/hero/Planta-CREACOM-portada.webp">
 
-    <link rel="stylesheet" href="styles/creahormigonera.css?v=3.4">
+    <link rel="stylesheet" href="styles/creahormigonera.css?v=3.5">
     <link rel="stylesheet" href="styles/review-home.css?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@600;700;800&display=swap" rel="stylesheet">
 
@@ -630,8 +609,13 @@
                     <p class="section-subtitle">Estamos listos para atender tu proyecto</p>
                     <div class="contacto-grid">
                         <div class="contacto-mapa">
+                            <div class="map-consent" data-map-consent>
+                                <strong>Encuéntranos en El Empalme</strong>
+                                <p>El mapa de Google se cargará si eliges verlo.</p>
+                                <button type="button" data-load-map>Ver mapa</button>
+                            </div>
                             <iframe title="Mapa de ubicación Creacom Hormigonera - El Empalme, Ecuador"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.5788146469147!2d-79.6379480730357!3d-1.0427165699341405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902b5b414a4f0969%3A0x6404b2a7326e2500!2sMixer%20Hormig%C3%B3n%20Elaborado%20-%20Crea%20Hormigonera!5e0!3m2!1ses!2sec!4v1765498469509!5m2!1ses!2sec"
+                                data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.5788146469147!2d-79.6379480730357!3d-1.0427165699341405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902b5b414a4f0969%3A0x6404b2a7326e2500!2sMixer%20Hormig%C3%B3n%20Elaborado%20-%20Crea%20Hormigonera!5e0!3m2!1ses!2sec!4v1765498469509!5m2!1ses!2sec"
                                 width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
@@ -842,6 +826,7 @@
             </div>
             <div class="footer-bottom">
                 <p>© 2026 Creacom Hormigonera. Todos los derechos reservados.</p>
+                <p><a href="/privacidad/">Privacidad y cookies</a> · <a href="#" data-privacy-settings>Preferencias de privacidad</a></p>
             </div>
         </div>
     </footer>
@@ -890,7 +875,16 @@
                 <div>¡Hola! Soy el Asistente Virtual de Creacom Hormigonera. ¿En qué puedo ayudarte con tu obra hoy?
                 </div>
             </div>
+            <div id="chat-suggestions" class="chatbot-suggestions" aria-label="Consultas frecuentes">
+                <button type="button" data-chat-suggestion="¿Tienen cobertura para mi obra?">Cobertura</button>
+                <button type="button" data-chat-suggestion="¿Qué datos necesito para preparar mi pedido?">Preparar pedido</button>
+                <button type="button" data-chat-advisor>Hablar con un asesor</button>
+            </div>
         </div>
+
+        <a id="chatbot-advisor" class="chatbot-advisor" href="https://wa.me/593997528670" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Hablar con un asesor por WhatsApp
+        </a>
 
         <div class="chatbot-input-area">
             <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." aria-label="Consulta para el asistente">
@@ -902,7 +896,7 @@
 
 
     <script src="js/site-motion.js"></script>
-    <script src="js/creahormigonera.js?v=3.0"></script>
+    <script src="js/creahormigonera.js?v=3.1"></script>
 </body>
 
 </html>

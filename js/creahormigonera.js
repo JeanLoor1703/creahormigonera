@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Timeout de Seguridad de 300ms
             setTimeout(doNavigation, 300);
 
-            if (typeof gtag === 'function') {
+            if (window.CREACOM_PRIVACY?.marketing && typeof gtag === 'function') {
                 gtag('event', 'conversion', {
                     'send_to': 'AW-17780502582/Z5sSCOOlp-0bELbgs55C',
                     'event_callback': doNavigation
@@ -345,8 +345,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // JavaScript público de este sitio estático.
 const CHAT_ENDPOINT = window.CREACOM_CHAT_ENDPOINT || "https://creacom-chat-api.creacom-chat.workers.dev";
 
-// Historial de conversación completo para memoria de acero
+// La conversación y los datos confirmados viven solo durante esta visita.
 let conversationHistory = [];
+let chatLead = {};
 let isSendingMessage = false;
 
 // El prompt activo está en la función Edge para que no se exponga ni se pueda alterar desde el navegador.
@@ -364,6 +365,7 @@ async function sendMessage() {
 
     // 1. Mostrar mensaje del usuario
     appendMessage('user', text);
+    document.getElementById('chat-suggestions')?.remove();
     input.value = '';
     input.focus();
 
@@ -389,7 +391,8 @@ async function sendMessage() {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        messages: conversationHistory
+                        messages: conversationHistory,
+                        lead: chatLead
                     }),
                     signal: controller.signal
                 });
@@ -426,6 +429,10 @@ async function sendMessage() {
 
         if (!botText) throw new Error("La API no devolvió un mensaje");
 
+        if (data.lead && typeof data.lead === 'object') {
+            chatLead = data.lead;
+        }
+
         // 6. Guardar respuesta del bot en historial
         conversationHistory.push({ role: "assistant", content: botText });
 
@@ -435,7 +442,7 @@ async function sendMessage() {
     } catch (error) {
         removeTypingIndicator(typingIndicator);
         console.error("No se pudo enviar el mensaje del chatbot", error);
-        appendMessage('bot', "Ahora mismo no puedo responder desde el chat. Puedes continuar con un ingeniero por WhatsApp:", true);
+        appendMessage('bot', "Ahora mismo no puedo responder desde el chat. Puedes continuar con nuestro equipo mediante el botón de WhatsApp.");
     } finally {
         isSendingMessage = false;
         if (sendButton) sendButton.disabled = false;
@@ -460,16 +467,9 @@ function removeTypingIndicator(el) {
 }
 
 // --- FUNCIÓN DE INTERFAZ ---
-function appendMessage(role, text, showWhatsappButton = false) {
+function appendMessage(role, text) {
     const container = document.getElementById('chat-messages');
     if (!container) return;
-
-    let hasWhatsappButton = false;
-    if (role === 'bot' && text.includes('[MOSTRAR_BOTON_WHATSAPP]')) {
-        text = text.replace(/\[MOSTRAR_BOTON_WHATSAPP\]/g, '').trim();
-        hasWhatsappButton = true;
-    }
-    hasWhatsappButton = hasWhatsappButton || showWhatsappButton;
 
     const div = document.createElement('div');
     div.className = 'msg ' + (role === 'user' ? 'user-msg' : 'bot-msg');
@@ -485,31 +485,32 @@ function appendMessage(role, text, showWhatsappButton = false) {
     }
 
     container.appendChild(div);
-
-    if (hasWhatsappButton) {
-        const btnContainer = document.createElement('div');
-        btnContainer.style.alignSelf = 'flex-start';
-        btnContainer.style.marginLeft = '38px';
-        btnContainer.style.marginBottom = '12px';
-        btnContainer.style.marginTop = '-4px';
-        btnContainer.style.animation = 'bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
-        btnContainer.innerHTML = `
-            <a href="${buildWhatsappUrl()}" target="_blank" rel="noopener noreferrer" class="chatbot-wa-btn">
-                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hablar con un Ingeniero Asesor
-            </a>
-        `;
-        container.appendChild(btnContainer);
-    }
-
     container.scrollTop = container.scrollHeight;
 }
 
 function buildWhatsappUrl() {
-    const recentMessages = conversationHistory
-        .slice(-6)
-        .map(message => `${message.role === 'user' ? 'Cliente' : 'Asistente'}: ${message.content}`)
-        .join('\n');
-    const message = `Hola, deseo una cotización de hormigón.\n\n${recentMessages}`.slice(0, 900);
+    const userMessages = conversationHistory.filter(message => message.role === 'user').map(message => message.content);
+    const historyText = userMessages.join(' ');
+    const cityMatches = [...historyText.matchAll(/\b(El Empalme|Quevedo|Buena Fe|Vinces|Ventanas|Mocache|Valencia|Quinsaloma|Pueblo Viejo|Daule|Colimes|Palestina|Santa Luc[ií]a|Pichincha|Balzar|Guayaquil|San Luis)\b/gi)];
+    const cityFromHistory = cityMatches.at(-1)?.[0];
+    const latestQuestion = userMessages.at(-1);
+    const request = /\b(precio|precios|valor|cotizar|cotizaci[oó]n|cu[aá]nto (?:cuesta|vale|sale))\b/i.test(latestQuestion || '')
+        ? latestQuestion
+        : (chatLead.need || latestQuestion);
+    const details = [
+        ['Ciudad', cityFromHistory || chatLead.city],
+        ['Sector o referencia', chatLead.sector],
+        ['Tipo de obra', chatLead.projectType],
+        ['Elemento', chatLead.element],
+        ['Medidas', chatLead.dimensions],
+        ['Volumen', chatLead.volume],
+        ['Resistencia indicada', chatLead.strength],
+        ['Fecha', chatLead.date],
+        ['Acceso y descarga', chatLead.access],
+        ['Consulta', request]
+    ].filter(([, value]) => typeof value === 'string' && value.trim())
+        .map(([label, value]) => `${label}: ${value.trim().slice(0, 160)}`);
+    const message = ['Hola, quisiera hablar con un asesor de Creacom sobre mi obra.', ...details].join('\n').slice(0, 1100);
     return `https://wa.me/593997528670?text=${encodeURIComponent(message)}`;
 }
 
@@ -535,6 +536,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inputField) {
         inputField.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
     }
+
+    const advisor = document.getElementById('chatbot-advisor');
+    if (advisor) advisor.addEventListener('click', () => { advisor.href = buildWhatsappUrl(); });
+
+    const suggestions = document.getElementById('chat-suggestions');
+    if (suggestions) suggestions.addEventListener('click', (event) => {
+        const button = event.target.closest('button');
+        if (!button) return;
+        if (button.hasAttribute('data-chat-advisor')) {
+            advisor?.click();
+            return;
+        }
+        if (inputField && button.dataset.chatSuggestion) {
+            inputField.value = button.dataset.chatSuggestion;
+            sendMessage();
+        }
+    });
 
 });
 

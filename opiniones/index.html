@@ -11,13 +11,7 @@
     <link rel="icon" href="../favicon.png" type="image/png" sizes="192x192">
     <link rel="canonical" href="https://creahormigonera.com/opiniones/">
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17780502582"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'AW-17780502582');
-    </script>
+    <script defer src="/js/privacy-consent.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1536,7 +1530,7 @@
                 openModal();
             }, 450);
 
-            if (typeof gtag === 'function') {
+            if (window.CREACOM_PRIVACY?.analytics && typeof gtag === 'function') {
                 gtag('event', 'feedback_whatsapp_opened', { event_category: 'engagement' });
             }
         });
