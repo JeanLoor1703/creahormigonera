@@ -1151,6 +1151,11 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.info-item-link:focus-visible {
+    outline: 3px solid #1769aa;
+    outline-offset: 4px;
+}
+
 .contacto-info {
     display: flex;
     flex-direction: column;
@@ -1161,6 +1166,28 @@ body {
     display: flex;
     gap: 20px;
     align-items: flex-start;
+}
+
+.info-item-link {
+    color: inherit;
+    text-decoration: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.info-item-link .info-icon {
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.info-item-link:hover .info-icon,
+.info-item-link:focus-visible .info-icon {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 16px rgba(21, 21, 21, .18);
+}
+
+.info-item-link:hover .info-text h3,
+.info-item-link:focus-visible .info-text h3 {
+    color: var(--color-primary);
 }
 
 .info-icon {
