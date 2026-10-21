@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { projectPortfolio } from './project-portfolio.mjs';
+import { companyExperienceBook } from './company-experience-book.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const wa = 'https://wa.me/593997528670';
@@ -67,53 +68,10 @@ const companyHero = () => `<section class="company-hero" aria-labelledby="compan
     <a class="button company-hero__cta" href="#proceso">Conoce el proceso ${companyIcon('flecha-blanco.svg')}</a>
   </div></div>
 </section>`;
-const companyBook = () => `<div class="brand-panel brand-book" aria-label="Conoce a Creacom en cinco páginas">
-  <div class="brand-book__viewport">
-    <article class="brand-book__page brand-book__page--cover" data-book-page aria-label="Portada">
-      ${img('creahormigoneralogo.png','Creacom Hormigonera')}
-      <p>Construye con confianza</p>
-    </article>
-    <article class="brand-book__page brand-book__page--work" data-book-page aria-label="Obras construidas con calidad" hidden>
-      <div class="brand-book__photos brand-book__photos--supply">
-        ${img('mixerdespachandoBalzarH-180Creacom.jpg','Mixer de Creacom descargando hormigón en una obra')}
-        ${img('Creacommixer1-optimized.webp','Personal trabajando sobre el hormigón recién colocado')}
-        ${img('HormigoneraQuevedoH-210.jpg','Mixer de Creacom durante otro despacho en obra')}
-      </div>
-      <div class="brand-book__caption"><span>Trabajo en obra</span><h3>Obras construidas con calidad</h3><p>Hormigón premezclado para cada etapa de tu proyecto.</p></div>
-    </article>
-    <article class="brand-book__page brand-book__page--clients" data-book-page aria-label="Empresas que confían" hidden>
-      <span class="brand-book__eyebrow">Confianza en obra</span>
-      <h3>Empresas que confían</h3>
-      <div class="brand-book__logos">
-        ${img('ALL-IN_CONSTRUCCIONS_logo.png','All In Construction')}
-        ${img('DIPAC_logo.png','DIPAC')}
-        ${img('CELEP_EP_logo.png','CELEP EP')}
-        ${img('Prefectura_del_Guayas_logo.png','Prefectura del Guayas')}
-        ${img('BI_Cacao_logo.png','BI Cacao')}
-      </div>
-    </article>
-    <article class="brand-book__page brand-book__page--gallery" data-book-page aria-label="Nuestro trabajo en obra" hidden>
-      <div class="brand-book__photos brand-book__photos--sites">
-        ${img('imagenes-hormigon/obra-san-luis.webp','Mixers de Creacom en el acceso de una obra')}
-        ${img('hormigonenbalzarH-240.jpg','Mixer junto al equipo de bombeo en una obra')}
-        ${img('mixer3.jpg','Mixer de Creacom en una obra vial')}
-      </div>
-      <div class="brand-book__caption"><span>Creacom en acción</span><h3>Nuestro trabajo en obra</h3></div>
-    </article>
-    <article class="brand-book__page brand-book__page--closing" data-book-page aria-label="Cuéntanos sobre tu proyecto" hidden>
-      ${img('creahormigoneralogo.png','Creacom Hormigonera')}
-      ${img('imagenes-empresa/Planta-CREACOM-portada.webp','Mixer de Creacom Hormigonera junto a la planta')}
-      <h3>Nos emociona conocer tu proyecto</h3>
-      <p>Cuéntanos qué necesitas construir.</p>
-      <a href="${wa}?text=Hola%2C%20quiero%20contarles%20sobre%20mi%20proyecto%20y%20cotizar%20hormig%C3%B3n." target="_blank" rel="noopener noreferrer">Hablemos por WhatsApp</a>
-    </article>
-  </div>
-  <div class="brand-book__controls" aria-label="Controles del libro">
-    <button class="brand-book__arrow" type="button" data-book-previous aria-label="Página anterior" disabled><span aria-hidden="true">←</span></button>
-    <span class="brand-book__count" data-book-count aria-live="polite">1 de 5</span>
-    <button class="brand-book__arrow" type="button" data-book-next aria-label="Página siguiente"><span aria-hidden="true">→</span></button>
-  </div>
-</div>`;
+const companyBook = () => `<div class="brand-panel brand-book brand-book--invite" aria-label="Libro de experiencias de Creacom">
+  <div class="brand-book__invite-art" aria-hidden="true"><img src="/imagenes/creahormigoneralogo.png" alt="" loading="lazy" decoding="async"><span>PLANTA · MIXERS · OBRAS</span></div>
+  <div class="brand-book__invite-copy"><span class="eyebrow">Conoce lo que hay detrás</span><h3>Personas, planta y hormigón.</h3><button class="brand-book__open" type="button" data-experience-open aria-haspopup="dialog" aria-controls="creacom-experience-book">Abrir libro de experiencias <span aria-hidden="true">↗</span></button></div>
+</div>${companyExperienceBook()}`;
 const productHero = () => `<section class="product-hero" aria-labelledby="product-title">
   <div class="wrap product-hero__inner"><div class="product-hero__copy">
     <span class="kicker product-hero__kicker">Producto <span aria-hidden="true">/</span> <span>Hormigón premezclado</span></span>
@@ -243,6 +201,8 @@ for (const page of pages) {
       .replace('</body>', '<script defer src="/js/proyectos.js"></script></body>')
     : coverageHtml;
   const html = specificHtml
+    .replace('</head>', page.url === '/empresa/' ? '<link rel="stylesheet" href="/styles/experience-book.css?v=4"></head>' : '</head>')
+    .replace('</body>', page.url === '/empresa/' ? '<script defer src="/js/experience-book.js"></script></body>' : '</body>')
     .replace('</body>', '<script defer src="/js/site-motion.js"></script></body>');
   fs.writeFileSync(file, html, 'utf8');
   console.log(page.url);
